@@ -993,7 +993,9 @@
   <button class="btn btn-small btn-outline" id="manageProductsBtn">
     Gerenciar catálogo
   </button>
-
+<button class="btn btn-small btn-outline" id="manageOrdersBtn" onclick="openOrdersModal()">
+  Pedidos
+</button>
   
   <button class="btn btn-small btn-outline" id="resetProductsBtn">
     Restaurar catálogo
@@ -1265,7 +1267,18 @@
 
 </form></div></div>
   <div class="modal" id="manageModal"><div class="overlay" data-close="manageModal"></div><div class="modal-card"><div class="panel-head"><h3>Gerenciar catálogo</h3><button class="close-btn" data-close="manageModal">×</button></div><div id="adminProductList"></div></div></div>
- <div class="modal" id="orderModal">
+ <div class="modal" id="ordersModal">
+  <div class="overlay" data-close="ordersModal"></div>
+
+  <div class="modal-card modal-large">
+    <div class="panel-head">
+      <h3>Pedidos</h3>
+      <button class="close-btn" data-close="ordersModal">×</button>
+    </div>
+
+    <div id="ordersList"></div>
+  </div>
+</div><div class="modal" id="orderModal">
   <div class="overlay" data-close="orderModal"></div>
 
   <div class="modal-card">
@@ -1319,6 +1332,7 @@
     collection,
     getDocs,
     addDoc,
+      getDocs,
     deleteDoc,
     doc,
     updateDoc
@@ -1351,6 +1365,7 @@ window.firebaseAuthFns = {
     collection,
     getDocs,
     addDoc,
+    getDocs,
     deleteDoc,
     doc,
     updateDoc
@@ -1565,6 +1580,8 @@ productColors: qs('#productColors'),
 customerName: qs('#customerName'),
 customerPhone: qs('#customerPhone'),
 customerNote: qs('#customerNote'),
+manageOrdersBtn: qs('#manageOrdersBtn'),
+ordersList: qs('#ordersList'),
         openCartFromBranch: qs('#openCartFromBranch'),
         detailContent: qs('#detailContent')
       };
@@ -1588,6 +1605,8 @@ customerNote: qs('#customerNote'),
         if (els.orderForm) {
   els.orderForm.addEventListener('submit', saveOrder);
 }
+
+      
         if (els.cartBtn) els.cartBtn.addEventListener('click', function () { openModal('cartDrawer'); });
         if (els.favoritesBtn) els.favoritesBtn.addEventListener('click', function () { openModal('favDrawer'); });
         if (els.searchFocusBtn) els.searchFocusBtn.addEventListener('click', function () { location.hash = 'loja'; if (els.searchInput) els.searchInput.focus(); });
@@ -2176,8 +2195,90 @@ function checkoutCart() {
     });
   } else {
     toast('Firebase não carregou.');
+  }window.openOrdersModal = async function () {
+  if (!requireAdmin()) return;
+
+  if (!window.firebaseDB || !window.firebaseFns) {
+    toast('Firebase não carregou.');
+    return;
+  };
+
+  renderOrdersLoading();
+  openModal('ordersModal');
+
+  try {
+    var db = window.firebaseDB;
+    var f = window.firebaseFns;
+
+    var snapshot = await f.getDocs(f.collection(db, 'orders'));
+    var orders = [];
+
+    snapshot.forEach(function (docSnap) {
+      var data = docSnap.data();
+      data.id = docSnap.id;
+      orders.push(data);
+    });
+
+    orders.sort(function (a, b) {
+      return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+    });
+
+    renderOrdersList(orders);
+
+  } catch (error) {
+    console.log(error);
+    toast('Erro ao carregar pedidos.');
   }
 }
+
+function renderOrdersLoading() {
+  if (!els.ordersList) return;
+  els.ordersList.innerHTML = '<div class="empty">Carregando pedidos...</div>';
+}
+
+function renderOrdersList(orders) {
+  if (!els.ordersList) return;
+
+  if (!orders.length) {
+    els.ordersList.innerHTML = '<div class="empty">Nenhum pedido encontrado.</div>';
+    return;
+  }
+
+  var html = '';
+
+  orders.forEach(function (order) {
+    var date = order.createdAt
+      ? new Date(order.createdAt).toLocaleString('pt-BR')
+      : 'Sem data';
+
+    var itemsHtml = '';
+
+    if (order.items && order.items.length) {
+      order.items.forEach(function (item) {
+        itemsHtml += '<p class="hint">• ' + safe(item.name) + ' — ' + item.qty + 'x — ' + money(item.total) + '</p>';
+      });
+    }
+
+    html += '<div class="admin-product" style="grid-template-columns:1fr;margin-bottom:14px">';
+    html += '<div>';
+    html += '<strong>Pedido de ' + safe(order.customerName || 'Cliente') + '</strong>';
+    html += '<p>' + safe(date) + ' • Status: <strong>' + safe(order.status || 'Novo') + '</strong></p>';
+    html += '<p><strong>WhatsApp:</strong> ' + safe(order.customerPhone || '') + '</p>';
+    html += '<p><strong>Total:</strong> ' + money(order.total || 0) + '</p>';
+
+    if (order.customerNote) {
+      html += '<p><strong>Observação:</strong> ' + safe(order.customerNote) + '</p>';
+    }
+
+    html += '<div style="margin-top:10px">' + itemsHtml + '</div>';
+
+    html += '</div>';
+    html += '</div>';
+  });
+
+  els.ordersList.innerHTML = html;
+}
+     }
 function sendWhatsapp(number) {
         var msg = pendingMessage || 'Ola! Vim pelo site da Sisters Boutique e quero atendimento.';
         window.open('https://wa.me/' + number + '?text=' + encodeURIComponent(msg), '_blank');
