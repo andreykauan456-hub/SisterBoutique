@@ -1326,19 +1326,13 @@
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
 
   import {
     getFirestore,
     collection,
     getDocs,
     addDoc,
-      getDocs,
     deleteDoc,
     doc,
     updateDoc
@@ -1366,11 +1360,6 @@ window.firebaseAuthFns = {
   onAuthStateChanged
 };
 
-window.firebaseAuthFns = {
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged
-};
 
   window.firebaseDB = db;
 
@@ -1695,13 +1684,8 @@ if (els.removeCouponBtn) {
 
       function handleLogin(event) {
   event.preventDefault();
-  if (!window.firebaseAuth || !window.firebaseAuthFns) {
-
-  setTimeout(function () {
-    handleLogin(event);
-  }, 800);
-
-  toast('Carregando sistema...');
+ if (!window.firebaseAuth || !window.firebaseAuthFns) {
+  toast('Firebase Auth não carregou. Verifique o script do Firebase.');
   return;
 }
 
