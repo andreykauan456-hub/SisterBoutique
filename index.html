@@ -750,6 +750,36 @@
     content: "Sair";
     font-size: 9px;
   }
+}@media (max-width: 768px) {
+
+  .categories {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    justify-items: center;
+  }
+
+  .category-item {
+    width: 100% !important;
+  }
+
+  .category-circle {
+    width: 72px !important;
+    height: 72px !important;
+    margin-bottom: 8px !important;
+    padding: 4px !important;
+  }
+
+  .category-circle img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .category-item strong {
+    font-size: 10px !important;
+    letter-spacing: 1px !important;
+  }
+
 }
  </style>
 </head>
