@@ -695,6 +695,61 @@
     text-align: center !important;
     justify-content: center !important;
   }
+}@media (max-width: 768px) {
+  .admin-bar.show {
+    display: grid !important;
+    grid-template-columns: repeat(5, 1fr) !important;
+    position: fixed !important;
+    left: 6px !important;
+    right: 6px !important;
+    bottom: 6px !important;
+    width: calc(100vw - 12px) !important;
+    max-width: calc(100vw - 12px) !important;
+    padding: 6px !important;
+    gap: 4px !important;
+    border-radius: 12px !important;
+    overflow: visible !important;
+  }
+
+  .admin-bar .admin-status {
+    display: none !important;
+  }
+
+  .admin-bar .btn {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 38px !important;
+    padding: 4px 2px !important;
+    font-size: 0 !important;
+    line-height: 1 !important;
+    white-space: normal !important;
+    border-radius: 8px !important;
+  }
+
+  #addProductBtn::before {
+    content: "Add";
+    font-size: 9px;
+  }
+
+  #manageProductsBtn::before {
+    content: "Produtos";
+    font-size: 9px;
+  }
+
+  #manageCouponsBtn::before {
+    content: "Cupons";
+    font-size: 9px;
+  }
+
+  #resetProductsBtn::before {
+    content: "Reset";
+    font-size: 9px;
+  }
+
+  #logoutAdminBtn::before {
+    content: "Sair";
+    font-size: 9px;
+  }
 }
  </style>
 </head>
