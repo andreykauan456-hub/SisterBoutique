@@ -1265,6 +1265,41 @@
 
 </form></div></div>
   <div class="modal" id="manageModal"><div class="overlay" data-close="manageModal"></div><div class="modal-card"><div class="panel-head"><h3>Gerenciar catálogo</h3><button class="close-btn" data-close="manageModal">×</button></div><div id="adminProductList"></div></div></div>
+ <div class="modal" id="orderModal">
+  <div class="overlay" data-close="orderModal"></div>
+
+  <div class="modal-card">
+    <div class="panel-head">
+      <h3>Finalizar pedido</h3>
+      <button class="close-btn" data-close="orderModal">×</button>
+    </div>
+
+    <p class="hint">
+      Preencha seus dados para registrar o pedido.
+    </p>
+
+    <form class="form-grid" id="orderForm">
+      <label class="field">
+        Nome completo
+        <input class="input" id="customerName" required>
+      </label>
+
+      <label class="field">
+        WhatsApp
+        <input class="input" id="customerPhone" placeholder="Ex: 11999999999" required>
+      </label>
+
+      <label class="field">
+        Observação
+        <textarea class="input" id="customerNote" placeholder="Ex: Quero tamanho M na cor rosa"></textarea>
+      </label>
+
+      <button class="btn" type="submit">
+        Enviar pedido
+      </button>
+    </form>
+  </div>
+</div>
   <div class="modal" id="branchModal"><div class="overlay" data-close="branchModal"></div><div class="modal-card"><div class="panel-head"><h3>Escolha a filial</h3><button class="close-btn" data-close="branchModal">×</button></div><p class="hint">Envie seu pedido para a filial Brasil ou Argentina.</p><div class="form-grid"><button class="btn" id="sendBrasil">Filial Brasil</button><button class="btn btn-outline" id="sendArgentina">Filial Argentina</button></div></div></div>
   <div class="modal" id="detailModal"><div class="overlay" data-close="detailModal"></div><div class="modal-card" id="detailContent"></div></div>
   <div class="toast" id="toast"></div>
@@ -1526,6 +1561,10 @@ productColors: qs('#productColors'),
         newsletterForm: qs('#newsletterForm'),
         newsletterEmail: qs('#newsletterEmail'),
         toast: qs('#toast'),
+        orderForm: qs('#orderForm'),
+customerName: qs('#customerName'),
+customerPhone: qs('#customerPhone'),
+customerNote: qs('#customerNote'),
         openCartFromBranch: qs('#openCartFromBranch'),
         detailContent: qs('#detailContent')
       };
@@ -1546,6 +1585,9 @@ productColors: qs('#productColors'),
       }
 
       function bindEvents() {
+        if (els.orderForm) {
+  els.orderForm.addEventListener('submit', saveOrder);
+}
         if (els.cartBtn) els.cartBtn.addEventListener('click', function () { openModal('cartDrawer'); });
         if (els.favoritesBtn) els.favoritesBtn.addEventListener('click', function () { openModal('favDrawer'); });
         if (els.searchFocusBtn) els.searchFocusBtn.addEventListener('click', function () { location.hash = 'loja'; if (els.searchInput) els.searchInput.focus(); });
@@ -2065,10 +2107,78 @@ function checkoutCart() {
 
   pendingMessage += '\nTotal: ' + money(total);
 
-  openModal('branchModal');
+ openModal('orderModal');
 }
 
-      function sendWhatsapp(number) {
+     function saveOrder(event) {
+  event.preventDefault();
+
+  if (!cart.length) {
+    toast('Carrinho vazio.');
+    return;
+  }
+
+  var lines = [];
+  var items = [];
+  var total = 0;
+
+  cart.forEach(function (item) {
+    var product = findProduct(item.id);
+    if (!product) return;
+
+    var itemTotal = product.price * item.qty;
+    total += itemTotal;
+
+    items.push({
+      productId: product.id,
+      name: product.name,
+      price: product.price,
+      qty: item.qty,
+      total: itemTotal
+    });
+
+    lines.push('- ' + product.name + ' - ' + item.qty + 'x - ' + money(itemTotal));
+  });
+
+  var order = {
+    customerName: els.customerName.value.trim(),
+    customerPhone: els.customerPhone.value.trim(),
+    customerNote: els.customerNote.value.trim(),
+    items: items,
+    total: total,
+    status: 'Novo',
+    createdAt: new Date().toISOString()
+  };
+
+  if (!order.customerName || !order.customerPhone) {
+    toast('Preencha nome e WhatsApp.');
+    return;
+  }
+
+  if (window.firebaseDB && window.firebaseFns) {
+    var db = window.firebaseDB;
+    var f = window.firebaseFns;
+
+    f.addDoc(f.collection(db, 'orders'), order).then(function () {
+      pendingMessage =
+        'Olá! Quero finalizar meu pedido na Sisters Boutique:\n\n' +
+        lines.join('\n') +
+        '\n\nNome: ' + order.customerName +
+        '\nWhatsApp: ' + order.customerPhone +
+        '\nObservação: ' + (order.customerNote || 'Nenhuma') +
+        '\n\nTotal: ' + money(total);
+
+      closeModal('orderModal');
+      openModal('branchModal');
+      toast('Pedido registrado.');
+    }).catch(function () {
+      toast('Erro ao registrar pedido.');
+    });
+  } else {
+    toast('Firebase não carregou.');
+  }
+}
+function sendWhatsapp(number) {
         var msg = pendingMessage || 'Ola! Vim pelo site da Sisters Boutique e quero atendimento.';
         window.open('https://wa.me/' + number + '?text=' + encodeURIComponent(msg), '_blank');
         closeModal('branchModal');
