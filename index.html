@@ -2196,9 +2196,13 @@ function checkoutCart() {
     }).catch(function () {
       toast('Erro ao registrar pedido.');
     });
-  } else {
-    toast('Firebase não carregou.');
-  }window.openOrdersModal = async function () {
+ } else {
+  toast('Firebase não carregou.');
+}
+
+};
+
+window.openOrdersModal = async function () {
   if (!requireAdmin()) return;
 
   if (!window.firebaseDB || !window.firebaseFns) {
@@ -2232,7 +2236,7 @@ function checkoutCart() {
     console.log(error);
     toast('Erro ao carregar pedidos.');
   }
-}
+};
 
 function renderOrdersLoading() {
   if (!els.ordersList) return;
@@ -2281,7 +2285,7 @@ function renderOrdersList(orders) {
 
   els.ordersList.innerHTML = html;
 }
-     }
+     
 function sendWhatsapp(number) {
         var msg = pendingMessage || 'Ola! Vim pelo site da Sisters Boutique e quero atendimento.';
         window.open('https://wa.me/' + number + '?text=' + encodeURIComponent(msg), '_blank');
