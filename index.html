@@ -1858,15 +1858,6 @@ if (product.colors) {
 }
         html += '<div class="installment">6x de ' + money(product.price / 6) + '</div>';
         html += `
-  <p class="product-desc" style="min-height:auto;margin-bottom:7px">
-    <strong>Tamanhos:</strong>
-    ${product.sizes || 'P, M, G'}
-  </p>
-
-  <p class="product-desc" style="min-height:auto;margin-bottom:10px">
-    <strong>Cores:</strong>
-    ${product.colors || 'Única'}
-  </p>
 `;
         html += '<div class="product-actions"><button class="btn" data-action="cart" data-id="' + product.id + '">Comprar</button><button class="btn btn-outline" data-action="buy" data-id="' + product.id + '">☏</button></div>';
         html += admin + '</div></article>';
