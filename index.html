@@ -1,0 +1,2453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sister's Boutique</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+}<style>
+    :root {
+      --brown: #8b4d34;
+      --dark: #5b2f22;
+      --soft: #a76a4e;
+      --cream: #fbf8f5;
+      --beige: #f3eae4;
+      --line: #e7d9d0;
+      --text: #2b1b16;
+      --muted: #75625a;
+      --white: #ffffff;
+      --danger: #c0392b;
+      --ok: #16804f;
+      --shadow: 0 16px 45px rgba(91, 47, 34, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Montserrat, sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+    body.no-scroll { overflow: hidden; }
+    a { text-decoration: none; color: inherit; }
+    button, input, textarea, select { font-family: inherit; }
+    button { cursor: pointer; }
+    img { max-width: 100%; display: block; }
+
+    .top-strip { background: var(--brown); color: #fff; font-size: 12px; font-weight: 600; }
+    .top-strip-inner { max-width: 1220px; margin: auto; padding: 9px 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center; }
+
+    .header { position: sticky; top: 0; z-index: 80; background: rgba(251, 248, 245, 0.94); backdrop-filter: blur(18px); border-bottom: 1px solid var(--line); }
+    .nav { max-width: 1220px; margin: auto; padding: 18px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .logo-area { display: flex; align-items: center; gap: 13px; min-width: 250px; }
+    .logo-mark { font-family: 'Playfair Display', serif; color: var(--brown); font-size: 54px; line-height: 0.8; letter-spacing: -10px; font-weight: 700; }
+    .logo-name { color: var(--brown); line-height: 1; }
+    .logo-name strong { display: block; font-family: 'Playfair Display', serif; font-size: 28px; font-style: italic; font-weight: 500; }
+    .logo-name span { display: block; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+    .nav-menu { display: flex; align-items: center; gap: 28px; font-size: 13px; font-weight: 600; text-transform: uppercase; }
+    .nav-menu a:hover { color: var(--brown); }
+    .nav-icons { display: flex; align-items: center; gap: 14px; }
+    .icon-btn { width: 36px; height: 36px; border: 0; background: transparent; color: var(--text); position: relative; font-size: 22px; }
+    .icon-btn svg { width: 25px; height: 25px; stroke-width: 1.7; }
+    .badge { position: absolute; top: -6px; right: -9px; min-width: 18px; height: 18px; border-radius: 50%; background: var(--brown); color: #fff; display: grid; place-items: center; font-size: 10px; font-weight: 800; }
+
+    .hero { background: linear-gradient(90deg, #fff 0%, #f7f0eb 45%, #ded8d4 100%); overflow: hidden; }
+    .hero-inner { max-width: 1220px; margin: auto; display: grid; grid-template-columns: 0.9fr 1.1fr; align-items: center; min-height: 590px; padding: 40px 18px 0; }
+    .hero h1 { font-family: 'Playfair Display', serif; color: var(--dark); font-size: clamp(38px, 5vw, 62px); line-height: 1.15; font-weight: 500; max-width: 520px; margin-bottom: 26px; }
+    .hero-line { width: 420px; max-width: 80%; height: 1px; background: var(--brown); margin-bottom: 22px; }
+    .hero-sub { color: var(--soft); letter-spacing: 5px; font-size: 13px; text-transform: uppercase; margin-bottom: 28px; }
+    .hero-image { height: 590px; display: flex; align-items: flex-end; justify-content: center; }
+    .hero-image img { width: 100%; max-height: 590px; object-fit: contain; object-position: bottom center; }
+
+    .btn { border: 0; border-radius: 4px; padding: 14px 24px; background: var(--brown); color: #fff; font-weight: 800; font-size: 12px; text-transform: uppercase; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn:hover { background: var(--dark); transform: translateY(-2px); }
+    .btn-outline { background: #fff; color: var(--brown); border: 1px solid var(--line); }
+    .btn-danger { background: var(--danger); }
+    .btn-small { padding: 9px 13px; font-size: 10px; }
+
+    .benefits { background: #fff; border-bottom: 1px solid var(--line); }
+    .benefits-inner { max-width: 1220px; margin: auto; display: grid; grid-template-columns: repeat(4, 1fr); padding: 25px 18px; }
+    .benefit { display: flex; align-items: center; gap: 18px; padding: 0 24px; border-right: 1px solid var(--line); }
+    .benefit:last-child { border-right: 0; }
+    .benefit-icon { color: var(--brown); font-size: 34px; }
+    .benefit strong { display: block; font-size: 13px; text-transform: uppercase; margin-bottom: 5px; }
+    .benefit span { font-size: 11px; color: var(--muted); }
+
+    .section { max-width: 1220px; margin: auto; padding: 38px 18px; }
+    .about-card { display: grid; grid-template-columns: 0.85fr 1.15fr; background: #f7f2ef; border-radius: 0 24px 24px 0; overflow: hidden; min-height: 390px; box-shadow: 0 4px 25px rgba(91, 47, 34, 0.06); }
+    .about-text { padding: 48px; background: #f8f4f1; }
+    .eyebrow { color: var(--brown); letter-spacing: 5px; text-transform: uppercase; font-size: 12px; font-weight: 600; margin-bottom: 14px; }
+    .section-title { font-family: 'Playfair Display', serif; color: var(--dark); font-weight: 500; font-size: clamp(28px, 3vw, 40px); line-height: 1.15; }
+    .title-line, .center-line { width: 44px; height: 2px; background: var(--brown); margin: 18px 0; }
+    .about-text p { font-size: 14px; line-height: 1.9; color: #49352e; margin-bottom: 18px; max-width: 430px; }
+    .about-img img { width: 100%; height: 100%; object-fit: cover; }
+    .center-head { text-align: center; margin-bottom: 22px; }
+    .center-head .eyebrow { margin-bottom: 6px; }
+    .center-line { margin: 12px auto 0; }
+
+ .categories{
+
+    display:grid !important;
+
+    grid-template-columns:
+    repeat(8, 1fr) !important;
+
+    gap:25px 10px !important;
+
+    justify-items:center;
+
+    align-items:center;
+
+    width:100%;
+
+    max-width:1100px;
+
+    margin:40px auto 0;
+
+}
+
+.category-item:nth-child(1){
+    grid-column:1 / span 2;
+}
+
+.category-item:nth-child(2){
+    grid-column:3 / span 2;
+}
+
+.category-item:nth-child(3){
+    grid-column:5 / span 2;
+}
+
+.category-item:nth-child(4){
+    grid-column:7 / span 2;
+}
+
+.category-item:nth-child(5){
+    grid-column:2 / span 2;
+}
+
+.category-item:nth-child(6){
+    grid-column:4 / span 2;
+}
+
+.category-item:nth-child(7){
+    grid-column:6 / span 2;
+}
+
+.category-item:nth-child(1){
+  grid-column:1 / span 2;
+}
+
+.category-item:nth-child(2){
+  grid-column:3 / span 2;
+}
+
+.category-item:nth-child(3){
+  grid-column:5 / span 2;
+}
+
+.category-item:nth-child(4){
+  grid-column:7 / span 2;
+}
+
+.category-item:nth-child(5){
+  grid-column:2 / span 2;
+}
+
+.category-item:nth-child(6){
+  grid-column:4 / span 2;
+}
+
+.category-item:nth-child(7){
+  grid-column:6 / span 2;
+}
+
+.category-item{
+  cursor:pointer;
+  text-align:center;
+}
+
+
+
+.category-inner{
+
+    width:100%;
+    height:100%;
+
+    border-radius:50%;
+
+    background:#fffaf7;
+
+    border:5px solid #f1ddd0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.category-img{
+
+    width:120px;
+
+    height:120px;
+
+    object-fit:contain;
+
+    margin-bottom:10px;
+
+}
+.category-name{
+
+    font-family:'Playfair Display', serif;
+
+    font-size:20px;
+
+    color:#5b2f22;
+
+    margin-top:-5px;
+
+}
+
+.category-item:hover .category-circle,
+.category-item.active .category-circle{
+  transform:translateY(-7px) scale(1.03);
+  box-shadow:0 22px 45px rgba(91,47,34,0.18);
+}
+
+@media(max-width:980px){
+ .categories{
+  grid-template-columns:repeat(2,1fr);
+}
+
+.category-item:nth-child(n){
+  grid-column:auto;
+}
+
+  .category-circle{
+    width:150px;
+    height:150px;
+  }
+
+  .category-img{
+    width:68px;
+    height:68px;
+  }
+
+  .category-name{
+    font-size:18px;
+  }
+}
+
+.emoji-circle-inner {
+
+  width: 100%;
+  height: 100%;
+
+  border-radius: 50%;
+
+  background: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 42px;
+
+}
+
+.category-item:hover .category-circle,
+.category-item.active .category-circle {
+
+  transform: translateY(-4px) scale(1.03);
+
+  background: linear-gradient(
+    45deg,
+    #5b2f22,
+    #8b4d34,
+    #d9b29c
+  );
+
+}
+    .category-item:hover .category-circle, .category-item.active .category-circle { border-color: var(--brown); transform: translateY(-4px); }
+    .category-item strong { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; }
+
+    .shop-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+    .shop-head-center { text-align: center; flex: 1; }
+    .shop-tools { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+    .search-box, .select-box { height: 40px; border: 1px solid var(--line); background: #fff; border-radius: 4px; padding: 0 12px; color: var(--text); outline: none; font-size: 12px; }
+    .search-box { width: 210px; }
+
+    .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .product-card { background: #fff; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; position: relative; transition: 0.2s; }
+    .product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .product-img { height: 300px; background: var(--beige); overflow: hidden; position: relative; }
+    .product-img img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+    .discount { position: absolute; top: 12px; left: 12px; background: #fff; color: var(--dark); padding: 6px 12px; border-radius: 3px; font-size: 12px; font-weight: 600; z-index: 2; }
+    .heart-btn { position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%; background: #fff; border: 1px solid var(--line); display: grid; place-items: center; color: var(--dark); font-size: 18px; z-index: 2; }
+    .heart-btn.active { background: var(--brown); color: #fff; }
+    .product-info { padding: 15px 14px 17px; }
+    .product-info h3 { font-size: 13px; text-transform: uppercase; margin-bottom: 10px; min-height: 32px; line-height: 1.35; cursor: pointer; }
+    .product-desc { font-size: 11px; color: var(--muted); line-height: 1.55; min-height: 36px; margin-bottom: 10px; }
+    .price { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 5px; }
+    .price strong { font-size: 16px; color: var(--dark); }
+    .old-price { text-decoration: line-through; color: #a99991; font-size: 12px; }
+    .installment { font-size: 12px; margin-bottom: 13px; }
+    .product-actions { display: grid; grid-template-columns: 1fr 42px; gap: 8px; }
+    .product-actions .btn { padding: 11px 8px; font-size: 10px; }
+    .admin-actions { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 9px; }
+
+    .wide-banner { margin-top: 26px; background: var(--beige); border-radius: 12px; padding: 22px 34px; display: grid; grid-template-columns: 1.2fr 1.4fr 1.1fr; gap: 22px; align-items: center; }
+    .coupon { display: flex; align-items: center; gap: 18px; }
+    .coupon-icon, .instagram-icon { font-size: 38px; color: var(--brown); }
+    .coupon strong, .instagram-box strong { display: block; text-transform: uppercase; letter-spacing: 3px; font-size: 15px; margin-bottom: 5px; }
+    .coupon span, .instagram-box span { font-size: 12px; color: var(--muted); }
+    .newsletter-form { display: flex; }
+    .newsletter-form input { flex: 1; height: 44px; border: 1px solid var(--line); border-right: 0; border-radius: 4px 0 0 4px; padding: 0 18px; outline: none; }
+    .newsletter-form button { border-radius: 0 4px 4px 0; height: 44px; white-space: nowrap; }
+    .instagram-box { display: flex; align-items: center; justify-content: flex-end; gap: 15px; }
+
+    .reviews-section { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 24px; }
+    .review-card { background: var(--cream); border: 1px solid var(--line); border-radius: 12px; padding: 24px; box-shadow: 0 8px 25px rgba(91, 47, 34, 0.06); }
+    .review-stars { color: var(--brown); font-size: 18px; margin-bottom: 12px; letter-spacing: 2px; }
+    .review-card p { color: var(--muted); font-size: 13px; line-height: 1.8; margin-bottom: 16px; }
+    .review-user { display: flex; align-items: center; gap: 12px; }
+    .review-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--brown); color: #fff; display: grid; place-items: center; font-weight: 800; }
+    .review-user strong { display: block; font-size: 13px; text-transform: uppercase; }
+    .review-user span { font-size: 11px; color: var(--muted); }
+    .choose-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 24px; }
+    .choose-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 22px; text-align: center; transition: 0.2s; }
+    .choose-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .choose-icon { font-size: 34px; margin-bottom: 12px; color: var(--brown); }
+    .choose-card h3 { font-size: 13px; text-transform: uppercase; margin-bottom: 10px; }
+    .choose-card p { color: var(--muted); font-size: 12px; line-height: 1.7; }
+
+    .values { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .values-inner { max-width: 1220px; margin: auto; padding: 22px 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .value-item { display: flex; align-items: center; gap: 16px; border-right: 1px solid var(--line); padding-right: 12px; }
+    .value-item:last-child { border-right: 0; }
+    .value-icon { font-size: 32px; color: var(--brown); }
+    .value-item strong { display: block; font-size: 11px; text-transform: uppercase; margin-bottom: 4px; }
+    .value-item span { font-size: 10px; color: var(--muted); }
+
+    .footer-main { background: #f7f1ec; padding: 32px 18px; }
+    .footer-inner { max-width: 1220px; margin: auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.25fr 1.1fr; gap: 28px; }
+    .footer-logo .logo-area { min-width: auto; margin-bottom: 12px; }
+    .footer-col h4 { font-size: 12px; text-transform: uppercase; margin-bottom: 14px; }
+    .footer-col a, .footer-col p, .footer-logo p { display: block; font-size: 12px; color: var(--muted); margin-bottom: 8px; line-height: 1.55; }
+    .socials { display: flex; gap: 10px; }
+    .socials a, .socials button { width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; background: #fff; color: var(--brown); }
+    .payment-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+    .payment-tags span { font-size: 10px; background: #fff; border: 1px solid var(--line); padding: 5px 7px; border-radius: 4px; font-weight: 700; }
+    .bottom-bar { background: var(--brown); color: #fff; padding: 12px 18px; font-size: 11px; }
+    .bottom-inner { max-width: 1220px; margin: auto; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+    .admin-bar { position: fixed; left: 16px; bottom: 16px; z-index: 150; display: none; background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); border-radius: 14px; padding: 10px; gap: 8px; align-items: center; flex-wrap: wrap; max-width: calc(100vw - 32px); }
+    .admin-bar.show { display: flex; }
+    .admin-status { font-size: 12px; font-weight: 800; color: var(--ok); padding: 0 8px; }
+    .drawer, .modal { position: fixed; inset: 0; z-index: 200; display: none; }
+    .drawer.open, .modal.open { display: block; }
+    .overlay { position: absolute; inset: 0; background: rgba(43, 27, 22, 0.48); backdrop-filter: blur(5px); }
+    .drawer-panel { position: absolute; right: 0; top: 0; height: 100%; width: min(450px, 94vw); background: #fff; box-shadow: var(--shadow); overflow: auto; padding: 22px; }
+    .panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .panel-head h3 { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--dark); font-weight: 500; }
+    .close-btn { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--dark); font-size: 22px; }
+    .cart-item { display: grid; grid-template-columns: 74px 1fr auto; gap: 12px; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--line); }
+    .cart-item img { width: 74px; height: 88px; object-fit: cover; background: var(--beige); }
+    .cart-item h4 { font-size: 12px; text-transform: uppercase; margin-bottom: 5px; line-height: 1.35; }
+    .cart-item span { font-size: 12px; color: var(--muted); }
+    .qty { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+    .qty button { width: 26px; height: 26px; border: 1px solid var(--line); background: #fff; border-radius: 50%; }
+    .drawer-total { position: sticky; bottom: 0; background: #fff; padding: 16px 0 0; margin-top: 14px; border-top: 1px solid var(--line); }
+    .total-row { display: flex; justify-content: space-between; font-weight: 800; margin-bottom: 12px; }
+    .modal-card { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(760px, 94vw); max-height: 92vh; overflow: auto; background: #fff; border-radius: 14px; box-shadow: var(--shadow); padding: 24px; }
+    .form-grid { display: grid; gap: 13px; margin-top: 12px; }
+    .field { display: grid; gap: 7px; font-size: 12px; font-weight: 700; color: var(--dark); text-transform: uppercase; }
+    .input { width: 100%; height: 44px; border: 1px solid var(--line); background: #fff; border-radius: 4px; padding: 0 13px; outline: none; color: var(--text); }
+    textarea.input { height: auto; min-height: 88px; padding-top: 12px; resize: vertical; }
+    .hint { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .empty { text-align: center; color: var(--muted); padding: 30px 10px; font-size: 13px; }
+    .admin-product { display: grid; grid-template-columns: 68px 1fr; gap: 12px; align-items: center; border: 1px solid var(--line); border-radius: 8px; padding: 10px; margin-bottom: 10px; }
+    .admin-product img { width: 68px; height: 78px; object-fit: cover; background: var(--beige); }
+    .admin-product strong { font-size: 12px; text-transform: uppercase; }
+    .admin-product p { font-size: 12px; color: var(--muted); margin: 4px 0 8px; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    .detail-image { height: 420px; border-radius: 8px; overflow: hidden; background: var(--beige); }
+    .detail-image img { width: 100%; height: 100%; object-fit: cover; }
+    .toast { position: fixed; top: 95px; right: 18px; z-index: 300; background: #fff; color: var(--text); border: 1px solid var(--line); box-shadow: var(--shadow); padding: 14px 16px; border-radius: 8px; display: none; max-width: 340px; font-size: 13px; font-weight: 600; }
+    .toast.show { display: block; }
+
+    @media (max-width: 980px) {
+      .reviews-grid, .choose-grid { grid-template-columns: repeat(2, 1fr); }
+      .top-strip-inner { grid-template-columns: 1fr; font-size: 11px; gap: 5px; }
+      .nav { flex-wrap: wrap; }
+      .logo-area { min-width: auto; }
+      .nav-menu { order: 3; width: 100%; justify-content: center; gap: 18px; flex-wrap: wrap; }
+      .hero-inner { grid-template-columns: 1fr; min-height: auto; text-align: center; }
+      .hero h1 { margin-inline: auto; }
+      .hero-line { margin-inline: auto; }
+      .hero-image { height: auto; }
+      .hero-image img { max-height: 430px; }
+      .benefits-inner, .values-inner { grid-template-columns: repeat(2, 1fr); }
+      .about-card { grid-template-columns: 1fr; border-radius: 18px; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .wide-banner { grid-template-columns: 1fr; text-align: center; }
+      .coupon, .instagram-box { justify-content: center; }
+      .footer-inner { grid-template-columns: repeat(2, 1fr); }
+      .detail-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .reviews-grid, .choose-grid { grid-template-columns: 1fr; }
+      .nav-menu { display: none; }
+      .logo-mark { font-size: 43px; }
+      .logo-name strong { font-size: 23px; }
+      .hero h1 { font-size: 39px; }
+      .hero-sub { letter-spacing: 2.8px; font-size: 11px; }
+      .benefits-inner, .values-inner, .products-grid, .footer-inner { grid-template-columns: 1fr; }
+      .category-circle { width: 94px; height: 94px; }
+      .shop-head { display: block; }
+      .shop-tools { justify-content: center; margin-top: 14px; }
+      .search-box, .select-box { width: 100%; }
+      .product-img { height: 350px; }
+      .newsletter-form { display: grid; }
+      .newsletter-form input { border-radius: 4px; border-right: 1px solid var(--line); margin-bottom: 8px; }
+      .newsletter-form button { border-radius: 4px; width: 100%; }
+      .admin-bar { left: 8px; right: 8px; bottom: 8px; }
+      .admin-status { width: 100%; text-align: center; }
+    }
+    .category-full-img{
+
+    width:180px !important;
+
+    height:180px !important;
+
+    object-fit:contain !important;
+
+    display:block !important;
+
+    margin:0 auto !important;
+
+}
+
+.category-name{
+    font-family:'Playfair Display', serif !important;
+    font-size:22px !important;
+    color:#5b2f22 !important;
+
+    margin-top:-38px !important;
+
+    position:relative !important;
+    z-index:2 !important;
+}
+.category-full-img{
+
+    width:190px !important;
+
+    height:190px !important;
+     
+
+    object-fit:contain !important;
+    transform:scale(0.82) !important;
+
+    display:block !important;
+
+    margin:auto !important;
+
+}
+
+.category-name{
+
+    font-family:'Playfair Display', serif !important;
+
+    font-size:20px !important;
+
+    color:#5b2f22 !important;
+
+    margin-top:-22px !important;
+
+    position:relative !important;
+
+    z-index:2 !important;
+
+}.category-item{
+    position:relative !important;
+    width:210px !important;
+    height:210px !important;
+    text-align:center !important;
+}
+
+.category-full-img{
+    width:210px !important;
+    height:210px !important;
+    object-fit:contain !important;
+    display:block !important;
+    margin:0 auto !important;
+}
+
+.category-name{
+    position:absolute !important;
+    bottom:28px !important;
+    left:0 !important;
+    right:0 !important;
+
+    margin:0 !important;
+
+    font-family:'Playfair Display', serif !important;
+    font-size:21px !important;
+    color:#5b2f22 !important;
+    font-weight:500 !important;
+    text-align:center !important;
+
+    z-index:5 !important;
+}.category-row{
+
+    display:flex !important;
+
+    justify-content:center !important;
+
+    gap:45x !important;
+
+    width:100% !important;
+
+}
+
+.category-full-img{
+    width:190px !important;
+    height:190px !important;
+}
+
+.category-item{
+    width:190px !important;
+    height:190px !important;
+}
+
+.category-name{
+    bottom:6px !important;
+    font-size:18px !important;
+}
+  </style>
+</head>
+<body>
+  <div class="top-strip">
+    <div class="top-strip-inner">
+      <span>🚚 FRETE PARA TODO O BRASIL</span>
+      <span>💳 ATÉ 6X SEM JUROS</span>
+      <span>🏷️ 5% OFF NO PIX</span>
+    </div>
+  </div>
+
+  <header class="header">
+    <nav class="nav">
+      <a href="#inicio" class="logo-area">
+        <div class="logo-mark">SB</div>
+        <div class="logo-name"><strong>Sister's</strong><span>Boutique</span></div>
+      </a>
+      <div class="nav-menu">
+        <a href="#inicio">Início</a>
+        <a href="#loja">Loja</a>
+        <a href="#categorias">Categorias</a>
+        <a href="#sobre">Sobre nós</a>
+        <a href="#filiais">Filiais</a>
+        <a href="#contato">Contato</a>
+      </div>
+      <div class="nav-icons">
+        <button class="icon-btn" id="searchFocusBtn" title="Buscar">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z"/></svg>
+        </button>
+        <button class="icon-btn" id="favoritesBtn" title="Favoritos">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.7-7.5 1.1-1.1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+          <span class="badge" id="favCount">0</span>
+        </button>
+        <button class="icon-btn" id="cartBtn" title="Carrinho">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4H6Z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+          <span class="badge" id="cartCount">0</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <h1>Elegância que te acompanha em todos os momentos.</h1>
+          <div class="hero-line"></div>
+          <div class="hero-sub">Conforto • Elegância • Exclusividade</div>
+          <a href="#loja" class="btn">Compre agora</a>
+        </div>
+        <div class="hero-image">
+          <img src="fundadoras-1.png" alt="Fundadoras Sister's Boutique">
+        </div>
+      </div>
+    </section>
+
+    <section class="benefits">
+      <div class="benefits-inner">
+        <div class="benefit"><div class="benefit-icon">🚚</div><div><strong>Frete</strong><span>Para todo o Brasil</span></div></div>
+        <div class="benefit"><div class="benefit-icon">💳</div><div><strong>Parcele em até 6x</strong><span>Sem juros no cartão</span></div></div>
+        <div class="benefit"><div class="benefit-icon">🛡️</div><div><strong>Compra segura</strong><span>Seus dados protegidos</span></div></div>
+        <div class="benefit"><div class="benefit-icon">🎧</div><div><strong>Atendimento VIP</strong><span>Suporte humanizado</span></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="sobre">
+      <div class="about-card">
+        <div class="about-text">
+          <div class="eyebrow">Sobre nós</div>
+          <h2 class="section-title">Mais que uma loja,<br>um propósito.</h2>
+          <div class="title-line"></div>
+          <p>A Sister's Boutique nasceu do sonho de duas irmãs apaixonadas por moda e por transformar autoestima em confiança.</p>
+          <p>Acreditamos que cada mulher é única e merece se sentir incrível todos os dias.</p>
+          <a href="#filiais" class="btn">Conheça nossas filiais</a>
+        </div>
+        <div class="about-img"><img src="fundadoras-2.jpeg" alt="Sobre Sister's Boutique"></div>
+      </div>
+    </section>
+
+    <section class="section" id="categorias">
+      <div class="center-head">
+        <div class="eyebrow">Categorias</div>
+        <h2 class="section-title">Encontre o que você procura</h2>
+        <div class="center-line"></div>
+      </div>
+      <div class="categories" id="categoryList"></div>
+    </section>
+
+    <section class="section" id="loja">
+      <div class="shop-head">
+        <div></div>
+        <div class="shop-head-center">
+          <div class="eyebrow">Destaques</div>
+          <h2 class="section-title">Os mais amados da semana</h2>
+          <div class="center-line"></div>
+        </div>
+        <div class="shop-tools">
+          <input class="search-box" id="searchInput" placeholder="Buscar produto...">
+          <select class="select-box" id="sortSelect">
+            <option value="default">Ordenar</option>
+            <option value="low">Menor preço</option>
+            <option value="high">Maior preço</option>
+            <option value="name">Nome A-Z</option>
+          </select>
+        </div>
+      </div>
+      <div class="products-grid" id="productsGrid"></div>
+      <div class="wide-banner">
+        <div class="coupon"><div class="coupon-icon">🎁</div><div><strong>5% OFF na primeira compra</strong><span>Cadastre-se e receba seu cupom!</span></div></div>
+       <form class="newsletter-form" id="newsletterForm">
+  <input
+    type="email"
+    id="newsletterEmail"
+    placeholder="Seu melhor e-mail"
+    required
+  >
+
+  <button class="btn" type="submit">
+    Ganhar 5% OFF
+  </button>
+</form>
+        <a class="instagram-box" href="https://www.instagram.com/sistersboutiquear/" target="_blank" rel="noopener"><div class="instagram-icon">◎</div><div><strong>Siga nosso Instagram</strong><span>@sistersboutiquea</span></div></a>
+      </div>
+    </section>
+
+    <section class="section" id="filiais">
+      <div class="center-head">
+        <div class="eyebrow">Nossas filiais</div>
+        <h2 class="section-title">Atendimento no Brasil e na Argentina</h2>
+        <div class="center-line"></div>
+      </div>
+      <div class="products-grid">
+        <div class="product-card" style="padding:24px"><h3>Filial Brasil</h3><p class="product-desc" style="min-height:auto;margin-top:10px">Atendimento para todo o Brasil com envio nacional.</p><p class="installment">📍 Brasil • Segunda a sábado • 08:30h às 19:30h</p><button class="btn" data-branch="br">Chamar Brasil</button></div>
+        <div class="product-card" style="padding:24px"><h3>Filial Argentina</h3><p class="product-desc" style="min-height:auto;margin-top:10px">Atendimento especial para clientes da Argentina.</p><p class="installment">📍 Argentina • Lunes a sábado • 8:30h às 19:30h</p><button class="btn" data-branch="ar">Chamar Argentina</button></div>
+        <div class="product-card" style="padding:24px"><h3>Atendimento online</h3><p class="product-desc" style="min-height:auto;margin-top:10px">Escolha seus produtos e envie o pedido pelo WhatsApp.</p><p class="installment">💬 Resposta rápida</p><button class="btn btn-outline" id="openCartFromBranch">Ver carrinho</button></div>
+        <div class="product-card" style="padding:24px"><h3>Instagram oficial</h3><p class="product-desc" style="min-height:auto;margin-top:10px">Acompanhe novidades e promoções exclusivas.</p><p class="installment">📷 @sistersboutiquea</p><a href="https://www.instagram.com/sistersboutiquear/" target="_blank" rel="noopener" class="btn">Abrir Instagram</a></div>
+      </div>
+    </section>
+
+    <section class="section reviews-section" id="avaliacoes">
+      <div class="center-head">
+        <div class="eyebrow">Avaliações</div>
+        <h2 class="section-title">O que nossas clientes dizem</h2>
+        <div class="center-line"></div>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p>Comprei um vestido e fiquei apaixonada. O atendimento foi rápido, a peça chegou bem embalada e o tecido é maravilhoso.</p>
+          <div class="review-user"><div class="review-avatar">A</div><div><strong>Ana Clara</strong><span>Cliente Brasil</span></div></div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p>A loja é muito elegante e fácil de comprar. Gostei muito do suporte pelo WhatsApp e das opções de looks.</p>
+          <div class="review-user"><div class="review-avatar">M</div><div><strong>Mariana Souza</strong><span>Cliente Brasil</span></div></div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">★★★★★</div>
+          <p>As peças são lindas, delicadas e combinam com várias ocasiões. Recomendo para quem quer comprar com segurança.</p>
+          <div class="review-user"><div class="review-avatar">L</div><div><strong>Lucía Fernández</strong><span>Cliente Argentina</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="porque-escolher">
+      <div class="center-head">
+        <div class="eyebrow">Por que nos escolher</div>
+        <h2 class="section-title">Motivos para comprar na Sister's Boutique</h2>
+        <div class="center-line"></div>
+      </div>
+      <div class="choose-grid">
+        <div class="choose-card"><div class="choose-icon">♡</div><h3>Peças selecionadas</h3><p>Escolhemos cada produto com cuidado para entregar beleza, conforto e elegância.</p></div>
+        <div class="choose-card"><div class="choose-icon">🚚</div><h3>Envio facilitado</h3><p>Atendimento para o Brasil e Argentina, com suporte para finalizar seu pedido.</p></div>
+        <div class="choose-card"><div class="choose-icon">💬</div><h3>Atendimento humano</h3><p>Você fala direto pelo WhatsApp e recebe ajuda para escolher o melhor look.</p></div>
+        <div class="choose-card"><div class="choose-icon">✨</div><h3>Estilo exclusivo</h3><p>Looks delicados, modernos e sofisticados para diferentes momentos do seu dia.</p></div>
+      </div>
+    </section>
+
+    <section class="values">
+      <div class="values-inner">
+        <div class="value-item"><div class="value-icon">♡</div><div><strong>Estilo que encanta</strong><span>Peças selecionadas com amor</span></div></div>
+        <div class="value-item"><div class="value-icon">⚙</div><div><strong>Qualidade premium</strong><span>Tecidos impecáveis</span></div></div>
+        <div class="value-item"><div class="value-icon">◇</div><div><strong>Exclusividade</strong><span>Coleções únicas para você</span></div></div>
+        <div class="value-item"><div class="value-icon">♙</div><div><strong>Confiança</strong><span>Clientes satisfeitas</span></div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contato">
+    <div class="footer-main">
+      <div class="footer-inner">
+        <div class="footer-logo"><div class="logo-area"><div class="logo-mark">SB</div><div class="logo-name"><strong>Sister's</strong><span>Boutique</span></div></div><p>Elegância que te acompanha em todos os momentos.</p><div class="socials"><a href="https://www.instagram.com/sistersboutiquear/" target="_blank" rel="noopener">◎</a><button data-branch="br">☏</button><button data-branch="ar">✉</button></div></div>
+        <div class="footer-col"><h4>Institucional</h4><a href="#sobre">Sobre nós</a><a href="#filiais">Nossas filiais</a><a href="#loja">Catálogo</a><a href="#">Política de privacidade</a></div>
+        <div class="footer-col"><h4>Ajuda</h4><a href="#loja">Como comprar</a><a href="#">Formas de pagamento</a><a href="#">Prazos de entrega</a><a href="#contato">Fale conosco</a></div>
+        <div class="footer-col"><h4>Contato</h4><p>Brasil: (62) 98474-7298</p><p>Argentina: +54 9 11 4189-5959</p><p>contato@sisters.com.br</p><p>Seg - Sáb: 09h às 18h</p></div>
+        <div class="footer-col"><h4>Formas de pagamento</h4><div class="payment-tags"><span>VISA</span><span>MASTER</span><span>ELO</span><span>PIX</span><span>BOLETO</span></div><h4>Segurança</h4><p>🛡️ Site protegido</p></div>
+      </div>
+    </div>
+    <div class="bottom-bar"><div class="bottom-inner"><p>© <span id="year"></span> Sister's Boutique. Todos os direitos reservados.</p><span>Sister's Boutique • Moda feminina premium</span></div></div>
+  </footer>
+
+  <div class="admin-bar" id="adminBar">
+  <span class="admin-status">Painel liberado</span>
+
+  <button class="btn btn-small" id="addProductBtn">
+    Adicionar produto
+  </button>
+
+
+  <button class="btn btn-small btn-outline" id="manageProductsBtn">
+    Gerenciar catálogo
+  </button>
+
+  
+  <button class="btn btn-small btn-outline" id="resetProductsBtn">
+    Restaurar catálogo
+  </button>
+
+  <button class="btn btn-small btn-danger" id="logoutAdminBtn">
+    Sair
+  </button>
+</div>
+
+  <div class="drawer" id="cartDrawer"><div class="overlay" data-close="cartDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Carrinho</h3><button class="close-btn" data-close="cartDrawer">×</button></div><div id="cartItems"></div><div class="modal" id="couponsModal">
+
+  <div class="overlay" data-close="couponsModal"></div>
+
+  <div class="modal-card">
+
+    <div class="panel-head">
+      <h3>Gerenciar cupons</h3>
+
+      <button class="close-btn" data-close="couponsModal">
+        ×
+      </button>
+    </div>
+
+    <form class="form-grid" id="couponForm">
+
+      <input type="hidden" id="couponId">
+
+      <label class="field">
+        Código do cupom
+
+        <input
+          class="input"
+          id="couponCode"
+          placeholder="Ex: PRIMEIRA5"
+          required
+        >
+      </label>
+
+      <label class="field">
+        Tipo de desconto
+
+        <select class="input" id="couponType">
+          <option value="percent">Porcentagem</option>
+          <option value="fixed">Valor fixo</option>
+        </select>
+      </label>
+
+      <label class="field">
+        Valor
+
+        <input
+          class="input"
+          id="couponValue"
+          type="number"
+          step="0.01"
+          min="0"
+          required
+        >
+      </label>
+
+      <label class="field">
+        Status
+
+        <select class="input" id="couponActive">
+          <option value="yes">Ativo</option>
+          <option value="no">Desativado</option>
+        </select>
+      </label>
+
+      <button class="btn" type="submit">
+        Salvar cupom
+      </button>
+
+    </form>
+
+    <div
+      style="
+        height:1px;
+        background:var(--line);
+        margin:20px 0;
+      "
+    ></div>
+
+    <div id="adminCouponList"></div>
+
+  </div>
+
+</div><div class="total-row"><span>Total</span><span id="cartTotal">R$ 0,00</span></div><button class="btn" id="checkoutBtn" style="width:100%">Finalizar pelo WhatsApp</button></div></aside></div>
+  <div class="drawer" id="favDrawer"><div class="overlay" data-close="favDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Favoritos</h3><button class="close-btn" data-close="favDrawer">×</button></div><div id="favItems"></div></aside></div>
+  <div class="modal" id="loginModal"><div class="overlay" data-close="loginModal"></div><div class="modal-card"><div class="panel-head"><h3>Painel admin</h3><button class="close-btn" data-close="loginModal">×</button></div><p class="hint">Área restrita. Digite a senha de administrador para continuar.</p><form class="form-grid" id="loginForm"><input class="input" type="email" id="adminEmail" placeholder="E-mail admin" required><input class="input" type="password" id="adminPassword" placeholder="Senha do painel" required><button class="btn" type="submit">Entrar</button></form></div></div>
+  <div class="modal" id="productModal"><div class="overlay" data-close="productModal"></div><div class="modal-card"><div class="panel-head"><h3 id="productModalTitle">Produto</h3><button class="close-btn" data-close="productModal">×</button></div><form class="form-grid" id="productForm">
+
+  <input type="hidden" id="productId">
+
+  <label class="field">
+    Nome
+    <input class="input" id="productName" required>
+  </label>
+
+  <label class="field">
+    Preço atual
+    <input
+      class="input"
+      id="productPrice"
+      type="number"
+      step="0.01"
+      min="0"
+      required
+    >
+  </label>
+
+  <label class="field">
+    Preço antigo opcional
+    <input
+      class="input"
+      id="productOldPrice"
+      type="number"
+      step="0.01"
+      min="0"
+    >
+  </label>
+
+  <label class="field">
+    Categoria
+
+    <select class="input" id="productCategory" required>
+      <option>Vestidos</option>
+      <option>Conjuntos</option>
+      <option>Blusas</option>
+      <option>Calças</option>
+      <option>Saias</option>
+      <option>Acessórios</option>
+    </select>
+
+  </label>
+
+  <label class="field">
+    Tamanhos disponíveis
+
+ <select
+  class="input"
+  id="productSizes"
+  multiple
+  style="height:120px"
+>
+
+  <option>PP</option>
+  <option>P</option>
+  <option>M</option>
+  <option>G</option>
+  <option>GG</option>
+  <option>XG</option>
+
+  <option>Baby Look P</option>
+  <option>Baby Look M</option>
+  <option>Baby Look G</option>
+
+</select>
+  </label>
+
+  <label class="field">
+    Cores disponíveis
+
+    <select
+  class="input"
+  id="productColors"
+  multiple
+  style="height:170px"
+>
+
+  <option>Preto</option>
+  <option>Branco</option>
+  <option>Bege</option>
+  <option>Marrom</option>
+  <option>Rosa</option>
+  <option>Pink</option>
+  <option>Vermelho</option>
+  <option>Verde</option>
+  <option>Azul</option>
+  <option>Azul Claro</option>
+  <option>Azul Marinho</option>
+  <option>Lilás</option>
+  <option>Roxo</option>
+  <option>Amarelo</option>
+  <option>Laranja</option>
+  <option>Cinza</option>
+  <option>Nude</option>
+  <option>Off White</option>
+
+</select>
+    >
+  </label>
+
+  <label class="field">
+    Imagem
+
+    <input
+      class="input"
+      id="productImage"
+      placeholder="Ex: vestido.jpg"
+      required
+    >
+  </label>
+
+  <label class="field">
+    Descrição
+
+    <textarea
+      class="input"
+      id="productDescription"
+      required
+    ></textarea>
+
+  </label>
+
+  <label class="field">
+    Etiqueta
+
+    <input
+      class="input"
+      id="productTag"
+      placeholder="Ex: Novo, -10%"
+    >
+  </label>
+
+  <label class="field">
+    Status
+
+    <select class="input" id="productStatus">
+
+      <option>Normal</option>
+
+      <option>Destaque</option>
+
+      <option>Promoção</option>
+
+      <option>Lançamento</option>
+
+      <option>Mais vendido</option>
+
+      <option>Exclusivo</option>
+
+    </select>
+
+  </label>
+
+  <button class="btn" type="submit">
+    Salvar alterações
+  </button>
+
+</form></div></div>
+  <div class="modal" id="manageModal"><div class="overlay" data-close="manageModal"></div><div class="modal-card"><div class="panel-head"><h3>Gerenciar catálogo</h3><button class="close-btn" data-close="manageModal">×</button></div><div id="adminProductList"></div></div></div>
+  <div class="modal" id="branchModal"><div class="overlay" data-close="branchModal"></div><div class="modal-card"><div class="panel-head"><h3>Escolha a filial</h3><button class="close-btn" data-close="branchModal">×</button></div><p class="hint">Envie seu pedido para a filial Brasil ou Argentina.</p><div class="form-grid"><button class="btn" id="sendBrasil">Filial Brasil</button><button class="btn btn-outline" id="sendArgentina">Filial Argentina</button></div></div></div>
+  <div class="modal" id="detailModal"><div class="overlay" data-close="detailModal"></div><div class="modal-card" id="detailContent"></div></div>
+  <div class="toast" id="toast"></div>
+  <div class="toast" id="toast"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  import {
+    getFirestore,
+    collection,
+    getDocs,
+    addDoc,
+    deleteDoc,
+    doc,
+    updateDoc
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDDML4icLEsgaUVP1XvWyIZ7ZF62NL96ZA",
+    authDomain: "sisters-boutique-599b4.firebaseapp.com",
+    projectId: "sisters-boutique-599b4",
+    storageBucket: "sisters-boutique-599b4.firebasestorage.app",
+    messagingSenderId: "460551459333",
+    appId: "1:460551459333:web:281d77935815e391db026c",
+    measurementId: "G-WXGBT1LFVL"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+window.firebaseAuth = auth;
+
+window.firebaseAuthFns = {
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+};
+
+  window.firebaseDB = db;
+
+  window.firebaseFns = {
+    collection,
+    getDocs,
+    addDoc,
+    deleteDoc,
+    doc,
+    updateDoc
+  };
+  window.dispatchEvent(new Event('firebase-ready'));
+</script>
+
+  <script>
+    (function () {
+      'use strict';
+
+      var CONFIG = {
+        adminPassword: 'Yeshua@2026',
+        adminRoute: '#YeshuaFamiliaCostaSB',
+        sessionMinutes: 15,
+        maxLoginAttempts: 3,
+        lockMinutes: 15,
+        whatsappBrasil: '5562984747298',
+        whatsappArgentina: '5491141895959',
+        keys: {
+          products: 'sb_products_final_v1',
+          cart: 'sb_cart_final_v1',
+          favorites: 'sb_fav_final_v1',
+          admin: 'sb_admin_final_v1',
+          attempts: 'sb_attempts_final_v1',
+          lock: 'sb_lock_final_v1',
+        newsletter: 'sb_news_final_v1',
+coupons: 'sb_coupons_final_v1',
+appliedCoupon: 'sb_applied_coupon_final_v1'
+        }
+      };
+
+      var productImages = {
+        vestido: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=900&q=80',
+        conjunto: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80',
+        blusa: 'https://images.unsplash.com/photo-1485968579580-b6d095142e6e?auto=format&fit=crop&w=900&q=80',
+        calca: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=900&q=80',
+        saia: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=80',
+        bolsa: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=900&q=80'
+      };
+
+      function uid() {
+        return 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2);
+      }
+
+      function makeProduct(name, price, oldPrice, category, image, description, tag, status) {
+        return {
+          id: uid(),
+          name: name,
+          price: price,
+          oldPrice: oldPrice || 0,
+          category: category,
+          image: image,
+          description: description,
+          tag: tag || '',
+          status: status || 'Normal'
+        };
+      }
+
+      var defaultProducts = [
+        
+        makeProduct('Vestido Elegance', 249.90, 0, 'Vestidos', productImages.vestido, 'Vestido elegante com caimento sofisticado para eventos e ocasiões especiais.', '', 'Destaque'),
+        makeProduct('Conjunto Sofisticado', 219.90, 0, 'Conjuntos', productImages.conjunto, 'Conjunto moderno para montar looks finos com praticidade e conforto.', '', 'Mais vendido'),
+        makeProduct('Blusa Detalhada', 149.90, 0, 'Blusas', productImages.blusa, 'Blusa feminina com acabamento delicado e toque premium.', '', 'Normal'),
+        makeProduct('Calça Pantalona', 199.90, 0, 'Calças', productImages.calca, 'Calça pantalona versátil para trabalho, passeio e eventos.', '', 'Normal'),
+        makeProduct('Saia Midi Plissada', 179.90, 199.90, 'Saias', productImages.saia, 'Saia midi elegante, leve e perfeita para combinações sofisticadas.', '-10%', 'Promoção'),
+        makeProduct('Bolsa Caramelo Premium', 159.90, 0, 'Acessórios', productImages.bolsa, 'Bolsa em tom caramelo para finalizar o look com elegância.', 'Novo', 'Lançamento'),
+        makeProduct('Vestido Classic Off', 269.90, 299.90, 'Vestidos', productImages.vestido, 'Modelo clássico em tom claro, ideal para momentos especiais.', '-10%', 'Promoção'),
+        makeProduct('Conjunto Alfaiataria Nude', 289.90, 0, 'Conjuntos', productImages.conjunto, 'Conjunto de alfaiataria com visual elegante e atemporal.', '', 'Exclusivo'),
+        makeProduct('Blusa Social Bege', 129.90, 0, 'Blusas', productImages.blusa, 'Peça curinga para combinar com calças, saias e acessórios.', '', 'Normal'),
+        makeProduct('Calça Wide Leg', 189.90, 219.90, 'Calças', productImages.calca, 'Calça wide leg confortável com caimento moderno.', 'Promoção', 'Promoção'),
+        makeProduct('Saia Elegance Marrom', 169.90, 0, 'Saias', productImages.saia, 'Saia em tom neutro para looks elegantes e femininos.', '', 'Normal'),
+        makeProduct('Bolsa Bege Deluxe', 179.90, 0, 'Acessórios', productImages.bolsa, 'Bolsa estruturada com visual sofisticado para todos os dias.', 'Mais amada', 'Destaque')
+      ];var defaultCoupons = [
+  {
+    id: uid(),
+    code: 'PRIMEIRA5',
+    type: 'percent',
+    value: 5,
+    active: true
+  },
+  {
+    id: uid(),
+    code: 'SISTERS10',
+    type: 'percent',
+    value: 10,
+    active: true
+  }
+];
+
+   var products = [];
+      var cart = load(CONFIG.keys.cart, []);
+      var favorites = load(CONFIG.keys.favorites, []);
+      var coupons = load(CONFIG.keys.coupons, defaultCoupons);
+var appliedCouponCode = load(CONFIG.keys.appliedCoupon, '');
+      var activeCategory = 'Todos';
+      var searchTerm = '';
+      var sortMode = 'default';
+      var pendingMessage = '';
+      var isAdmin = isSessionValid();
+      async function loadProductsFromFirebase() {
+  try {
+    if (!window.firebaseDB || !window.firebaseFns) return;
+
+    var db = window.firebaseDB;
+    var f = window.firebaseFns;
+
+    var snapshot = await f.getDocs(f.collection(db, 'products'));
+    var onlineProducts = [];
+
+    snapshot.forEach(function (docSnap) {
+      var data = docSnap.data();
+
+      onlineProducts.push({
+        id: docSnap.id,
+        name: data.name || '',
+        price: Number(data.price || 0),
+        oldPrice: Number(data.oldPrice || 0),
+        category: data.category || 'Vestidos',
+        image: data.image || '',
+        description: data.description || '',
+        tag: data.tag || '',
+        status: data.status || 'Normal'
+      });
+    });
+
+    if (onlineProducts.length) {
+      products = onlineProducts;
+      save(CONFIG.keys.products, products);
+      renderAll();
+      return;
+    }
+
+    for (var i = 0; i < defaultProducts.length; i++) {
+      var p = defaultProducts[i];
+
+      await f.addDoc(f.collection(db, 'products'), {
+        name: p.name,
+        price: p.price,
+        oldPrice: p.oldPrice || 0,
+        category: p.category,
+        image: p.image,
+        description: p.description,
+        tag: p.tag || '',
+        status: p.status || 'Normal'
+      });
+    }
+
+    await loadProductsFromFirebase();
+
+  } catch (error) {
+    console.log('Erro Firebase:', error);
+    toast('Erro ao carregar produtos online.');
+  }
+}
+
+      function qs(selector) {
+        return document.querySelector(selector);
+      }
+
+      var els = {
+        year: qs('#year'),
+        categoryList: qs('#categoryList'),
+        productsGrid: qs('#productsGrid'),
+        searchInput: qs('#searchInput'),
+        sortSelect: qs('#sortSelect'),
+        searchFocusBtn: qs('#searchFocusBtn'),
+        cartBtn: qs('#cartBtn'),
+        favoritesBtn: qs('#favoritesBtn'),
+        cartItems: qs('#cartItems'),
+        favItems: qs('#favItems'),
+        cartCount: qs('#cartCount'),
+        favCount: qs('#favCount'),
+        cartTotal: qs('#cartTotal'),
+        checkoutBtn: qs('#checkoutBtn'),
+        adminBar: qs('#adminBar'),
+        loginForm: qs('#loginForm'),
+        adminPassword: qs('#adminPassword'),
+        adminEmail: qs('#adminEmail'),
+        logoutAdminBtn: qs('#logoutAdminBtn'),
+        addProductBtn: qs('#addProductBtn'),
+        manageProductsBtn: qs('#manageProductsBtn'),
+        resetProductsBtn: qs('#resetProductsBtn'),
+        manageCouponsBtn: qs('#manageCouponsBtn'),
+couponForm: qs('#couponForm'),
+couponId: qs('#couponId'),
+couponCode: qs('#couponCode'),
+couponType: qs('#couponType'),
+couponValue: qs('#couponValue'),
+couponActive: qs('#couponActive'),
+adminCouponList: qs('#adminCouponList'),
+couponInput: qs('#couponInput'),
+applyCouponBtn: qs('#applyCouponBtn'),
+removeCouponBtn: qs('#removeCouponBtn'),
+couponStatus: qs('#couponStatus'),
+cartSubtotal: qs('#cartSubtotal'),
+cartDiscount: qs('#cartDiscount'),
+        productForm: qs('#productForm'),
+        productModalTitle: qs('#productModalTitle'),
+        productSizes: qs('#productSizes'),
+productColors: qs('#productColors'),
+        adminProductList: qs('#adminProductList'),
+        sendBrasil: qs('#sendBrasil'),
+        sendArgentina: qs('#sendArgentina'),
+        newsletterForm: qs('#newsletterForm'),
+        newsletterEmail: qs('#newsletterEmail'),
+        toast: qs('#toast'),
+        openCartFromBranch: qs('#openCartFromBranch'),
+        detailContent: qs('#detailContent')
+      };
+
+      start();
+
+      function start() {
+        if (els.year) els.year.textContent = new Date().getFullYear();
+        bindEvents();
+        renderAll();
+        setAdminUI();
+        checkAdminRoute();
+        if (window.firebaseDB && window.firebaseFns) {
+  loadProductsFromFirebase();
+} else {
+  window.addEventListener('firebase-ready', loadProductsFromFirebase);
+}
+      }
+
+      function bindEvents() {
+        if (els.cartBtn) els.cartBtn.addEventListener('click', function () { openModal('cartDrawer'); });
+        if (els.favoritesBtn) els.favoritesBtn.addEventListener('click', function () { openModal('favDrawer'); });
+        if (els.searchFocusBtn) els.searchFocusBtn.addEventListener('click', function () { location.hash = 'loja'; if (els.searchInput) els.searchInput.focus(); });
+        if (els.searchInput) els.searchInput.addEventListener('input', function (event) { searchTerm = event.target.value.toLowerCase().trim(); renderProducts(); });
+        if (els.sortSelect) els.sortSelect.addEventListener('change', function (event) { sortMode = event.target.value; renderProducts(); });
+        if (els.loginForm) els.loginForm.addEventListener('submit', handleLogin);
+        if (els.logoutAdminBtn) els.logoutAdminBtn.addEventListener('click', logoutAdmin);
+        if (els.addProductBtn) els.addProductBtn.addEventListener('click', function () { openProductForm(''); });
+        if (els.manageProductsBtn) els.manageProductsBtn.addEventListener('click', function () { if (requireAdmin()) { renderAdminList(); openModal('manageModal'); } });
+        if (els.resetProductsBtn) els.resetProductsBtn.addEventListener('click', resetProducts);
+        if (els.productForm) els.productForm.addEventListener('submit', saveProductFromForm);
+        if (els.checkoutBtn) els.checkoutBtn.addEventListener('click', checkoutCart);
+        if (els.sendBrasil) els.sendBrasil.addEventListener('click', function () { sendWhatsapp(CONFIG.whatsappBrasil); });
+        if (els.sendArgentina) els.sendArgentina.addEventListener('click', function () { sendWhatsapp(CONFIG.whatsappArgentina); });
+        if (els.newsletterForm) els.newsletterForm.addEventListener('submit', handleNewsletter);
+        if (els.openCartFromBranch) els.openCartFromBranch.addEventListener('click', function () { openModal('cartDrawer'); });
+        if (els.manageCouponsBtn) {
+  els.manageCouponsBtn.addEventListener('click', function () {
+
+    if (requireAdmin()) {
+
+      renderAdminCoupons();
+
+      openModal('couponsModal');
+    }
+  });
+}
+
+if (els.couponForm) {
+  els.couponForm.addEventListener('submit', saveCouponFromForm);
+}
+
+if (els.applyCouponBtn) {
+  els.applyCouponBtn.addEventListener('click', applyCoupon);
+}
+
+if (els.removeCouponBtn) {
+  els.removeCouponBtn.addEventListener('click', removeCoupon);
+}
+
+        var branchButtons = document.querySelectorAll('[data-branch]');
+        branchButtons.forEach(function (button) {
+          button.addEventListener('click', function (event) {
+            var branch = event.currentTarget.getAttribute('data-branch');
+            pendingMessage = 'Ola! Vim pelo site da Sisters Boutique e quero atendimento da filial ' + (branch === 'br' ? 'Brasil.' : 'Argentina.');
+            sendWhatsapp(branch === 'br' ? CONFIG.whatsappBrasil : CONFIG.whatsappArgentina);
+          });
+        });
+
+        document.addEventListener('click', function (event) {
+          var closeTarget = event.target.getAttribute('data-close');
+          if (closeTarget) closeModal(closeTarget);
+        });
+
+        document.addEventListener('keydown', function (event) {
+          if (event.key === 'Escape') closeAllModals();
+        });
+
+        window.addEventListener('hashchange', checkAdminRoute);
+      }
+
+      function checkAdminRoute() {
+        if (location.hash === CONFIG.adminRoute) {
+          if (isAdmin) {
+            renderAdminList();
+            openModal('manageModal');
+          } else {
+            openModal('loginModal');
+            if (els.adminPassword) els.adminPassword.focus();
+          }
+        }
+      }
+
+      function handleLogin(event) {
+  event.preventDefault();
+
+  var email = els.adminEmail.value.trim();
+  var password = els.adminPassword.value.trim();
+  els.adminEmail.value = '';
+  
+
+  if (!window.firebaseAuth || !window.firebaseAuthFns) {
+    toast('Firebase Auth ainda não carregou.');
+    return;
+  }
+
+  window.firebaseAuthFns.signInWithEmailAndPassword(
+    window.firebaseAuth,
+    email,
+    password
+  ).then(function () {
+    isAdmin = true;
+
+    sessionStorage.setItem(CONFIG.keys.admin, JSON.stringify({
+      logged: true,
+      expiresAt: Date.now() + CONFIG.sessionMinutes * 60000
+    }));
+
+    els.adminPassword.value = '';
+    closeModal('loginModal');
+    setAdminUI();
+    renderAll();
+    renderAdminList();
+    openModal('manageModal');
+    toast('Painel liberado.');
+  }).catch(function () {
+    els.adminPassword.value = '';
+    toast('Login admin incorreto.');
+  });
+}
+
+      function isSessionValid() {
+        try {
+          var raw = sessionStorage.getItem(CONFIG.keys.admin);
+          if (!raw) return false;
+          var session = JSON.parse(raw);
+          if (!session.logged || Date.now() > session.expiresAt) {
+            sessionStorage.removeItem(CONFIG.keys.admin);
+            return false;
+          }
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+
+      function isLocked() {
+        var time = Number(localStorage.getItem(CONFIG.keys.lock) || 0);
+        if (!time) return false;
+        if (Date.now() > time) {
+          clearLoginAttempts();
+          return false;
+        }
+        return true;
+      }
+
+      function registerFailedAttempt() {
+        var attempts = Number(localStorage.getItem(CONFIG.keys.attempts) || 0) + 1;
+        if (attempts >= CONFIG.maxLoginAttempts) {
+          localStorage.setItem(CONFIG.keys.lock, String(Date.now() + CONFIG.lockMinutes * 60000));
+          localStorage.removeItem(CONFIG.keys.attempts);
+        } else {
+          localStorage.setItem(CONFIG.keys.attempts, String(attempts));
+        }
+      }
+
+      function clearLoginAttempts() {
+        localStorage.removeItem(CONFIG.keys.attempts);
+        localStorage.removeItem(CONFIG.keys.lock);
+      }
+
+      function requireAdmin() {
+        isAdmin = isSessionValid();
+        if (!isAdmin) {
+          setAdminUI();
+          openModal('loginModal');
+          toast('Acesso restrito.');
+          return false;
+        }
+        return true;
+      }
+
+      function logoutAdmin() {
+  isAdmin = false;
+
+  if (window.firebaseAuth && window.firebaseAuthFns) {
+    window.firebaseAuthFns.signOut(window.firebaseAuth);
+  }
+
+  sessionStorage.removeItem(CONFIG.keys.admin);
+  setAdminUI();
+  renderAll();
+  closeAllModals();
+  toast('Painel fechado.');
+}
+      function setAdminUI() {
+        if (els.adminBar) els.adminBar.classList.toggle('show', isAdmin);
+      }
+
+      function renderAll() {
+        renderCategories();
+        renderProducts();
+        renderCart();
+        renderFavorites();
+        updateCounts();
+      }
+
+function renderCategories(){
+
+  if(!els.categoryList) return;
+
+  var cats = [
+    {
+      name:'Todos',
+      image:'img/categoria-todos.png'
+    },
+    {
+      name:'Vestidos',
+      image:'img/categoria-vestidos.png'
+    },
+    {
+      name:'Conjuntos',
+      image:'img/categoria-conjuntos.png'
+    },
+    {
+      name:'Blusas',
+      image:'img/categoria-blusas.png'
+    },
+    {
+      name:'Calças',
+      image:'img/categoria-calcas.png'
+    },
+    {
+      name:'Saias',
+      image:'img/categoria-saias.png'
+    },
+    {
+      name:'Acessórios',
+      image:'img/categoria-acessorios.png'
+    }
+  ];
+
+  var html = '';
+
+  cats.forEach(function(cat){
+
+    html += `
+      <div class="category-item ${activeCategory === cat.name ? 'active' : ''}" data-cat="${cat.name}">
+        
+          <div class="category-inner">
+            <img class="category-full-img" src="${cat.image}" alt="${cat.name}">
+            <div class="category-name">${cat.name}</div>
+          </div>
+      
+      </div>
+    `;
+
+  });
+
+  els.categoryList.innerHTML = html;
+
+  var items = els.categoryList.querySelectorAll('[data-cat]');
+
+  items.forEach(function(item){
+    item.addEventListener('click', function(){
+      activeCategory = item.getAttribute('data-cat');
+      location.hash = 'loja';
+      renderAll();
+    });
+  });
+
+}
+      function renderProducts() {
+        if (!els.productsGrid) return;
+        var list = products.slice();
+
+        if (activeCategory !== 'Todos') {
+          list = list.filter(function (product) { return product.category === activeCategory; });
+        }
+        if (searchTerm) {
+          list = list.filter(function (product) {
+            return (product.name + ' ' + product.category + ' ' + product.description).toLowerCase().indexOf(searchTerm) !== -1;
+          });
+        }
+        if (sortMode === 'low') list.sort(function (a, b) { return a.price - b.price; });
+        if (sortMode === 'high') list.sort(function (a, b) { return b.price - a.price; });
+        if (sortMode === 'name') list.sort(function (a, b) { return a.name.localeCompare(b.name); });
+
+        if (!list.length) {
+          els.productsGrid.innerHTML = '<div class="empty" style="grid-column:1/-1">Nenhum produto encontrado.</div>';
+          return;
+        }
+
+        var html = '';
+        list.forEach(function (product) { html += productCard(product); });
+        els.productsGrid.innerHTML = html;
+
+        var buttons = els.productsGrid.querySelectorAll('[data-action]');
+        buttons.forEach(function (button) { button.addEventListener('click', handleProductAction); });
+      }
+
+      function productCard(product) {
+        var isFav = favorites.indexOf(product.id) !== -1;
+        var oldPrice = product.oldPrice ? '<span class="old-price">' + money(product.oldPrice) + '</span>' : '';
+        var badgeText = product.tag || (product.status && product.status !== 'Normal' ? product.status : '');
+        var badge = badgeText ? '<span class="discount">' + safe(badgeText) + '</span>' : '';
+        var admin = '';
+
+        if (isAdmin) {
+          admin += '<div class="admin-actions">';
+          admin += '<button class="btn btn-small btn-outline" data-action="edit" data-id="' + product.id + '">Editar</button>';
+          admin += '<button class="btn btn-small btn-danger" data-action="delete" data-id="' + product.id + '">Excluir</button>';
+          admin += '</div>';
+        }
+
+        var html = '';
+        html += '<article class="product-card">';
+        html += '<div class="product-img">' + badge;
+        html += '<button class="heart-btn ' + (isFav ? 'active' : '') + '" data-action="fav" data-id="' + product.id + '">' + (isFav ? '♥' : '♡') + '</button>';
+        html += '<img src="' + safe(product.image) + '" alt="' + safe(product.name) + '" loading="lazy" data-action="detail" data-id="' + product.id + '">';
+        html += '</div><div class="product-info">';
+        html += '<h3 data-action="detail" data-id="' + product.id + '">' + safe(product.name) + '</h3>';
+        html += '<p class="product-desc">' + safe(product.description) + '</p>';
+        html += '<div class="price"><strong>' + money(product.price) + '</strong>' + oldPrice + '</div>';
+        html += '<div class="installment">6x de ' + money(product.price / 6) + '</div>';
+        html += `
+  <p class="product-desc" style="min-height:auto;margin-bottom:7px">
+    <strong>Tamanhos:</strong>
+    ${product.sizes || 'P, M, G'}
+  </p>
+
+  <p class="product-desc" style="min-height:auto;margin-bottom:10px">
+    <strong>Cores:</strong>
+    ${product.colors || 'Única'}
+  </p>
+`;
+        html += '<div class="product-actions"><button class="btn" data-action="cart" data-id="' + product.id + '">Comprar</button><button class="btn btn-outline" data-action="buy" data-id="' + product.id + '">☏</button></div>';
+        html += admin + '</div></article>';
+        return html;
+      }
+
+      function handleProductAction(event) {
+        var action = event.currentTarget.getAttribute('data-action');
+        var id = event.currentTarget.getAttribute('data-id');
+        if (action === 'fav') toggleFavorite(id);
+        if (action === 'cart') addToCart(id);
+        if (action === 'buy') buyNow(id);
+        if (action === 'edit') openProductForm(id);
+        if (action === 'delete') deleteProduct(id);
+        if (action === 'detail') openProductDetail(id);
+      }
+
+      function addToCart(id) {
+        var product = findProduct(id);
+        if (!product) return;
+        var item = cart.find(function (cartItem) { return cartItem.id === id; });
+        if (item) item.qty += 1;
+        else cart.push({ id: id, qty: 1 });
+        save(CONFIG.keys.cart, cart);
+        renderAll();
+        toast('Produto adicionado.');
+      }
+
+      function toggleFavorite(id) {
+        if (favorites.indexOf(id) !== -1) favorites = favorites.filter(function (item) { return item !== id; });
+        else favorites.push(id);
+        save(CONFIG.keys.favorites, favorites);
+        renderAll();
+      }
+
+      function buyNow(id) {
+        var product = findProduct(id);
+        if (!product) return;
+        pendingMessage = 'Ola! Tenho interesse neste produto da Sisters Boutique:\n\n' + product.name + '\nPreço: ' + money(product.price) + '\nCategoria: ' + product.category;
+        openModal('branchModal');
+      }
+
+      function openProductDetail(id) {
+        var product = findProduct(id);
+        if (!product || !els.detailContent) return;
+        var oldPrice = product.oldPrice ? '<span class="old-price">' + money(product.oldPrice) + '</span>' : '';
+        var badgeText = product.tag || (product.status && product.status !== 'Normal' ? product.status : '');
+        var badge = badgeText ? '<span class="discount" style="position:static;display:inline-block;margin-bottom:14px">' + safe(badgeText) + '</span>' : '';
+
+        var html = '';
+        html += '<div class="panel-head"><h3>' + safe(product.name) + '</h3><button class="close-btn" data-close="detailModal">×</button></div>';
+        html += '<div class="detail-grid">';
+        html += '<div class="detail-image"><img src="' + safe(product.image) + '" alt="' + safe(product.name) + '"></div>';
+        html += '<div><div class="eyebrow">' + safe(product.category) + '</div>';
+        html += '<h2 class="section-title" style="font-size:32px;margin-bottom:12px">' + safe(product.name) + '</h2>' + badge;
+        html += '<p style="color:var(--muted);line-height:1.8;margin-bottom:18px">' + safe(product.description) + '</p>';
+        html += '<div class="price" style="margin-bottom:8px"><strong style="font-size:24px">' + money(product.price) + '</strong>' + oldPrice + '</div>';
+        html += '<p class="installment">6x de ' + money(product.price / 6) + '</p>';
+        html += '<div style="display:grid;gap:10px;margin-top:18px"><button class="btn" id="detailBuyBtn">Comprar pelo WhatsApp</button><button class="btn btn-outline" id="detailCartBtn">Adicionar ao carrinho</button></div>';
+        html += '</div></div>';
+        els.detailContent.innerHTML = html;
+
+        openModal('detailModal');
+        var buyButton = document.getElementById('detailBuyBtn');
+        var cartButton = document.getElementById('detailCartBtn');
+        if (buyButton) buyButton.addEventListener('click', function () { buyNow(id); });
+        if (cartButton) cartButton.addEventListener('click', function () { addToCart(id); closeModal('detailModal'); });
+      }
+function renderCart() {
+  if (!els.cartItems || !els.cartTotal) return;
+
+  if (!cart.length) {
+    els.cartItems.innerHTML = '<div class="empty">Seu carrinho está vazio.</div>';
+
+    if (els.cartSubtotal) els.cartSubtotal.textContent = money(0);
+    if (els.cartDiscount) els.cartDiscount.textContent = money(0);
+    if (els.cartTotal) els.cartTotal.textContent = money(0);
+
+    updateCouponArea(0, 0, null);
+    return;
+  }
+
+  var subtotal = 0;
+  var html = '';
+
+  cart.forEach(function (item) {
+    var product = findProduct(item.id);
+    if (!product) return;
+
+    subtotal += product.price * item.qty;
+
+    html += '<div class="cart-item"><img src="' + safe(product.image) + '" alt="' + safe(product.name) + '">';
+    html += '<div><h4>' + safe(product.name) + '</h4><span>' + money(product.price) + '</span>';
+    html += '<div class="qty"><button data-cart="minus" data-id="' + item.id + '">−</button><strong>' + item.qty + '</strong><button data-cart="plus" data-id="' + item.id + '">+</button></div></div>';
+    html += '<button class="close-btn" data-cart="remove" data-id="' + item.id + '">×</button></div>';
+  });
+
+  var coupon = getAppliedCoupon();
+  var discount = coupon ? calculateCouponDiscount(subtotal, coupon) : 0;
+  var total = Math.max(0, subtotal - discount);
+
+  els.cartItems.innerHTML = html;
+
+  if (els.cartSubtotal) els.cartSubtotal.textContent = money(subtotal);
+  if (els.cartDiscount) els.cartDiscount.textContent = money(discount);
+  if (els.cartTotal) els.cartTotal.textContent = money(total);
+
+  updateCouponArea(subtotal, discount, coupon);
+
+  var cartButtons = els.cartItems.querySelectorAll('[data-cart]');
+
+  cartButtons.forEach(function (button) {
+    button.addEventListener('click', handleCartAction);
+  });
+}
+
+      function handleCartAction(event) {
+        var action = event.currentTarget.getAttribute('data-cart');
+        var id = event.currentTarget.getAttribute('data-id');
+        var item = cart.find(function (cartItem) { return cartItem.id === id; });
+        if (!item) return;
+        if (action === 'plus') item.qty += 1;
+        if (action === 'minus') item.qty -= 1;
+        if (action === 'remove' || item.qty <= 0) cart = cart.filter(function (cartItem) { return cartItem.id !== id; });
+        save(CONFIG.keys.cart, cart);
+        renderAll();
+      }
+
+      function renderFavorites() {
+        if (!els.favItems) return;
+        var list = products.filter(function (product) { return favorites.indexOf(product.id) !== -1; });
+        if (!list.length) {
+          els.favItems.innerHTML = '<div class="empty">Nenhum favorito ainda.</div>';
+          return;
+        }
+
+        var html = '';
+        list.forEach(function (product) {
+          html += '<div class="cart-item"><img src="' + safe(product.image) + '" alt="' + safe(product.name) + '">';
+          html += '<div><h4>' + safe(product.name) + '</h4><span>' + money(product.price) + '</span>';
+          html += '<div class="admin-actions"><button class="btn btn-small" data-fav="cart" data-id="' + product.id + '">Carrinho</button><button class="btn btn-small btn-outline" data-fav="remove" data-id="' + product.id + '">Remover</button></div></div></div>';
+        });
+        els.favItems.innerHTML = html;
+
+        var favButtons = els.favItems.querySelectorAll('[data-fav]');
+        favButtons.forEach(function (button) {
+          button.addEventListener('click', function (event) {
+            var id = event.currentTarget.getAttribute('data-id');
+            if (event.currentTarget.getAttribute('data-fav') === 'cart') addToCart(id);
+            else toggleFavorite(id);
+          });
+        });
+      }
+
+      function updateCounts() {
+        if (els.cartCount) {
+          els.cartCount.textContent = cart.reduce(function (sum, item) { return sum + item.qty; }, 0);
+        }
+        if (els.favCount) els.favCount.textContent = favorites.length;
+      }
+
+function checkoutCart() {
+  if (!cart.length) {
+    toast('Adicione produtos primeiro.');
+    return;
+  }
+
+  var lines = [];
+  var subtotal = 0;
+
+  cart.forEach(function (item) {
+    var product = findProduct(item.id);
+    if (!product) return;
+
+    subtotal += product.price * item.qty;
+
+    lines.push(
+      '- ' +
+      product.name +
+      ' - ' +
+      item.qty +
+      'x - ' +
+      money(product.price * item.qty)
+    );
+  });
+
+  var coupon = getAppliedCoupon();
+  var discount = coupon ? calculateCouponDiscount(subtotal, coupon) : 0;
+  var total = Math.max(0, subtotal - discount);
+
+  pendingMessage =
+    'Ola! Quero finalizar meu pedido na Sisters Boutique:\n\n' +
+    lines.join('\n') +
+    '\n\nSubtotal: ' +
+    money(subtotal);
+
+  if (coupon) {
+    pendingMessage +=
+      '\nCupom: ' +
+      coupon.code +
+      '\nDesconto: ' +
+      money(discount);
+  }
+
+  pendingMessage += '\nTotal: ' + money(total);
+
+  openModal('branchModal');
+}
+
+      function sendWhatsapp(number) {
+        var msg = pendingMessage || 'Ola! Vim pelo site da Sisters Boutique e quero atendimento.';
+        window.open('https://wa.me/' + number + '?text=' + encodeURIComponent(msg), '_blank');
+        closeModal('branchModal');
+      }
+
+      function openProductForm(id) {
+        if (!requireAdmin()) return;
+        var product = id ? findProduct(id) : null;
+        qs('#productModalTitle').textContent = product ? 'Editar produto' : 'Adicionar produto';
+        qs('#productId').value = product ? product.id : '';
+        qs('#productName').value = product ? product.name : '';
+        qs('#productPrice').value = product ? product.price : '';
+        qs('#productOldPrice').value = product && product.oldPrice ? product.oldPrice : '';
+        qs('#productCategory').value = product ? product.category : 'Vestidos';
+        qs('#productImage').value = product ? product.image : '';
+        qs('#productDescription').value = product ? product.description : '';
+        qs('#productSizes').value =
+  product && product.sizes
+  ? product.sizes
+  : 'P, M, G';
+
+qs('#productColors').value =
+  product && product.colors
+  ? product.colors
+  : 'Única';
+
+qs('#productTag').value =
+  product
+  ? product.tag
+  : '';
+        qs('#productStatus').value = product && product.status ? product.status : 'Normal';
+        closeModal('manageModal');
+        openModal('productModal');
+      }
+
+     function saveProductFromForm(event) {
+  event.preventDefault();
+
+  if (!requireAdmin()) return;
+
+  var id = qs('#productId').value || '';
+
+  var data = {
+    id: id || uid(),
+    name: qs('#productName').value.trim(),
+    price: Number(qs('#productPrice').value),
+    oldPrice: Number(qs('#productOldPrice').value) || 0,
+    category: qs('#productCategory').value,
+    image: qs('#productImage').value.trim(),
+    description: qs('#productDescription').value.trim(),
+    tag: qs('#productTag').value.trim(),
+    status: qs('#productStatus').value
+  };
+
+  if (!data.name || !data.image || !data.description || Number.isNaN(data.price)) {
+    toast('Preencha tudo corretamente.');
+    return;
+  }
+
+  var index = products.findIndex(function (product) {
+    return product.id === id;
+  });
+
+  if (window.firebaseDB && window.firebaseFns) {
+    var db = window.firebaseDB;
+    var f = window.firebaseFns;
+
+    if (index >= 0) {
+      f.updateDoc(f.doc(db, 'products', id), {
+        name: data.name,
+        price: data.price,
+        oldPrice: data.oldPrice,
+        category: data.category,
+        image: data.image,
+        description: data.description,
+        tag: data.tag,
+        status: data.status
+      }).then(function () {
+        products[index] = data;
+        save(CONFIG.keys.products, products);
+        closeModal('productModal');
+        renderAll();
+        renderAdminList();
+        toast('Produto salvo.');
+      }).catch(function () {
+        toast('Erro ao salvar online.');
+      });
+
+    } else {
+      f.addDoc(f.collection(db, 'products'), {
+        name: data.name,
+        price: data.price,
+        oldPrice: data.oldPrice,
+        category: data.category,
+        image: data.image,
+        description: data.description,
+        tag: data.tag,
+        status: data.status
+      }).then(function (docRef) {
+        data.id = docRef.id;
+        products.unshift(data);
+        save(CONFIG.keys.products, products);
+        closeModal('productModal');
+        renderAll();
+        renderAdminList();
+        toast('Produto salvo.');
+      }).catch(function () {
+        toast('Erro ao salvar online.');
+      });
+    }
+
+  } else {
+    if (index >= 0) {
+      products[index] = data;
+    } else {
+      products.unshift(data);
+    }
+
+    save(CONFIG.keys.products, products);
+    closeModal('productModal');
+    renderAll();
+    renderAdminList();
+    toast('Produto salvo.');
+  }
+
+save(CONFIG.keys.products, products);
+        closeModal('productModal');
+        renderAll();
+        renderAdminList();
+        toast('Produto salvo.');
+      }
+
+      function deleteProduct(id) {
+        if (!requireAdmin()) return;
+        var product = findProduct(id);
+        if (!product) return;
+        if (!confirm('Excluir ' + product.name + '?')) return;
+       if (window.firebaseDB && window.firebaseFns) {
+  var db = window.firebaseDB;
+  var f = window.firebaseFns;
+
+  f.deleteDoc(
+    f.doc(db, 'products', id)
+  );
+}
+
+products = products.filter(function (item) { return item.id !== id; });
+cart = cart.filter(function (item) { return item.id !== id; });
+favorites = favorites.filter(function (item) { return item !== id; });
+
+save(CONFIG.keys.products, products);
+save(CONFIG.keys.cart, cart);
+save(CONFIG.keys.favorites, favorites);
+        renderAll();
+        renderAdminList();
+        toast('Produto excluido.');
+      }
+
+      function renderAdminList() {
+        if (!els.adminProductList) return;
+        if (!products.length) {
+          els.adminProductList.innerHTML = '<div class="empty">Nenhum produto cadastrado.</div>';
+          return;
+        }
+
+        var html = '';
+        products.forEach(function (product) {
+          var badge = product.tag || product.status || 'Normal';
+          html += '<div class="admin-product"><img src="' + safe(product.image) + '" alt="' + safe(product.name) + '">';
+          html += '<div><strong>' + safe(product.name) + '</strong><p>' + safe(product.category) + ' • ' + money(product.price) + ' • ' + safe(badge) + '</p>';
+          html += '<div class="admin-actions"><button class="btn btn-small btn-outline" data-admin="edit" data-id="' + product.id + '">Editar</button><button class="btn btn-small btn-danger" data-admin="delete" data-id="' + product.id + '">Excluir</button></div></div></div>';
+        });
+        els.adminProductList.innerHTML = html;
+
+        var buttons = els.adminProductList.querySelectorAll('[data-admin]');
+        buttons.forEach(function (button) {
+          button.addEventListener('click', function (event) {
+            var id = event.currentTarget.getAttribute('data-id');
+            if (event.currentTarget.getAttribute('data-admin') === 'edit') openProductForm(id);
+            else deleteProduct(id);
+          });
+        });
+      }
+
+      function resetProducts() {
+        if (!requireAdmin()) return;
+        if (!confirm('Restaurar catálogo padrão?')) return;
+        products = defaultProducts.slice();
+        cart = [];
+        favorites = [];
+        save(CONFIG.keys.products, products);
+        save(CONFIG.keys.cart, cart);
+        save(CONFIG.keys.favorites, favorites);
+        renderAll();
+        renderAdminList();
+        toast('Catalogo restaurado.');
+      }
+
+      function handleNewsletter(event) {
+        event.preventDefault();
+        var email = els.newsletterEmail.value.trim();
+        var list = load(CONFIG.keys.newsletter, []);
+        if (email && list.indexOf(email) === -1) list.push(email);
+        save(CONFIG.keys.newsletter, list);
+        els.newsletterEmail.value = '';
+        toast('Cadastro realizado.');
+      }
+      function normalizeCouponCode(code) {
+  return String(code || '').trim().toUpperCase();
+}
+
+function findCouponByCode(code) {
+
+  var normalized = normalizeCouponCode(code);
+
+  return coupons.find(function (coupon) {
+
+    return normalizeCouponCode(coupon.code) === normalized;
+  });
+}
+
+function getAppliedCoupon() {
+
+  if (!appliedCouponCode) return null;
+
+  var coupon = findCouponByCode(appliedCouponCode);
+
+  if (!coupon || !coupon.active) {
+
+    appliedCouponCode = '';
+
+    save(CONFIG.keys.appliedCoupon, appliedCouponCode);
+
+    return null;
+  }
+
+  return coupon;
+}
+
+function calculateCouponDiscount(subtotal, coupon) {
+
+  if (!coupon) return 0;
+
+  var discount = 0;
+
+  if (coupon.type === 'percent') {
+
+    discount = subtotal * (Number(coupon.value) / 100);
+
+  } else {
+
+    discount = Number(coupon.value);
+  }
+
+  if (discount > subtotal) {
+    discount = subtotal;
+  }
+
+  return discount;
+}
+
+function updateCouponArea(subtotal, discount, coupon) {
+
+  if (els.couponInput) {
+    els.couponInput.value = appliedCouponCode || '';
+  }
+
+  if (els.couponStatus) {
+
+    if (coupon) {
+
+      els.couponStatus.textContent =
+        'Cupom aplicado: ' +
+        coupon.code +
+        ' • Desconto de ' +
+        money(discount);
+
+    } else {
+
+      els.couponStatus.textContent = '';
+    }
+  }
+
+  if (els.removeCouponBtn) {
+
+    els.removeCouponBtn.style.display =
+      coupon ? 'inline-flex' : 'none';
+  }
+}
+
+function applyCoupon() {
+
+  if (!cart.length) {
+
+    toast('Adicione produtos antes de usar cupom.');
+
+    return;
+  }
+
+  var code = normalizeCouponCode(
+    els.couponInput
+      ? els.couponInput.value
+      : ''
+  );
+
+  var coupon = findCouponByCode(code);
+
+  if (!code) {
+
+    toast('Digite um cupom.');
+
+    return;
+  }
+
+  if (!coupon) {
+
+    toast('Cupom não encontrado.');
+
+    return;
+  }
+
+  if (!coupon.active) {
+
+    toast('Este cupom está desativado.');
+
+    return;
+  }
+
+  appliedCouponCode = coupon.code;
+
+  save(CONFIG.keys.appliedCoupon, appliedCouponCode);
+
+  renderCart();
+
+  toast('Cupom aplicado.');
+}
+
+function removeCoupon() {
+
+  appliedCouponCode = '';
+
+  save(CONFIG.keys.appliedCoupon, appliedCouponCode);
+
+  renderCart();
+
+  toast('Cupom removido.');
+}
+
+function saveCouponFromForm(event) {
+
+  event.preventDefault();
+
+  if (!requireAdmin()) return;
+
+  var id = els.couponId.value || uid();
+
+  var data = {
+
+    id: id,
+
+    code: normalizeCouponCode(
+      els.couponCode.value
+    ),
+
+    type: els.couponType.value,
+
+    value: Number(els.couponValue.value),
+
+    active: els.couponActive.value === 'yes'
+  };
+
+  if (
+    !data.code ||
+    Number.isNaN(data.value) ||
+    data.value <= 0
+  ) {
+
+    toast('Preencha o cupom corretamente.');
+
+    return;
+  }
+
+  var duplicated = coupons.find(function (coupon) {
+
+    return (
+      normalizeCouponCode(coupon.code) === data.code &&
+      coupon.id !== id
+    );
+  });
+
+  if (duplicated) {
+
+    toast('Já existe um cupom com esse código.');
+
+    return;
+  }
+
+  var index = coupons.findIndex(function (coupon) {
+
+    return coupon.id === id;
+  });
+
+  if (index >= 0) {
+
+    coupons[index] = data;
+
+  } else {
+
+    coupons.unshift(data);
+  }
+
+  save(CONFIG.keys.coupons, coupons);
+
+  clearCouponForm();
+
+  renderAdminCoupons();
+
+  renderCart();
+
+  toast('Cupom salvo.');
+}
+
+function clearCouponForm() {
+
+  if (!els.couponForm) return;
+
+  els.couponId.value = '';
+
+  els.couponCode.value = '';
+
+  els.couponType.value = 'percent';
+
+  els.couponValue.value = '';
+
+  els.couponActive.value = 'yes';
+}
+
+function editCoupon(id) {
+
+  if (!requireAdmin()) return;
+
+  var coupon = coupons.find(function (item) {
+
+    return item.id === id;
+  });
+
+  if (!coupon) return;
+
+  els.couponId.value = coupon.id;
+
+  els.couponCode.value = coupon.code;
+
+  els.couponType.value = coupon.type;
+
+  els.couponValue.value = coupon.value;
+
+  els.couponActive.value =
+    coupon.active
+      ? 'yes'
+      : 'no';
+}
+
+function deleteCoupon(id) {
+
+  if (!requireAdmin()) return;
+
+  var coupon = coupons.find(function (item) {
+
+    return item.id === id;
+  });
+
+  if (!coupon) return;
+
+  if (!confirm('Excluir cupom ' + coupon.code + '?')) {
+    return;
+  }
+
+  coupons = coupons.filter(function (item) {
+
+    return item.id !== id;
+  });
+
+  if (appliedCouponCode === coupon.code) {
+
+    appliedCouponCode = '';
+
+    save(CONFIG.keys.appliedCoupon, appliedCouponCode);
+  }
+
+  save(CONFIG.keys.coupons, coupons);
+
+  renderAdminCoupons();
+
+  renderCart();
+
+  toast('Cupom excluído.');
+}
+
+function renderAdminCoupons() {
+
+  if (!els.adminCouponList) return;
+
+  if (!coupons.length) {
+
+    els.adminCouponList.innerHTML =
+      '<div class="empty">Nenhum cupom cadastrado.</div>';
+
+    return;
+  }
+
+  var html = '';
+
+  coupons.forEach(function (coupon) {
+
+    var typeText =
+      coupon.type === 'percent'
+        ? coupon.value + '%'
+        : money(coupon.value);
+
+    var statusText =
+      coupon.active
+        ? 'Ativo'
+        : 'Desativado';
+
+    html += '<div class="admin-product">';
+
+    html +=
+      '<div style="width:68px;height:68px;border-radius:8px;background:var(--beige);display:grid;place-items:center;font-weight:800;color:var(--brown)">%</div>';
+
+    html += '<div>';
+
+    html +=
+      '<strong>' +
+      safe(coupon.code) +
+      '</strong>';
+
+    html +=
+      '<p>' +
+      safe(typeText) +
+      ' • ' +
+      safe(statusText) +
+      '</p>';
+
+    html += '<div class="admin-actions">';
+
+    html +=
+      '<button class="btn btn-small btn-outline" data-coupon="edit" data-id="' +
+      coupon.id +
+      '">Editar</button>';
+
+    html +=
+      '<button class="btn btn-small btn-danger" data-coupon="delete" data-id="' +
+      coupon.id +
+      '">Excluir</button>';
+
+    html += '</div></div></div>';
+  });
+
+  els.adminCouponList.innerHTML = html;
+
+  var buttons =
+    els.adminCouponList.querySelectorAll('[data-coupon]');
+
+  buttons.forEach(function (button) {
+
+    button.addEventListener('click', function (event) {
+
+      var id =
+        event.currentTarget.getAttribute('data-id');
+
+      var action =
+        event.currentTarget.getAttribute('data-coupon');
+
+      if (action === 'edit') {
+        editCoupon(id);
+      }
+
+      if (action === 'delete') {
+        deleteCoupon(id);
+      }
+    });
+  });
+}
+
+      function openModal(id) {
+        var element = document.getElementById(id);
+        if (element) {
+          element.classList.add('open');
+          document.body.classList.add('no-scroll');
+        }
+      }
+
+      function closeModal(id) {
+        var element = document.getElementById(id);
+        if (element) element.classList.remove('open');
+        if (!document.querySelector('.modal.open,.drawer.open')) document.body.classList.remove('no-scroll');
+      }
+
+      function closeAllModals() {
+        var modals = document.querySelectorAll('.modal.open,.drawer.open');
+        modals.forEach(function (element) { element.classList.remove('open'); });
+        document.body.classList.remove('no-scroll');
+      }
+
+      function findProduct(id) {
+        return products.find(function (product) { return product.id === id; });
+      }
+
+      function money(value) {
+        return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      }
+
+      function load(key, fallback) {
+        try {
+          var raw = localStorage.getItem(key);
+          return raw ? JSON.parse(raw) : fallback;
+        } catch (error) {
+          return fallback;
+        }
+      }
+
+      function save(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+          return true;
+        } catch (error) {
+          toast('Erro ao salvar.');
+          return false;
+        }
+      }
+
+      function toast(message) {
+        if (!els.toast) return;
+        els.toast.textContent = message;
+        els.toast.classList.add('show');
+        clearTimeout(toast.timer);
+        toast.timer = setTimeout(function () { els.toast.classList.remove('show'); }, 2800);
+      }
+
+      function safe(value) {
+        return String(value || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+    })();
+    
+  </script>
+</body>
+</html>
