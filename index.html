@@ -781,6 +781,34 @@
   }
 
 }
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.dashboard-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+
+.dashboard-card span {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.dashboard-card strong {
+  font-size: 32px;
+  line-height: 1;
+}
  </style>
 </head>
 <body>
@@ -823,6 +851,34 @@
   </header>
 
   <main>
+    <section class="section" id="adminDashboard" style="display:none">
+  <div class="section-title">
+    <p class="eyebrow">Dashboard</p>
+    <h2>Resumo da loja</h2>
+  </div>
+
+  <div class="dashboard-grid">
+    <div class="dashboard-card">
+      <span>Total de pedidos</span>
+      <strong id="dashOrders">0</strong>
+    </div>
+
+    <div class="dashboard-card">
+      <span>Total vendido</span>
+      <strong id="dashRevenue">R$ 0,00</strong>
+    </div>
+
+    <div class="dashboard-card">
+      <span>Pedidos novos</span>
+      <strong id="dashNewOrders">0</strong>
+    </div>
+
+    <div class="dashboard-card">
+      <span>Pedidos finalizados</span>
+      <strong id="dashFinishedOrders">0</strong>
+    </div>
+  </div>
+</section>
     <section class="hero" id="inicio">
       <div class="hero-inner">
         <div class="hero-text">
@@ -1584,6 +1640,12 @@ customerPhone: qs('#customerPhone'),
 customerNote: qs('#customerNote'),
 manageOrdersBtn: qs('#manageOrdersBtn'),
 ordersList: qs('#ordersList'),
+adminDashboard: qs('#adminDashboard'),
+
+dashOrders: qs('#dashOrders'),
+dashRevenue: qs('#dashRevenue'),
+dashNewOrders: qs('#dashNewOrders'),
+dashFinishedOrders: qs('#dashFinishedOrders'),  
         openCartFromBranch: qs('#openCartFromBranch'),
         detailContent: qs('#detailContent')
       };
@@ -1711,6 +1773,9 @@ if (els.removeCouponBtn) {
     els.adminPassword.value = '';
     closeModal('loginModal');
     setAdminUI();
+    if (els.adminDashboard) {
+  els.adminDashboard.style.display = 'block';
+}
     renderAll();
     renderAdminList();
     openModal('manageModal');
@@ -2203,6 +2268,7 @@ function checkoutCart() {
 };
 
 window.openOrdersModal = async function () {
+
   if (!requireAdmin()) return;
 
   if (!window.firebaseDB || !window.firebaseFns) {
@@ -2230,7 +2296,8 @@ window.openOrdersModal = async function () {
       return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
     });
 
-    renderOrdersList(orders);
+   renderOrdersList(orders);
+updateDashboard(orders);
 
   } catch (error) {
     console.log(error);
@@ -2278,14 +2345,125 @@ function renderOrdersList(orders) {
     }
 
     html += '<div style="margin-top:10px">' + itemsHtml + '</div>';
+    html += `
+  <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn btn-small"
+      onclick="updateOrderStatus('${order.id}','Novo')">
+      Novo
+    </button>
 
+    <button class="btn btn-small"
+      onclick="updateOrderStatus('${order.id}','Em preparo')">
+      Em preparo
+    </button>
+    
+
+    <button class="btn btn-small"
+      onclick="updateOrderStatus('${order.id}','Enviado')">
+      Enviado
+    </button>
+
+    <button class="btn btn-small"
+      onclick="updateOrderStatus('${order.id}','Finalizado')">
+      Finalizado
+    </button>
+  </div>
+`;
+html += `
+  <button class="btn btn-small btn-outline"
+    onclick="notifyCustomer('${order.customerPhone}','${order.customerName}','${order.status}')">
+    Avisar cliente
+  </button>
+`;
     html += '</div>';
     html += '</div>';
   });
 
   els.ordersList.innerHTML = html;
 }
-     
+     window.updateOrderStatus = function (id, status) {
+  if (!requireAdmin()) return;
+
+  if (!window.firebaseDB || !window.firebaseFns) {
+    toast('Firebase não carregou.');
+    return;
+  }
+
+  var db = window.firebaseDB;
+  var f = window.firebaseFns;
+
+  f.updateDoc(
+    f.doc(db, 'orders', id),
+    { status: status }
+  ).then(function () {
+    toast('Status atualizado.');
+    openOrdersModal();
+  }).catch(function () {
+    toast('Erro ao atualizar status.');
+  });
+  
+};window.notifyCustomer = function (phone, name, status) {
+
+  var number = String(phone || '').replace(/\D/g, '');
+
+  if (!number) {
+    toast('Cliente sem WhatsApp.');
+    return;
+  }
+
+  var message =
+    'Olá, ' + (name || 'cliente') +
+    '! Seu pedido na Sisters Boutique está com status: ' +
+    status + '.';
+
+  window.open(
+    'https://wa.me/55' + number +
+    '?text=' + encodeURIComponent(message),
+    '_blank'
+  );
+
+};function updateDashboard(orders) {
+
+  if (!orders || !orders.length) return;
+
+  var totalOrders = orders.length;
+
+  var revenue = 0;
+  var newOrders = 0;
+  var finishedOrders = 0;
+
+  orders.forEach(function (order) {
+
+    revenue += Number(order.total || 0);
+
+    if (order.status === 'Novo') {
+      newOrders++;
+    }
+
+    if (order.status === 'Finalizado') {
+      finishedOrders++;
+    }
+
+  });
+
+  if (els.dashOrders) {
+    els.dashOrders.textContent = totalOrders;
+  }
+
+  if (els.dashRevenue) {
+    els.dashRevenue.textContent = money(revenue);
+  }
+
+  if (els.dashNewOrders) {
+    els.dashNewOrders.textContent = newOrders;
+  }
+
+  if (els.dashFinishedOrders) {
+    els.dashFinishedOrders.textContent = finishedOrders;
+  }
+
+}
+
 function sendWhatsapp(number) {
         var msg = pendingMessage || 'Ola! Vim pelo site da Sisters Boutique e quero atendimento.';
         window.open('https://wa.me/' + number + '?text=' + encodeURIComponent(msg), '_blank');
