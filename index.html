@@ -1240,7 +1240,24 @@
     </select>
 
   </label>
+<label class="field">
+  Tamanhos disponíveis
+  <input
+    class="input"
+    id="productSizes"
+    placeholder="Ex: PP, P, M, G, GG, Tamanho Único"
+  >
+</label>
 
+<label class="field">
+  Cores disponíveis
+  <input
+    class="input"
+    id="productColors"
+    placeholder="Ex: Rosa, Branco, Preto, Verde"
+  >
+</label>
+  
   <button class="btn" type="submit">
     Salvar alterações
   </button>
@@ -1420,7 +1437,10 @@ var appliedCouponCode = load(CONFIG.keys.appliedCoupon, '');
         image: data.image || '',
         description: data.description || '',
         tag: data.tag || '',
-        status: data.status || 'Normal'
+        status: data.status || 'Normal',
+
+          sizes: data.sizes || '',
+  colors: data.colors || ''
       });
     });
 
@@ -1829,6 +1849,13 @@ function renderCategories(){
         html += '<h3 data-action="detail" data-id="' + product.id + '">' + safe(product.name) + '</h3>';
         html += '<p class="product-desc">' + safe(product.description) + '</p>';
         html += '<div class="price"><strong>' + money(product.price) + '</strong>' + oldPrice + '</div>';
+        if (product.sizes) {
+  html += '<p class="product-desc"><strong>Tamanhos:</strong> ' + safe(product.sizes) + '</p>';
+}
+
+if (product.colors) {
+  html += '<p class="product-desc"><strong>Cores:</strong> ' + safe(product.colors) + '</p>';
+}
         html += '<div class="installment">6x de ' + money(product.price / 6) + '</div>';
         html += `
   <p class="product-desc" style="min-height:auto;margin-bottom:7px">
@@ -2066,16 +2093,15 @@ function checkoutCart() {
         qs('#productCategory').value = product ? product.category : 'Vestidos';
         qs('#productImage').value = product ? product.image : '';
         qs('#productDescription').value = product ? product.description : '';
-        qs('#productSizes').value =
+qs('#productSizes').value =
   product && product.sizes
-  ? product.sizes
-  : 'P, M, G';
+    ? product.sizes
+    : '';
 
 qs('#productColors').value =
   product && product.colors
-  ? product.colors
-  : 'Única';
-
+    ? product.colors
+    : '';
 qs('#productTag').value =
   product
   ? product.tag
@@ -2101,7 +2127,10 @@ qs('#productTag').value =
     image: qs('#productImage').value.trim(),
     description: qs('#productDescription').value.trim(),
     tag: qs('#productTag').value.trim(),
-    status: qs('#productStatus').value
+    status: qs('#productStatus').value,
+    sizes: qs('#productSizes').value.trim(),
+colors: qs('#productColors').value.trim(),
+    
   };
 
   if (!data.name || !data.image || !data.description || Number.isNaN(data.price)) {
