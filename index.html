@@ -1326,6 +1326,12 @@
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   import {
     getFirestore,
@@ -1350,8 +1356,15 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+  
   const auth = getAuth(app);
 window.firebaseAuth = auth;
+window.firebaseAuthReady = true;
+window.firebaseAuthFns = {
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+};
 
 window.firebaseAuthFns = {
   signInWithEmailAndPassword,
@@ -1682,16 +1695,22 @@ if (els.removeCouponBtn) {
 
       function handleLogin(event) {
   event.preventDefault();
+  if (!window.firebaseAuth || !window.firebaseAuthFns) {
+
+  setTimeout(function () {
+    handleLogin(event);
+  }, 800);
+
+  toast('Carregando sistema...');
+  return;
+}
 
   var email = els.adminEmail.value.trim();
   var password = els.adminPassword.value.trim();
   els.adminEmail.value = '';
   
 
-  if (!window.firebaseAuth || !window.firebaseAuthFns) {
-    toast('Firebase Auth ainda não carregou.');
-    return;
-  }
+  
 
   window.firebaseAuthFns.signInWithEmailAndPassword(
     window.firebaseAuth,
