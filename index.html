@@ -2146,7 +2146,9 @@ colors: qs('#productColors').value.trim(),
         image: data.image,
         description: data.description,
         tag: data.tag,
-        status: data.status
+        status: data.status,
+         sizes: data.sizes,
+  colors: data.colors
       }).then(function () {
         products[index] = data;
         save(CONFIG.keys.products, products);
@@ -2167,7 +2169,9 @@ colors: qs('#productColors').value.trim(),
         image: data.image,
         description: data.description,
         tag: data.tag,
-        status: data.status
+        status: data.status,
+  sizes: data.sizes,
+  colors: data.colors
       }).then(function (docRef) {
         data.id = docRef.id;
         products.unshift(data);
