@@ -1295,60 +1295,12 @@
   </label>
 
   <label class="field">
-    Tamanhos disponíveis
-
- <select
-  class="input"
-  id="productSizes"
-  multiple
-  style="height:120px"
->
-
-  <option>PP</option>
-  <option>P</option>
-  <option>M</option>
-  <option>G</option>
-  <option>GG</option>
-  <option>XG</option>
-
-  <option>Baby Look P</option>
-  <option>Baby Look M</option>
-  <option>Baby Look G</option>
-  <option>ÚNICO</option>
-
-</select>
-  </label>
-
-  <label class="field">
     Cores disponíveis
 
-    <select
+  <input
   class="input"
   id="productColors"
-  multiple
-  style="height:170px"
->
-
-  <option>Preto</option>
-  <option>Branco</option>
-  <option>Bege</option>
-  <option>Marrom</option>
-  <option>Rosa</option>
-  <option>Pink</option>
-  <option>Vermelho</option>
-  <option>Verde</option>
-  <option>Azul</option>
-  <option>Azul Claro</option>
-  <option>Azul Marinho</option>
-  <option>Lilás</option>
-  <option>Roxo</option>
-  <option>Amarelo</option>
-  <option>Laranja</option>
-  <option>Cinza</option>
-  <option>Nude</option>
-  <option>Off White</option>
-
-</select>
+  placeholder="Ex: Preto, Branco, Rosa, Azul"
     >
   </label>
 
@@ -1413,13 +1365,6 @@
   >
 </label>
 
-<label class="field">
-  Cores disponíveis
-  <input
-    class="input"
-    id="productColors"
-    placeholder="Ex: Rosa, Branco, Preto, Verde"
-  >
   <label class="field">
   Estoque disponível
   <input
@@ -2221,10 +2166,10 @@ if (product.colors) {
 }).join('');
 
 html += `
-  <select class="input color-select" data-color-select="${product.id}">
-    <option value="">Escolha a cor</option>
-    ${colorOptions}
-  </select>
+<select class="input color-select" data-color-select="${product.id}">
+  <option value="">Escolha a cor</option>
+  ${colorOptions}
+</select>
 `;
 }
 
@@ -2257,22 +2202,16 @@ html += `
         if (!product) return;
         var sizeSelect = document.querySelector('[data-size-select="' + id + '"]');
 
-if (sizeSelect && !sizeSelect.value) {
-  if (colorSelect && !colorSelect.value) {
-  alert('Escolha uma cor antes de comprar.');
-  colorSelect.focus();
-  return;
-}
-  alert('Escolha um tamanho antes de comprar.');
-  sizeSelect.focus();
-  return;
-}
 
-
-        var sizeSelect = document.querySelector('[data-size-select="' + id + '"]');
+var sizeSelect = document.querySelector('[data-size-select="' + id + '"]');
 var selectedSize = sizeSelect ? sizeSelect.value : '';
-var colorSelect = document.querySelector('[data-color-select="' + id + '"]');
+
+var colorSelects = document.querySelectorAll('[data-color-select="' + id + '"]');
+var colorSelect = colorSelects.length ? colorSelects[colorSelects.length - 1] : null;
 var selectedColor = colorSelect ? colorSelect.value : '';
+console.log('SELECTS DE COR:', colorSelects);
+console.log('SELECT DE COR USADO:', colorSelect);
+console.log('COR ESCOLHIDA:', selectedColor);
 
 if (product.sizes && !selectedSize) {
   toast('Escolha um tamanho.');
