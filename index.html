@@ -1177,6 +1177,7 @@
 
   <label class="field">
     Categoria
+    
 
     <select class="input" id="productCategory" required>
       <option>Vestidos</option>
@@ -1314,6 +1315,15 @@
     class="input"
     id="productColors"
     placeholder="Ex: Rosa, Branco, Preto, Verde"
+  >
+  <label class="field">
+  Estoque disponível
+  <input
+    class="input"
+    id="productStock"
+    type="number"
+    min="0"
+    placeholder="Ex: 10"
   >
 </label>
   
@@ -1549,7 +1559,8 @@ var appliedCouponCode = load(CONFIG.keys.appliedCoupon, '');
         status: data.status || 'Normal',
 
           sizes: data.sizes || '',
-  colors: data.colors || ''
+  colors: data.colors || '',
+  stock: Number(data.stock || 0),
       });
     });
 
@@ -1647,7 +1658,8 @@ dashRevenue: qs('#dashRevenue'),
 dashNewOrders: qs('#dashNewOrders'),
 dashFinishedOrders: qs('#dashFinishedOrders'),  
         openCartFromBranch: qs('#openCartFromBranch'),
-        detailContent: qs('#detailContent')
+        detailContent: qs('#detailContent'),
+        productStock: qs('#productStock'),
       };
 
       start();
@@ -2005,6 +2017,7 @@ function renderCategories(){
 if (product.colors) {
   html += '<p class="product-desc"><strong>Cores:</strong> ' + safe(product.colors) + '</p>';
 }
+html += '<p class="product-desc"><strong>Estoque:</strong> ' + Number(product.stock || 0) + ' unidade(s)</p>';
         html += '<div class="installment">6x de ' + money(product.price / 6) + '</div>';
         html += `
   
@@ -2267,6 +2280,40 @@ function checkoutCart() {
     var f = window.firebaseFns;
 
     f.addDoc(f.collection(db, 'orders'), order).then(function () {
+   items.forEach(function (item) {
+  var productId = item.productId || item.id;
+
+  var product = products.find(function (p) {
+    return p.id === productId;
+  });
+
+  if (!product) {
+    console.log('Produto não encontrado no estoque:', item);
+    return;
+  }
+
+  var newStock = Math.max(
+    0,
+    Number(product.stock || 0) - Number(item.qty || 0)
+  );
+
+  product.stock = newStock;
+
+  f.updateDoc(
+    f.doc(db, 'products', productId),
+    {
+      stock: newStock
+    }
+  ).then(function () {
+    console.log('Estoque atualizado:', product.name, newStock);
+  }).catch(function (error) {
+    console.log('Erro ao atualizar estoque:', error);
+    toast('Pedido registrado, mas estoque não atualizou.');
+  });
+});
+
+save(CONFIG.keys.products, products);
+renderAll();
       pendingMessage =
         'Olá! Quero finalizar meu pedido na Sisters Boutique:\n\n' +
         lines.join('\n') +
@@ -2515,6 +2562,10 @@ qs('#productTag').value =
   ? product.tag
   : '';
         qs('#productStatus').value = product && product.status ? product.status : 'Normal';
+        qs('#productStock').value =
+  product && product.stock !== undefined
+    ? product.stock
+    : '';
         closeModal('manageModal');
         openModal('productModal');
       }
@@ -2533,6 +2584,7 @@ qs('#productTag').value =
     oldPrice: Number(qs('#productOldPrice').value) || 0,
     category: qs('#productCategory').value,
     image: qs('#productImage').value.trim(),
+    stock: Number(qs('#productStock').value) || 0,
     description: qs('#productDescription').value.trim(),
     tag: qs('#productTag').value.trim(),
     status: qs('#productStatus').value,
@@ -2565,7 +2617,8 @@ colors: qs('#productColors').value.trim(),
         tag: data.tag,
         status: data.status,
          sizes: data.sizes,
-  colors: data.colors
+  colors: data.colors,
+  stock: data.stock,
       }).then(function () {
         products[index] = data;
         save(CONFIG.keys.products, products);
@@ -2588,7 +2641,8 @@ colors: qs('#productColors').value.trim(),
         tag: data.tag,
         status: data.status,
   sizes: data.sizes,
-  colors: data.colors
+  colors: data.colors,
+  stock: data.stock,
       }).then(function (docRef) {
         data.id = docRef.id;
         products.unshift(data);
