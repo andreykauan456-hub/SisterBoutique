@@ -2114,9 +2114,23 @@ if (product.colors) {
       function addToCart(id) {
         var product = findProduct(id);
         if (!product) return;
+
+if (Number(product.stock || 0) <= 0) {
+  toast('Produto sem estoque.');
+  return;
+}
+        if (!product) return;
         var item = cart.find(function (cartItem) { return cartItem.id === id; });
-        if (item) item.qty += 1;
-        else cart.push({ id: id, qty: 1 });
+   if (item) {
+  if (item.qty >= Number(product.stock || 0)) {
+    toast('Quantidade máxima em estoque.');
+    return;
+  }
+
+  item.qty += 1;
+} else {
+  cart.push({ id: id, qty: 1 });
+}
         save(CONFIG.keys.cart, cart);
         renderAll();
         toast('Produto adicionado.');
@@ -2215,7 +2229,16 @@ function renderCart() {
         var id = event.currentTarget.getAttribute('data-id');
         var item = cart.find(function (cartItem) { return cartItem.id === id; });
         if (!item) return;
-        if (action === 'plus') item.qty += 1;
+      if (action === 'plus') {
+  var product = findProduct(id);
+
+  if (product && item.qty >= Number(product.stock || 0)) {
+    toast('Quantidade máxima em estoque.');
+    return;
+  }
+
+  item.qty += 1;
+}
         if (action === 'minus') item.qty -= 1;
         if (action === 'remove' || item.qty <= 0) cart = cart.filter(function (cartItem) { return cartItem.id !== id; });
         save(CONFIG.keys.cart, cart);
