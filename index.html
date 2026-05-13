@@ -2064,6 +2064,7 @@ function renderCategories(){
         var isFav = favorites.indexOf(product.id) !== -1;
         var oldPrice = product.oldPrice ? '<span class="old-price">' + money(product.oldPrice) + '</span>' : '';
         var badgeText = product.tag || (product.status && product.status !== 'Normal' ? product.status : '');
+        var isOutOfStock = Number(product.stock || 0) <= 0;
         var badge = badgeText ? '<span class="discount">' + safe(badgeText) + '</span>' : '';
         var stockBadge = '<span class="discount" style="top:48px">Estoque: ' + Number(product.stock || 0) + '</span>';
         var admin = '';
@@ -2095,7 +2096,11 @@ if (product.colors) {
         html += `
   
 `;
-        html += '<div class="product-actions"><button class="btn" data-action="cart" data-id="' + product.id + '">Comprar</button><button class="btn btn-outline" data-action="buy" data-id="' + product.id + '">☏</button></div>';
+       if (isOutOfStock) {
+  html += '<div class="product-actions"><button class="btn btn-danger" disabled>Esgotado</button><button class="btn btn-outline" disabled>☏</button></div>';
+} else {
+  html += '<div class="product-actions"><button class="btn" data-action="cart" data-id="' + product.id + '">Comprar</button><button class="btn btn-outline" data-action="buy" data-id="' + product.id + '">☏</button></div>';
+}
         html += admin + '</div></article>';
         return html;
       }
