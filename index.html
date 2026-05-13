@@ -1651,12 +1651,24 @@ dashFinishedOrders: qs('#dashFinishedOrders'),
       };
 
       start();
+function showDashboard() {
+  if (els.adminDashboard) {
+    els.adminDashboard.style.display = 'block';
+  }
+}
 
+function hideDashboard() {
+  if (els.adminDashboard) {
+    els.adminDashboard.style.display = 'none';
+  }
+}
       function start() {
         if (els.year) els.year.textContent = new Date().getFullYear();
         bindEvents();
         renderAll();
-        setAdminUI();
+        setAdminUI();if (isAdmin && els.adminDashboard) {
+  els.adminDashboard.style.display = 'block';
+}
         checkAdminRoute();
         if (window.firebaseDB && window.firebaseFns) {
   loadProductsFromFirebase();
@@ -1764,6 +1776,8 @@ if (els.removeCouponBtn) {
     password
   ).then(function () {
     isAdmin = true;
+    showDashboard();
+    setAdminUI();
 
     sessionStorage.setItem(CONFIG.keys.admin, JSON.stringify({
       logged: true,
@@ -1839,6 +1853,7 @@ if (els.removeCouponBtn) {
 
       function logoutAdmin() {
   isAdmin = false;
+  hideDashboard();
 
   if (window.firebaseAuth && window.firebaseAuthFns) {
     window.firebaseAuthFns.signOut(window.firebaseAuth);
@@ -1850,10 +1865,15 @@ if (els.removeCouponBtn) {
   closeAllModals();
   toast('Painel fechado.');
 }
-      function setAdminUI() {
-        if (els.adminBar) els.adminBar.classList.toggle('show', isAdmin);
-      }
+function setAdminUI() {
+  if (els.adminBar) {
+    els.adminBar.classList.toggle('show', isAdmin);
+  }
 
+  if (els.adminDashboard) {
+    els.adminDashboard.style.display = isAdmin ? 'block' : 'none';
+  }
+}
       function renderAll() {
         renderCategories();
         renderProducts();
