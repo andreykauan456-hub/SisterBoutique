@@ -2046,6 +2046,7 @@ function renderCategories(){
         var oldPrice = product.oldPrice ? '<span class="old-price">' + money(product.oldPrice) + '</span>' : '';
         var badgeText = product.tag || (product.status && product.status !== 'Normal' ? product.status : '');
         var badge = badgeText ? '<span class="discount">' + safe(badgeText) + '</span>' : '';
+        var stockBadge = '<span class="discount" style="top:48px">Estoque: ' + Number(product.stock || 0) + '</span>';
         var admin = '';
 
         if (isAdmin) {
@@ -2057,7 +2058,7 @@ function renderCategories(){
 
         var html = '';
         html += '<article class="product-card">';
-        html += '<div class="product-img">' + badge;
+        html += '<div class="product-img">' + badge + stockBadge;
         html += '<button class="heart-btn ' + (isFav ? 'active' : '') + '" data-action="fav" data-id="' + product.id + '">' + (isFav ? '♥' : '♡') + '</button>';
         html += '<img src="' + safe(product.image) + '" alt="' + safe(product.name) + '" loading="lazy" data-action="detail" data-id="' + product.id + '">';
         html += '</div><div class="product-info">';
