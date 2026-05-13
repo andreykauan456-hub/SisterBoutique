@@ -2087,6 +2087,25 @@ function renderCategories(){
         html += '<div class="price"><strong>' + money(product.price) + '</strong>' + oldPrice + '</div>';
         if (product.sizes) {
   html += '<p class="product-desc"><strong>Tamanhos:</strong> ' + safe(product.sizes) + '</p>';
+}if (product.sizes) {
+
+  var sizeOptions = product.sizes
+    .split(',')
+    .map(function(size) {
+      size = size.trim();
+
+      return '<option value="' + safe(size) + '">' +
+        safe(size) +
+      '</option>';
+    })
+    .join('');
+
+  html += `
+    <select class="input size-select" data-size-select="${product.id}">
+      <option value="">Escolha o tamanho</option>
+      ${sizeOptions}
+    </select>
+  `;
 }
 if (product.colors) {
   html += '<p class="product-desc"><strong>Cores:</strong> ' + safe(product.colors) + '</p>';
@@ -2119,13 +2138,22 @@ if (product.colors) {
       function addToCart(id) {
         var product = findProduct(id);
         if (!product) return;
+        var sizeSelect = document.querySelector('[data-size-select="' + id + '"]');
+var selectedSize = sizeSelect ? sizeSelect.value : '';
+
+if (product.sizes && !selectedSize) {
+  toast('Escolha um tamanho.');
+  return;
+}
 
 if (Number(product.stock || 0) <= 0) {
   toast('Produto sem estoque.');
   return;
 }
         if (!product) return;
-        var item = cart.find(function (cartItem) { return cartItem.id === id; });
+        var item = cart.find(function (cartItem) {
+  return cartItem.id === id && cartItem.size === selectedSize;
+});
    if (item) {
   if (item.qty >= Number(product.stock || 0)) {
     toast('Quantidade máxima em estoque.');
@@ -2134,7 +2162,7 @@ if (Number(product.stock || 0) <= 0) {
 
   item.qty += 1;
 } else {
-  cart.push({ id: id, qty: 1 });
+  cart.push({ id: id, qty: 1, size: selectedSize });
 }
         save(CONFIG.keys.cart, cart);
         renderAll();
@@ -2205,7 +2233,13 @@ function renderCart() {
     subtotal += product.price * item.qty;
 
     html += '<div class="cart-item"><img src="' + safe(product.image) + '" alt="' + safe(product.name) + '">';
-    html += '<div><h4>' + safe(product.name) + '</h4><span>' + money(product.price) + '</span>';
+    html += '<div><h4>' + safe(product.name) + '</h4>';
+
+if (item.size) {
+  html += '<span>Tamanho: ' + safe(item.size) + '</span><br>';
+}
+
+html += '<span>' + money(product.price) + '</span>';
     html += '<div class="qty"><button data-cart="minus" data-id="' + item.id + '">−</button><strong>' + item.qty + '</strong><button data-cart="plus" data-id="' + item.id + '">+</button></div></div>';
     html += '<button class="close-btn" data-cart="remove" data-id="' + item.id + '">×</button></div>';
   });
@@ -2351,14 +2385,18 @@ function checkoutCart() {
     total += itemTotal;
 
     items.push({
-      productId: product.id,
-      name: product.name,
-      price: product.price,
-      qty: item.qty,
-      total: itemTotal
-    });
-
-    lines.push('- ' + product.name + ' - ' + item.qty + 'x - ' + money(itemTotal));
+  productId: product.id,
+  name: product.name,
+  size: item.size || '',
+  price: product.price,
+  qty: item.qty,
+  total: itemTotal
+});
+    lines.push(
+  '- ' + product.name +
+  (item.size ? ' | Tam: ' + item.size : '') +
+  ' - ' + item.qty + 'x - ' + money(itemTotal)
+);
   });
 
   var order = {
