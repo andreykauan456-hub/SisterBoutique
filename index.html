@@ -839,6 +839,28 @@
     margin: 6px 0 8px !important;
     color: var(--dark) !important;
   }
+}@media (max-width: 768px) {
+  .product-card,
+  .product-info {
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .product-desc,
+  .stock-line,
+  .installment,
+  .price,
+  .product-actions {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .product-actions {
+    display: grid !important;
+  }
 }
  </style>
 </head>
