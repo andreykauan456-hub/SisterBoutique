@@ -821,18 +821,24 @@
     word-break: break-word;
   }
 
-}@media (max-width: 768px) {
+}.stock-line {
+  display: block;
+  font-size: 12px;
+  color: var(--dark);
+  margin: 6px 0 8px;
+  font-weight: 600;
+}
 
-  .product-desc {
+@media (max-width: 768px) {
+  .stock-line {
     display: block !important;
-    width: 100% !important;
-    min-height: auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     font-size: 11px !important;
     line-height: 1.4 !important;
-    margin-bottom: 6px !important;
-    word-break: break-word;
+    margin: 6px 0 8px !important;
+    color: var(--dark) !important;
   }
-
 }
  </style>
 </head>
@@ -2042,7 +2048,7 @@ function renderCategories(){
 if (product.colors) {
   html += '<p class="product-desc"><strong>Cores:</strong> ' + safe(product.colors) + '</p>';
 }
-html += '<p class="product-desc"><strong>Estoque:</strong> ' + Number(product.stock || 0) + ' unidade(s)</p>';
+html += '<p class="stock-line"><strong>Estoque:</strong> ' + Number(product.stock || 0) + ' unidade(s)</p>';
         html += '<div class="installment">6x de ' + money(product.price / 6) + '</div>';
         html += `
   
