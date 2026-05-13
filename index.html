@@ -1929,66 +1929,107 @@ function renderCategories(){
         return Object.keys(map).map(function (size) { return size + ':' + map[size]; }).join(' ');
       }
 
-      function productCard(product) {
-        var isFav = favorites.indexOf(product.id) !== -1;
-        var oldPrice = product.oldPrice ? '<span class="old-price">' + money(product.oldPrice) + '</span>' : '';
-        var badgeText = product.tag || (product.status && product.status !== 'Normal' ? product.status : '');
-        var stockQty = Number(product.stock || 0);
-        var isOutOfStock = stockQty <= 0;
-        var badge = badgeText ? '<span class="discount">' + safe(badgeText) + '</span>' : '';
-        var admin = '';
+     function productCard(product) {
+  var isFav = favorites.indexOf(product.id) !== -1;
+  var oldPrice = product.oldPrice ? '<span class="old-price">' + money(product.oldPrice) + '</span>' : '';
+  var badgeText = product.tag || (product.status && product.status !== 'Normal' ? product.status : '');
 
-        if (isAdmin) {
-          admin += '<div class="admin-actions">';
-          admin += '<button class="btn btn-small btn-outline" data-action="edit" data-id="' + product.id + '">Editar</button>';
-          admin += '<button class="btn btn-small btn-danger" data-action="delete" data-id="' + product.id + '">Excluir</button>';
-          admin += '</div>';
-        }
+  var stockMap = parseSizeStock(product.sizeStock);
+  var sizesList = parseList(product.sizes);
+  if (!sizesList.length && product.sizeStock) sizesList = Object.keys(stockMap);
 
-        var html = '';
-        html += '<article class="product-card">';
-        html += '<div class="product-img">' + badge + '<span class="stock-badge-mobile">Estoque: ' + stockQty + '</span>';
-        html += '<button class="heart-btn ' + (isFav ? 'active' : '') + '" data-action="fav" data-id="' + product.id + '">' + (isFav ? '♥' : '♡') + '</button>';
-        html += '<img src="' + safe(product.image) + '" alt="' + safe(product.name) + '" loading="lazy" data-action="detail" data-id="' + product.id + '">';
-        html += '</div><div class="product-info">';
-        html += '<h3 data-action="detail" data-id="' + product.id + '">' + safe(product.name) + '</h3>';
-        html += '<p class="product-desc">' + safe(product.description) + '</p>';
-        html += '<div class="price"><strong>' + money(product.price) + '</strong>' + oldPrice + '</div>';
-        html += '<span class="stock-line">Estoque: ' + stockQty + '</span>';
+  var hasSizeStock = product.sizeStock && Object.keys(stockMap).length > 0;
 
-        var stockMap = parseSizeStock(product.sizeStock);
-        var sizesList = parseList(product.sizes);
-        if (!sizesList.length && product.sizeStock) sizesList = Object.keys(stockMap);
+  var availableSizeStockTotal = 0;
+  if (hasSizeStock) {
+    Object.keys(stockMap).forEach(function(key) {
+      availableSizeStockTotal += Number(stockMap[key] || 0);
+    });
+  }
 
-        if (sizesList.length) {
-          html += '<p class="product-desc"><strong>Tamanhos:</strong> ' + safe(sizesList.join(', ')) + '</p>';
-          var sizeOptions = sizesList.map(function(size) {
-            var originalSize = size.trim();
-            var key = originalSize.toUpperCase();
-            var qty = stockMap[key];
-            if (product.sizeStock && Number(qty || 0) <= 0) return '';
-            return '<option value="' + safe(originalSize) + '">' + safe(originalSize) + (qty !== undefined ? ' (' + qty + ')' : '') + '</option>';
-          }).join('');
-          html += '<select class="input size-select" data-size-select="' + product.id + '"><option value="">Escolha o tamanho</option>' + sizeOptions + '</select>';
-        }
+  var stockQty = hasSizeStock ? availableSizeStockTotal : Number(product.stock || 0);
+  var isOutOfStock = stockQty <= 0;
 
-        var colorsList = parseList(product.colors);
-        if (colorsList.length) {
-          var colorOptions = colorsList.map(function(color) {
-            return '<option value="' + safe(color) + '">' + safe(color) + '</option>';
-          }).join('');
-          html += '<select class="input color-select" data-color-select="' + product.id + '"><option value="">Escolha a cor</option>' + colorOptions + '</select>';
-        }
+  var badge = badgeText ? '<span class="discount">' + safe(badgeText) + '</span>' : '';
+  var admin = '';
 
-        html += '<div class="installment">6x de ' + money(product.price / 6) + '</div>';
-        if (isOutOfStock) {
-          html += '<div class="product-actions"><button class="btn btn-danger" disabled>Esgotado</button><button class="btn btn-outline" disabled>☏</button></div>';
-        } else {
-          html += '<div class="product-actions"><button class="btn" data-action="cart" data-id="' + product.id + '">Comprar</button><button class="btn btn-outline" data-action="buy" data-id="' + product.id + '">☏</button></div>';
-        }
-        html += admin + '</div></article>';
-        return html;
-      }
+  if (isAdmin) {
+    admin += '<div class="admin-actions">';
+    admin += '<button class="btn btn-small btn-outline" data-action="edit" data-id="' + product.id + '">Editar</button>';
+    admin += '<button class="btn btn-small btn-danger" data-action="delete" data-id="' + product.id + '">Excluir</button>';
+    admin += '</div>';
+  }
+
+  var html = '';
+
+  html += '<article class="product-card" style="height:auto;overflow:visible;">';
+
+  html += '<div class="product-img">' + badge;
+  html += '<span class="stock-badge-mobile">Estoque: ' + stockQty + '</span>';
+  html += '<button class="heart-btn ' + (isFav ? 'active' : '') + '" data-action="fav" data-id="' + product.id + '">' + (isFav ? '♥' : '♡') + '</button>';
+  html += '<img src="' + safe(product.image) + '" alt="' + safe(product.name) + '" loading="lazy" data-action="detail" data-id="' + product.id + '">';
+  html += '</div>';
+
+  html += '<div class="product-info" style="display:block;height:auto;max-height:none;overflow:visible;">';
+
+  html += '<h3 data-action="detail" data-id="' + product.id + '">' + safe(product.name) + '</h3>';
+  html += '<p class="product-desc">' + safe(product.description) + '</p>';
+  html += '<div class="price"><strong>' + money(product.price) + '</strong>' + oldPrice + '</div>';
+  html += '<span class="stock-line">Estoque: ' + stockQty + '</span>';
+
+  if (sizesList.length) {
+    var sizeOptions = sizesList.map(function(size) {
+      var originalSize = size.trim();
+      var key = originalSize.toUpperCase();
+      var qty = stockMap[key];
+
+      if (hasSizeStock && Number(qty || 0) <= 0) return '';
+
+      return '<option value="' + safe(originalSize) + '">' +
+        safe(originalSize) +
+        (qty !== undefined ? ' (' + qty + ')' : '') +
+      '</option>';
+    }).join('');
+
+    html += '<select class="input size-select" data-size-select="' + product.id + '" style="display:block;width:100%;height:40px;margin:8px 0;">';
+    html += '<option value="">Escolha o tamanho</option>';
+    html += sizeOptions;
+    html += '</select>';
+  }
+
+  var colorsList = parseList(product.colors);
+
+  if (colorsList.length) {
+    var colorOptions = colorsList.map(function(color) {
+      return '<option value="' + safe(color) + '">' + safe(color) + '</option>';
+    }).join('');
+
+    html += '<select class="input color-select" data-color-select="' + product.id + '" style="display:block;width:100%;height:40px;margin:8px 0;">';
+    html += '<option value="">Escolha a cor</option>';
+    html += colorOptions;
+    html += '</select>';
+  }
+
+  html += '<div class="installment">6x de ' + money(product.price / 6) + '</div>';
+
+  if (isOutOfStock) {
+    html += '<div class="product-actions">';
+    html += '<button class="btn btn-danger" disabled>Esgotado</button>';
+    html += '<button class="btn btn-outline" disabled>☏</button>';
+    html += '</div>';
+  } else {
+    html += '<div class="product-actions">';
+    html += '<button class="btn" data-action="cart" data-id="' + product.id + '">Comprar</button>';
+    html += '<button class="btn btn-outline" data-action="buy" data-id="' + product.id + '">☏</button>';
+    html += '</div>';
+  }
+
+  html += admin;
+  html += '</div>';
+  html += '</article>';
+
+  return html;
+}
 
       function handleProductAction(event) {
         var action = event.currentTarget.getAttribute('data-action');
