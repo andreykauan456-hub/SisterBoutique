@@ -883,20 +883,79 @@
 }
  
 
-/* === CORREÇÃO FINAL MOBILE / CARDS / SELECTS === */
-.product-card, .product-info { overflow: visible !important; }
-.size-select, .color-select { display:block !important; width:100% !important; height:40px !important; margin:8px 0 !important; visibility:visible !important; opacity:1 !important; }
-@media (max-width:768px){
-  .products-grid{ display:grid !important; grid-template-columns:1fr !important; gap:18px !important; }
-  .product-card{ display:block !important; width:100% !important; max-width:340px !important; height:auto !important; min-height:0 !important; max-height:none !important; overflow:visible !important; margin:0 auto !important; }
-  .product-img{ width:100% !important; height:350px !important; overflow:hidden !important; position:relative !important; }
-  .product-img img{ width:100% !important; height:100% !important; object-fit:cover !important; display:block !important; }
-  .product-info{ display:block !important; height:auto !important; min-height:0 !important; max-height:none !important; overflow:visible !important; padding:15px 14px 17px !important; }
-  .product-info h3, .product-desc, .stock-line, .size-select, .color-select, .installment, .price{ display:block !important; visibility:visible !important; opacity:1 !important; }
-  .product-actions{ display:grid !important; grid-template-columns:1fr 42px !important; gap:8px !important; visibility:visible !important; opacity:1 !important; }
+/* Correção final: cards, selects e informações visíveis no celular */
+.size-select,
+.color-select {
+  display: block !important;
+  width: 100% !important;
+  height: 40px !important;
+  margin: 8px 0 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
-</style>
+@media (max-width: 768px) {
+  .products-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+
+  .product-card {
+    display: block !important;
+    width: 100% !important;
+    max-width: 340px !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 auto !important;
+  }
+
+  .product-img {
+    width: 100% !important;
+    height: 350px !important;
+    min-height: 350px !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+
+  .product-img img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .product-info {
+    display: block !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 15px 14px 17px !important;
+  }
+
+  .product-info h3,
+  .product-desc,
+  .stock-line,
+  .size-select,
+  .color-select,
+  .installment,
+  .price,
+  .product-actions {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .product-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 42px !important;
+    gap: 8px !important;
+  }
+}
+
+ </style>
 </head>
 <body>
   <div class="top-strip">
@@ -1185,7 +1244,7 @@
   </aside>
 </div>
 
-  <div class="drawer" id="favDrawer"><div class="overlay" data-close="favDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Favoritos</h3><button class="close-btn" data-close="favDrawer">×</button></div><div id="favItems"></div></aside></div>
+<div class="drawer" id="favDrawer"><div class="overlay" data-close="favDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Favoritos</h3><button class="close-btn" data-close="favDrawer">×</button></div><div id="favItems"></div></aside></div>
   <div class="modal" id="loginModal"><div class="overlay" data-close="loginModal"></div><div class="modal-card"><div class="panel-head"><h3>Painel admin</h3><button class="close-btn" data-close="loginModal">×</button></div><p class="hint">Área restrita. Digite a senha de administrador para continuar.</p><form class="form-grid" id="loginForm"><input class="input" type="email" id="adminEmail" placeholder="E-mail admin" required><input class="input" type="password" id="adminPassword" placeholder="Senha do painel" required><button class="btn" type="submit">Entrar</button></form></div></div>
  <div class="modal" id="couponsModal">
   <div class="modal-card">
@@ -1265,11 +1324,11 @@
       </label>
 
       <label class="field">Tamanhos disponíveis
-        <input class="input" id="productSizesNew" placeholder="Ex: PP, P, M, G, GG, XG">
+        <input class="input" id="productSizes" placeholder="Ex: PP, P, M, G, GG, XG">
       </label>
 
       <label class="field">Cores disponíveis
-        <input class="input" id="productColors" placeholder="Ex: Perola, Rosa, Branco, Azul">
+        <input class="input" id="productColors" placeholder="Ex: Pérola, Rosa, Branco, Azul">
       </label>
 
       <label class="field">Imagem
@@ -1300,14 +1359,15 @@
       </label>
 
       <label class="field">Estoque por tamanho
-        <input class="input" id="productSizeStock" placeholder="Ex: PP:0 P:1 M:2 G:1 GG:0 XG:5">
+        <input class="input" id="productSizeStock" placeholder="Ex: PP:2 P:4 M:0 G:3 GG:1">
       </label>
 
       <button class="btn" type="submit">Salvar alterações</button>
     </form>
   </div>
 </div>
-  <div class="modal" id="manageModal"><div class="overlay" data-close="manageModal"></div><div class="modal-card"><div class="panel-head"><h3>Gerenciar catálogo</h3><button class="close-btn" data-close="manageModal">×</button></div><div id="adminProductList"></div></div></div>
+
+<div class="modal" id="manageModal"><div class="overlay" data-close="manageModal"></div><div class="modal-card"><div class="panel-head"><h3>Gerenciar catálogo</h3><button class="close-btn" data-close="manageModal">×</button></div><div id="adminProductList"></div></div></div>
  <div class="modal" id="ordersModal">
   <div class="overlay" data-close="ordersModal"></div>
 
@@ -1613,7 +1673,7 @@ cartDiscount: qs('#cartDiscount'),
         productForm: qs('#productForm'),
         productModalTitle: qs('#productModalTitle'),
         productSizes: qs('#productSizes'),
-productColors: qs('#productColors'),
+        productColors: qs('#productColors'),
         adminProductList: qs('#adminProductList'),
         sendBrasil: qs('#sendBrasil'),
         sendArgentina: qs('#sendArgentina'),
@@ -1938,50 +1998,36 @@ function renderCategories(){
 
       function parseList(value) {
         if (!value) return [];
-        if (Array.isArray(value)) return value.map(function(v){ return String(v).trim(); }).filter(Boolean);
-        return String(value).split(',').map(function(v){ return v.trim(); }).filter(Boolean);
+        if (Array.isArray(value)) return value.map(function(item){ return String(item).trim(); }).filter(Boolean);
+        return String(value).split(',').map(function(item){ return item.trim(); }).filter(Boolean);
       }
 
       function parseSizeStock(value) {
         var map = {};
         if (!value) return map;
-        String(value).split(/[ ,]+/).forEach(function(part){
-          if (!part) return;
+        String(value).replace(/,/g, ' ').split(/\s+/).forEach(function(part) {
+          if (!part || part.indexOf(':') === -1) return;
           var pieces = part.split(':');
-          if (pieces.length !== 2) return;
-          var key = pieces[0].trim().toUpperCase();
-          var qty = Number(pieces[1].trim());
-          if (key && !Number.isNaN(qty)) map[key] = qty;
+          var size = pieces[0].trim().toUpperCase();
+          var qty = Number(pieces.slice(1).join(':').trim());
+          if (size) map[size] = Number.isFinite(qty) ? qty : 0;
         });
         return map;
       }
 
-      function getProductStockTotal(product) {
+      function getAvailableStock(product, selectedSize) {
         var stockMap = parseSizeStock(product.sizeStock);
         var keys = Object.keys(stockMap);
+        if (selectedSize && keys.length) {
+          var selectedKey = String(selectedSize).trim().toUpperCase();
+          if (stockMap[selectedKey] !== undefined) return Number(stockMap[selectedKey] || 0);
+        }
         if (keys.length) {
-          return keys.reduce(function(sum, key){ return sum + Number(stockMap[key] || 0); }, 0);
+          return keys.reduce(function(total, key){ return total + Number(stockMap[key] || 0); }, 0);
         }
         return Number(product.stock || 0);
       }
 
-      function getSelectedProductOptions(id) {
-        var sizeSelect = document.querySelector('[data-size-select="' + id + '"]');
-        var colorSelect = document.querySelector('[data-color-select="' + id + '"]');
-        return {
-          size: sizeSelect ? sizeSelect.value : '',
-          color: colorSelect ? colorSelect.value : ''
-        };
-      }
-
-      function getCartItemStockLimit(product, size) {
-        var stockMap = parseSizeStock(product.sizeStock);
-        if (size && Object.keys(stockMap).length) {
-          var key = String(size).trim().toUpperCase();
-          return Number(stockMap[key] || 0);
-        }
-        return Number(product.stock || 0);
-      }
       function renderProducts() {
         if (!els.productsGrid) return;
         var list = products.slice();
@@ -2020,7 +2066,7 @@ function renderCategories(){
         var sizesList = parseList(product.sizes);
         if (!sizesList.length && Object.keys(stockMap).length) sizesList = Object.keys(stockMap);
         var colorsList = parseList(product.colors);
-        var stockQty = getProductStockTotal(product);
+        var stockQty = getAvailableStock(product, '');
         var isOutOfStock = stockQty <= 0;
         var admin = '';
 
@@ -2036,7 +2082,8 @@ function renderCategories(){
         html += '<div class="product-img">' + badge + '<span class="stock-badge-mobile">Estoque: ' + stockQty + '</span>';
         html += '<button class="heart-btn ' + (isFav ? 'active' : '') + '" data-action="fav" data-id="' + product.id + '">' + (isFav ? '♥' : '♡') + '</button>';
         html += '<img src="' + safe(product.image) + '" alt="' + safe(product.name) + '" loading="lazy" data-action="detail" data-id="' + product.id + '">';
-        html += '</div><div class="product-info">';
+        html += '</div>';
+        html += '<div class="product-info">';
         html += '<h3 data-action="detail" data-id="' + product.id + '">' + safe(product.name) + '</h3>';
         html += '<p class="product-desc">' + safe(product.description) + '</p>';
         html += '<div class="price"><strong>' + money(product.price) + '</strong>' + oldPrice + '</div>';
@@ -2055,20 +2102,18 @@ function renderCategories(){
 
         if (colorsList.length) {
           var colorOptions = colorsList.map(function(color) {
-            color = String(color).trim();
-            return '<option value="' + safe(color) + '">' + safe(color) + '</option>';
+            var cleanColor = String(color).trim();
+            return '<option value="' + safe(cleanColor) + '">' + safe(cleanColor) + '</option>';
           }).join('');
           html += '<select class="input color-select" data-color-select="' + product.id + '"><option value="">Escolha a cor</option>' + colorOptions + '</select>';
         }
 
         html += '<div class="installment">6x de ' + money(product.price / 6) + '</div>';
-
         if (isOutOfStock) {
           html += '<div class="product-actions"><button class="btn btn-danger" disabled>Esgotado</button><button class="btn btn-outline" disabled>☏</button></div>';
         } else {
           html += '<div class="product-actions"><button class="btn" data-action="cart" data-id="' + product.id + '">Comprar</button><button class="btn btn-outline" data-action="buy" data-id="' + product.id + '">☏</button></div>';
         }
-
         html += admin + '</div></article>';
         return html;
       }
@@ -2088,47 +2133,40 @@ function renderCategories(){
         var product = findProduct(id);
         if (!product) return;
 
-        var options = getSelectedProductOptions(id);
-        var sizesList = parseList(product.sizes);
-        var stockMap = parseSizeStock(product.sizeStock);
-        if (!sizesList.length && Object.keys(stockMap).length) sizesList = Object.keys(stockMap);
-        var colorsList = parseList(product.colors);
+        var sizeSelect = document.querySelector('[data-size-select="' + id + '"]');
+        var colorSelect = document.querySelector('[data-color-select="' + id + '"]');
+        var selectedSize = sizeSelect ? sizeSelect.value : '';
+        var selectedColor = colorSelect ? colorSelect.value : '';
 
-        if (sizesList.length && !options.size) {
+        if (sizeSelect && !selectedSize) {
           toast('Escolha um tamanho.');
           return;
         }
-
-        if (colorsList.length && !options.color) {
+        if (colorSelect && !selectedColor) {
           toast('Escolha uma cor.');
           return;
         }
 
-        var stockLimit = getCartItemStockLimit(product, options.size);
-        if (stockLimit <= 0) {
+        var availableStock = getAvailableStock(product, selectedSize);
+        if (availableStock <= 0) {
           toast('Produto sem estoque.');
           return;
         }
 
         var item = cart.find(function (cartItem) {
           return cartItem.id === id &&
-                 (cartItem.size || '') === (options.size || '') &&
-                 (cartItem.color || '') === (options.color || '');
+            (cartItem.size || '') === selectedSize &&
+            (cartItem.color || '') === selectedColor;
         });
 
         if (item) {
-          if (item.qty >= stockLimit) {
+          if (item.qty >= availableStock) {
             toast('Quantidade máxima em estoque.');
             return;
           }
           item.qty += 1;
         } else {
-          cart.push({
-            id: id,
-            qty: 1,
-            size: options.size || '',
-            color: options.color || ''
-          });
+          cart.push({ id: id, qty: 1, size: selectedSize, color: selectedColor });
         }
 
         save(CONFIG.keys.cart, cart);
@@ -2193,7 +2231,7 @@ function renderCart() {
   var subtotal = 0;
   var html = '';
 
-  cart.forEach(function (item) {
+  cart.forEach(function (item, cartIndex) {
     var product = findProduct(item.id);
     if (!product) return;
 
@@ -2210,8 +2248,8 @@ if (item.color) {
 }
 
 html += '<span>' + money(product.price) + '</span>';
-    html += '<div class="qty"><button data-cart="minus" data-id="' + item.id + '" data-size="' + safe(item.size || '') + '" data-color="' + safe(item.color || '') + '">−</button><strong>' + item.qty + '</strong><button data-cart="plus" data-id="' + item.id + '" data-size="' + safe(item.size || '') + '" data-color="' + safe(item.color || '') + '">+</button></div></div>';
-    html += '<button class="close-btn" data-cart="remove" data-id="' + item.id + '" data-size="' + safe(item.size || '') + '" data-color="' + safe(item.color || '') + '">×</button></div>';
+    html += '<div class="qty"><button data-cart="minus" data-id="' + item.id + '" data-index="' + cartIndex + '">−</button><strong>' + item.qty + '</strong><button data-cart="plus" data-id="' + item.id + '" data-index="' + cartIndex + '">+</button></div></div>';
+    html += '<button class="close-btn" data-cart="remove" data-id="' + item.id + '" data-index="' + cartIndex + '">×</button></div>';
   });
 
   var coupon = getAppliedCoupon();
@@ -2236,20 +2274,14 @@ html += '<span>' + money(product.price) + '</span>';
       function handleCartAction(event) {
         var action = event.currentTarget.getAttribute('data-cart');
         var id = event.currentTarget.getAttribute('data-id');
-        var size = event.currentTarget.getAttribute('data-size') || '';
-        var color = event.currentTarget.getAttribute('data-color') || '';
-
-        var item = cart.find(function (cartItem) {
-          return cartItem.id === id &&
-                 (cartItem.size || '') === size &&
-                 (cartItem.color || '') === color;
-        });
+        var index = Number(event.currentTarget.getAttribute('data-index'));
+        var item = Number.isInteger(index) ? cart[index] : cart.find(function (cartItem) { return cartItem.id === id; });
         if (!item) return;
 
         if (action === 'plus') {
-          var product = findProduct(id);
-          var limit = product ? getCartItemStockLimit(product, item.size) : 0;
-          if (product && item.qty >= limit) {
+          var product = findProduct(item.id);
+          var availableStock = product ? getAvailableStock(product, item.size || '') : 0;
+          if (item.qty >= availableStock) {
             toast('Quantidade máxima em estoque.');
             return;
           }
@@ -2258,11 +2290,8 @@ html += '<span>' + money(product.price) + '</span>';
 
         if (action === 'minus') item.qty -= 1;
         if (action === 'remove' || item.qty <= 0) {
-          cart = cart.filter(function (cartItem) {
-            return !(cartItem.id === id && (cartItem.size || '') === size && (cartItem.color || '') === color);
-          });
+          cart = cart.filter(function (_, cartIndex) { return cartIndex !== index; });
         }
-
         save(CONFIG.keys.cart, cart);
         renderAll();
       }
@@ -2431,7 +2460,7 @@ var updateData = {
 if (item.size && product.sizeStock) {
   var stockMap = {};
 
-  String(product.sizeStock).split(/[ ,]+/).forEach(function(part) {
+  product.sizeStock.split(' ').forEach(function(part) {
     var pieces = part.split(':');
 
     if (pieces.length === 2) {
@@ -2699,10 +2728,7 @@ function sendWhatsapp(number) {
         qs('#productCategory').value = product ? product.category : 'Vestidos';
         qs('#productImage').value = product ? product.image : '';
         qs('#productDescription').value = product ? product.description : '';
-qs('#productSizesNew').value =
-  product && product.sizes
-    ? product.sizes
-    : '';
+qs('#productSizes').value = product && product.sizes ? product.sizes : '';
 
 qs('#productColors').value =
   product && product.colors
@@ -2744,7 +2770,7 @@ qs('#productTag').value =
     description: qs('#productDescription').value.trim(),
     tag: qs('#productTag').value.trim(),
     status: qs('#productStatus').value,
-    sizes: qs('#productSizesNew').value.trim(),
+    sizes: qs('#productSizes').value.trim(),
 colors: qs('#productColors').value.trim(),
     
   };
