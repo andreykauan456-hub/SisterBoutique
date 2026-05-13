@@ -1376,7 +1376,7 @@
   Tamanhos disponíveis
   <input
     class="input"
-    id="productSizes"
+    id="productSizesNew"
     placeholder="Ex: PP, P, M, G, GG, Tamanho Único"
   >
 </label>
@@ -1397,6 +1397,14 @@
     min="0"
     placeholder="Ex: 10"
   >
+  <label class="field">
+  Estoque por tamanho
+  <input
+    class="input"
+    id="productSizeStock"
+    placeholder="Ex: PP:2, P:4, M:0, G:3, GG:1"
+  >
+</label>
 </label>
   
   <button class="btn" type="submit">
@@ -1632,7 +1640,8 @@ var appliedCouponCode = load(CONFIG.keys.appliedCoupon, '');
 
           sizes: data.sizes || '',
   colors: data.colors || '',
-  stock: Number(data.stock || 0),
+ stock: Number(data.stock || 0),
+sizeStock: data.sizeStock || ''
       });
     });
 
@@ -1732,6 +1741,7 @@ dashFinishedOrders: qs('#dashFinishedOrders'),
         openCartFromBranch: qs('#openCartFromBranch'),
         detailContent: qs('#detailContent'),
         productStock: qs('#productStock'),
+        productSizeStock: qs('#productSizeStock'),
       };
 
       start();
@@ -2085,21 +2095,48 @@ function renderCategories(){
         html += '<h3 data-action="detail" data-id="' + product.id + '">' + safe(product.name) + '</h3>';
         html += '<p class="product-desc">' + safe(product.description) + '</p>';
         html += '<div class="price"><strong>' + money(product.price) + '</strong>' + oldPrice + '</div>';
+        html += '<p class="product-desc"><strong>Teste sizeStock:</strong> ' + safe(product.sizeStock || 'VAZIO') + '</p>';
         if (product.sizes) {
   html += '<p class="product-desc"><strong>Tamanhos:</strong> ' + safe(product.sizes) + '</p>';
 }if (product.sizes) {
 
-  var sizeOptions = product.sizes
-    .split(',')
-    .map(function(size) {
-      size = size.trim();
+var stockMap = {};
 
-      return '<option value="' + safe(size) + '">' +
-        safe(size) +
-      '</option>';
-    })
-    .join('');
+if (product.sizeStock) {
 
+  product.sizeStock.split(',').forEach(function(item) {
+
+    var parts = item.split(':');
+
+    if (parts.length >= 2) {
+
+      var sizeName = parts[0].trim();
+      var qty = Number(parts[1].trim());
+
+      stockMap[sizeName] = qty;
+    }
+  });
+}
+
+var sizeOptions = product.sizes
+  .split(',')
+  .map(function(size) {
+
+    size = size.trim();
+
+    var qty = stockMap[size];
+
+    if (qty !== undefined && qty <= 0) {
+      return '';
+    }
+
+    return '<option value="' + safe(size) + '">' +
+      safe(size) +
+      (qty !== undefined ? ' (' + qty + ')' : '') +
+    '</option>';
+
+  })
+  .join('');
   html += `
     <select class="input size-select" data-size-select="${product.id}">
       <option value="">Escolha o tamanho</option>
@@ -2687,7 +2724,7 @@ function sendWhatsapp(number) {
         qs('#productCategory').value = product ? product.category : 'Vestidos';
         qs('#productImage').value = product ? product.image : '';
         qs('#productDescription').value = product ? product.description : '';
-qs('#productSizes').value =
+qs('#productSizesNew').value =
   product && product.sizes
     ? product.sizes
     : '';
@@ -2704,6 +2741,10 @@ qs('#productTag').value =
         qs('#productStock').value =
   product && product.stock !== undefined
     ? product.stock
+    : '';
+    qs('#productSizeStock').value =
+  product && product.sizeStock
+    ? product.sizeStock
     : '';
         closeModal('manageModal');
         openModal('productModal');
@@ -2724,10 +2765,11 @@ qs('#productTag').value =
     category: qs('#productCategory').value,
     image: qs('#productImage').value.trim(),
     stock: Number(qs('#productStock').value) || 0,
+    sizeStock: qs('#productSizeStock').value.trim(),
     description: qs('#productDescription').value.trim(),
     tag: qs('#productTag').value.trim(),
     status: qs('#productStatus').value,
-    sizes: qs('#productSizes').value.trim(),
+    sizes: qs('#productSizesNew').value.trim(),
 colors: qs('#productColors').value.trim(),
     
   };
@@ -2757,7 +2799,8 @@ colors: qs('#productColors').value.trim(),
         status: data.status,
          sizes: data.sizes,
   colors: data.colors,
-  stock: data.stock,
+ stock: data.stock,
+sizeStock: data.sizeStock
       }).then(function () {
         products[index] = data;
         save(CONFIG.keys.products, products);
@@ -2782,6 +2825,7 @@ colors: qs('#productColors').value.trim(),
   sizes: data.sizes,
   colors: data.colors,
   stock: data.stock,
+sizeStock: data.sizeStock
       }).then(function (docRef) {
         data.id = docRef.id;
         products.unshift(data);
