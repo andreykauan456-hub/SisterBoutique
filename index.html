@@ -1129,92 +1129,124 @@
     Restaurar catálogo
   </button>
 
+  <button
+  class="btn btn-small"
+  id="manageCouponsBtn"
+  type="button"
+>
+  Gerenciar cupons
+</button>
+
   <button class="btn btn-small btn-danger" id="logoutAdminBtn">
     Sair
   </button>
 </div>
 
-  <div class="drawer" id="cartDrawer"><div class="overlay" data-close="cartDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Carrinho</h3><button class="close-btn" data-close="cartDrawer">×</button></div><div id="cartItems"></div><div class="modal" id="couponsModal">
+  <div class="drawer" id="cartDrawer"><div class="overlay" data-close="cartDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Carrinho</h3><button class="close-btn" data-close="cartDrawer">×</button></div><div id="cartItems"></div>
 
-  <div class="overlay" data-close="couponsModal"></div>
+<div style="margin:8px 0;">
 
-  <div class="modal-card">
+  <div style="display:flex; gap:8px;">
 
-    <div class="panel-head">
-      <h3>Gerenciar cupons</h3>
+    <input
+      id="couponInput"
+      class="input"
+      placeholder="Cupom"
+      style="flex:1;height:38px;"
+    >
 
-      <button class="close-btn" data-close="couponsModal">
-        ×
-      </button>
-    </div>
-
-    <form class="form-grid" id="couponForm">
-
-      <input type="hidden" id="couponId">
-
-      <label class="field">
-        Código do cupom
-
-        <input
-          class="input"
-          id="couponCode"
-          placeholder="Ex: PRIMEIRA5"
-          required
-        >
-      </label>
-
-      <label class="field">
-        Tipo de desconto
-
-        <select class="input" id="couponType">
-          <option value="percent">Porcentagem</option>
-          <option value="fixed">Valor fixo</option>
-        </select>
-      </label>
-
-      <label class="field">
-        Valor
-
-        <input
-          class="input"
-          id="couponValue"
-          type="number"
-          step="0.01"
-          min="0"
-          required
-        >
-      </label>
-
-      <label class="field">
-        Status
-
-        <select class="input" id="couponActive">
-          <option value="yes">Ativo</option>
-          <option value="no">Desativado</option>
-        </select>
-      </label>
-
-      <button class="btn" type="submit">
-        Salvar cupom
-      </button>
-
-    </form>
-
-    <div
-      style="
-        height:1px;
-        background:var(--line);
-        margin:20px 0;
-      "
-    ></div>
-
-    <div id="adminCouponList"></div>
+    <button
+      class="btn btn-small btn-outline"
+      id="applyCouponBtn"
+      type="button"
+    >
+      Aplicar
+    </button>
 
   </div>
 
-</div><div class="total-row"><span>Total</span><span id="cartTotal">R$ 0,00</span></div><button class="btn" id="checkoutBtn" style="width:100%">Finalizar pelo WhatsApp</button></div></aside></div>
+  <div
+    id="couponStatus"
+    style="
+      margin-top:8px;
+      font-size:13px;
+      color:var(--muted);
+    "
+  ></div>
+
+  <button
+    id="removeCouponBtn"
+    class="btn btn-small btn-outline"
+    type="button"
+    style="
+      margin-top:8px;
+      display:none;
+      width:100%;
+    "
+  >
+    Remover cupom
+  </button>
+
+</div>
+
+<div class="total-row">
+  <span>Total</span>
+  <span id="cartTotal">R$ 0,00</span>
+</div>
+
+<button
+  class="btn"
+  id="checkoutBtn"
+  style="width:100%;"
+>
+  FINALIZAR PELO WHATSAPP
+<button
+
   <div class="drawer" id="favDrawer"><div class="overlay" data-close="favDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Favoritos</h3><button class="close-btn" data-close="favDrawer">×</button></div><div id="favItems"></div></aside></div>
   <div class="modal" id="loginModal"><div class="overlay" data-close="loginModal"></div><div class="modal-card"><div class="panel-head"><h3>Painel admin</h3><button class="close-btn" data-close="loginModal">×</button></div><p class="hint">Área restrita. Digite a senha de administrador para continuar.</p><form class="form-grid" id="loginForm"><input class="input" type="email" id="adminEmail" placeholder="E-mail admin" required><input class="input" type="password" id="adminPassword" placeholder="Senha do painel" required><button class="btn" type="submit">Entrar</button></form></div></div>
+ <div class="modal" id="couponsModal">
+  <div class="modal-card">
+    <button class="modal-close" data-close="couponsModal">×</button>
+
+    <h2>Gerenciar cupons</h2>
+
+  <form class="form-grid" id="couponForm">
+  <input type="hidden" id="couponId">
+
+  <label class="field">
+    Código do cupom
+    <input id="couponCode" class="input" placeholder="Ex: PRIMEIRA5" required>
+  </label>
+
+  <label class="field">
+    Tipo de desconto
+    <select id="couponType" class="input">
+      <option value="percent">Porcentagem (%)</option>
+      <option value="fixed">Valor fixo (R$)</option>
+    </select>
+  </label>
+
+  <label class="field">
+    Valor
+    <input id="couponValue" class="input" type="number" placeholder="Ex: 10" required>
+  </label>
+
+  <label class="field">
+    Status
+    <select id="couponActive" class="input">
+      <option value="yes">Ativo</option>
+      <option value="no">Desativado</option>
+    </select>
+  </label>
+
+  <button class="btn" type="submit">
+    Salvar cupom
+  </button>
+</form>
+
+<div id="adminCouponList" style="margin-top:15px;"></div>
+  </div>
+</div>
   <div class="modal" id="productModal"><div class="overlay" data-close="productModal"></div><div class="modal-card"><div class="panel-head"><h3 id="productModalTitle">Produto</h3><button class="close-btn" data-close="productModal">×</button></div><form class="form-grid" id="productForm">
 
   <input type="hidden" id="productId">
@@ -2095,57 +2127,105 @@ function renderCategories(){
         html += '<h3 data-action="detail" data-id="' + product.id + '">' + safe(product.name) + '</h3>';
         html += '<p class="product-desc">' + safe(product.description) + '</p>';
         html += '<div class="price"><strong>' + money(product.price) + '</strong>' + oldPrice + '</div>';
-        html += '<p class="product-desc"><strong>Teste sizeStock:</strong> ' + safe(product.sizeStock || 'VAZIO') + '</p>';
+        
+console.log('PRODUTO:', product.name, product);
+console.log('sizes:', product.sizes);
+console.log('sizeStock:', product.sizeStock);
+console.log('stockBySize:', product.stockBySize);
+console.log('sizesStock:', product.sizesStock);
         if (product.sizes) {
+
   html += '<p class="product-desc"><strong>Tamanhos:</strong> ' + safe(product.sizes) + '</p>';
-}if (product.sizes) {
+
+  var stockMap = {};
+
+  if (product.sizeStock) {
+
+    product.sizeStock.split(',').forEach(function(item) {
+
+      var parts = item.split(':');
+
+      if (parts.length >= 2) {
+
+        var sizeName = parts[0].trim().toUpperCase();
+        var qty = Number(parts[1].trim());
+
+        stockMap[sizeName] = qty;
+      }
+
+    });
+
+  }
+
+ var sizesList = [];
+
+if (product.sizes && product.sizes.trim() !== '') {
+  sizesList = product.sizes.split(',');
+} else if (product.sizeStock) {
+  sizesList = Object.keys(product.sizeStock);
+}
 
 var stockMap = {};
 
 if (product.sizeStock) {
-
-  product.sizeStock.split(',').forEach(function(item) {
-
+  product.sizeStock.split(' ').forEach(function(item) {
     var parts = item.split(':');
 
-    if (parts.length >= 2) {
+    if (parts.length === 2) {
+      var size = parts[0].trim().toUpperCase();
+      var qty = parseInt(parts[1]);
 
-      var sizeName = parts[0].trim();
-      var qty = Number(parts[1].trim());
-
-      stockMap[sizeName] = qty;
+      stockMap[size] = qty;
     }
   });
 }
 
-var sizeOptions = product.sizes
-  .split(',')
-  .map(function(size) {
+var sizesList = [];
 
-    size = size.trim();
+if (product.sizes && product.sizes.trim() !== '') {
+  sizesList = product.sizes.split(',');
+} else {
+  sizesList = Object.keys(stockMap);
+}
 
-    var qty = stockMap[size];
+var sizeOptions = sizesList.map(function(size) {
+  var originalSize = size.trim();
+  var key = originalSize.toUpperCase();
+  var qty = stockMap[key];
 
-    if (qty !== undefined && qty <= 0) {
-      return '';
-    }
+  if (product.sizeStock && qty <= 0) {
+    return '';
+  }
 
-    return '<option value="' + safe(size) + '">' +
-      safe(size) +
-      (qty !== undefined ? ' (' + qty + ')' : '') +
+  return '<option value="' + safe(originalSize) + '">' +
+    safe(originalSize) +
+    (qty !== undefined ? ' (' + qty + ')' : '') +
     '</option>';
+}).join('');
 
-  })
-  .join('');
   html += `
     <select class="input size-select" data-size-select="${product.id}">
       <option value="">Escolha o tamanho</option>
       ${sizeOptions}
     </select>
   `;
+
 }
 if (product.colors) {
-  html += '<p class="product-desc"><strong>Cores:</strong> ' + safe(product.colors) + '</p>';
+  var colorOptions = product.colors.split(',').map(function(color) {
+  var c = color.trim();
+
+  return '<option value="' + safe(c) + '">' +
+    safe(c) +
+    '</option>';
+}).join('');
+
+html += `
+  <select class="input color-select" data-color-select="${product.id}">
+    <option value="">Escolha a cor</option>
+    ${colorOptions}
+  </select>
+`;
 }
 
         html += '<div class="installment">6x de ' + money(product.price / 6) + '</div>';
@@ -2176,10 +2256,30 @@ if (product.colors) {
         var product = findProduct(id);
         if (!product) return;
         var sizeSelect = document.querySelector('[data-size-select="' + id + '"]');
+
+if (sizeSelect && !sizeSelect.value) {
+  if (colorSelect && !colorSelect.value) {
+  alert('Escolha uma cor antes de comprar.');
+  colorSelect.focus();
+  return;
+}
+  alert('Escolha um tamanho antes de comprar.');
+  sizeSelect.focus();
+  return;
+}
+
+
+        var sizeSelect = document.querySelector('[data-size-select="' + id + '"]');
 var selectedSize = sizeSelect ? sizeSelect.value : '';
+var colorSelect = document.querySelector('[data-color-select="' + id + '"]');
+var selectedColor = colorSelect ? colorSelect.value : '';
 
 if (product.sizes && !selectedSize) {
   toast('Escolha um tamanho.');
+  return;
+}
+if (colorSelect && !colorSelect.value) {
+  toast('Escolha uma cor.');
   return;
 }
 
@@ -2189,7 +2289,9 @@ if (Number(product.stock || 0) <= 0) {
 }
         if (!product) return;
         var item = cart.find(function (cartItem) {
-  return cartItem.id === id && cartItem.size === selectedSize;
+  return cartItem.id === id &&
+       cartItem.size === selectedSize &&
+       cartItem.color === selectedColor;
 });
    if (item) {
   if (item.qty >= Number(product.stock || 0)) {
@@ -2199,7 +2301,12 @@ if (Number(product.stock || 0) <= 0) {
 
   item.qty += 1;
 } else {
-  cart.push({ id: id, qty: 1, size: selectedSize });
+  cart.push({
+  id: id,
+  qty: 1,
+  size: selectedSize,
+  color: selectedColor
+});
 }
         save(CONFIG.keys.cart, cart);
         renderAll();
@@ -2274,6 +2381,9 @@ function renderCart() {
 
 if (item.size) {
   html += '<span>Tamanho: ' + safe(item.size) + '</span><br>';
+}
+if (item.color) {
+  html += '<span>Cor: ' + safe(item.color) + '</span><br>';
 }
 
 html += '<span>' + money(product.price) + '</span>';
@@ -2368,15 +2478,16 @@ function checkoutCart() {
     if (!product) return;
 
     subtotal += product.price * item.qty;
-
-    lines.push(
-      '- ' +
-      product.name +
-      ' - ' +
-      item.qty +
-      'x - ' +
-      money(product.price * item.qty)
-    );
+lines.push(
+  '- ' +
+  product.name +
+  (item.size ? ' | Tam: ' + item.size : '') +
+  (item.color ? ' | Cor: ' + item.color : '') +
+  ' - ' +
+  item.qty +
+  'x - ' +
+  money(product.price * item.qty)
+);
   });
 
   var coupon = getAppliedCoupon();
@@ -2468,24 +2579,50 @@ function checkoutCart() {
     return;
   }
 
-  var newStock = Math.max(
-    0,
-    Number(product.stock || 0) - Number(item.qty || 0)
-  );
+var newStock = Math.max(
+  0,
+  Number(product.stock || 0) - Number(item.qty || 0)
+);
 
-  product.stock = newStock;
+product.stock = newStock;
 
-  f.updateDoc(
-    f.doc(db, 'products', productId),
-    {
-      stock: newStock
+var updateData = {
+  stock: newStock
+};
+
+if (item.size && product.sizeStock) {
+  var stockMap = {};
+
+  product.sizeStock.split(' ').forEach(function(part) {
+    var pieces = part.split(':');
+
+    if (pieces.length === 2) {
+      stockMap[pieces[0].trim().toUpperCase()] = Number(pieces[1]);
     }
-  ).then(function () {
-    console.log('Estoque atualizado:', product.name, newStock);
-  }).catch(function (error) {
-    console.log('Erro ao atualizar estoque:', error);
-    toast('Pedido registrado, mas estoque não atualizou.');
   });
+
+  var sizeKey = item.size.trim().toUpperCase();
+
+  if (stockMap[sizeKey] !== undefined) {
+    stockMap[sizeKey] = Math.max(0, stockMap[sizeKey] - Number(item.qty || 0));
+
+    product.sizeStock = Object.keys(stockMap).map(function(size) {
+      return size + ':' + stockMap[size];
+    }).join(' ');
+
+    updateData.sizeStock = product.sizeStock;
+  }
+}
+
+f.updateDoc(
+  f.doc(db, 'products', productId),
+  updateData
+).then(function () {
+  console.log('Estoque atualizado:', product.name, updateData);
+}).catch(function (error) {
+  console.log('Erro ao atualizar estoque:', error);
+  toast('Pedido registrado, mas estoque não atualizou.');
+});
 });
 
 save(CONFIG.keys.products, products);
