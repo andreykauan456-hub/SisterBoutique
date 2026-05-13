@@ -883,79 +883,22 @@
 }
  
 
-/* Correção final: cards, selects e informações visíveis no celular */
-.size-select,
-.color-select {
-  display: block !important;
-  width: 100% !important;
-  height: 40px !important;
-  margin: 8px 0 !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
+/* ===== CORREÇÃO FINAL MOBILE/CARDS/CAMPOS ===== */
+.product-card, .product-info { height:auto !important; max-height:none !important; overflow:visible !important; }
+.product-info .input, .product-info select, .size-select, .color-select { display:block !important; width:100% !important; height:40px !important; margin:8px 0 !important; visibility:visible !important; opacity:1 !important; }
+.stock-line { display:block !important; visibility:visible !important; opacity:1 !important; }
 @media (max-width: 768px) {
-  .products-grid {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    gap: 18px !important;
-  }
-
-  .product-card {
-    display: block !important;
-    width: 100% !important;
-    max-width: 340px !important;
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    margin: 0 auto !important;
-  }
-
-  .product-img {
-    width: 100% !important;
-    height: 350px !important;
-    min-height: 350px !important;
-    overflow: hidden !important;
-    position: relative !important;
-  }
-
-  .product-img img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-  }
-
-  .product-info {
-    display: block !important;
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
-    padding: 15px 14px 17px !important;
-  }
-
-  .product-info h3,
-  .product-desc,
-  .stock-line,
-  .size-select,
-  .color-select,
-  .installment,
-  .price,
-  .product-actions {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-
-  .product-actions {
-    display: grid !important;
-    grid-template-columns: 1fr 42px !important;
-    gap: 8px !important;
-  }
+  .products-grid { display:grid !important; grid-template-columns:1fr !important; gap:18px !important; }
+  .product-card { display:block !important; width:100% !important; max-width:340px !important; margin:0 auto !important; height:auto !important; min-height:0 !important; max-height:none !important; overflow:visible !important; }
+  .product-img { width:100% !important; height:350px !important; overflow:hidden !important; position:relative !important; }
+  .product-img img { width:100% !important; height:100% !important; object-fit:cover !important; display:block !important; }
+  .product-info { display:block !important; height:auto !important; min-height:0 !important; max-height:none !important; overflow:visible !important; padding:15px 14px 17px !important; }
+  .product-desc, .stock-line, .installment, .price { display:block !important; visibility:visible !important; opacity:1 !important; }
+  .size-select, .color-select { display:block !important; width:100% !important; height:42px !important; min-height:42px !important; margin:8px 0 !important; visibility:visible !important; opacity:1 !important; position:relative !important; z-index:5 !important; background:#fff !important; color:var(--text) !important; }
+  .product-actions { display:grid !important; grid-template-columns:1fr 42px !important; gap:8px !important; visibility:visible !important; opacity:1 !important; }
 }
 
- </style>
+</style>
 </head>
 <body>
   <div class="top-strip">
@@ -1240,11 +1183,20 @@
       <span id="cartTotal">R$ 0,00</span>
     </div>
 
-    <button class="btn" id="checkoutBtn" style="width:100%;" type="button">FINALIZAR PELO WHATSAPP</button>
+    <button class="btn" id="checkoutBtn" type="button" style="width:100%;">FINALIZAR PELO WHATSAPP</button>
   </aside>
 </div>
 
-<div class="drawer" id="favDrawer"><div class="overlay" data-close="favDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Favoritos</h3><button class="close-btn" data-close="favDrawer">×</button></div><div id="favItems"></div></aside></div>
+<div class="drawer" id="favDrawer">
+  <div class="overlay" data-close="favDrawer"></div>
+  <aside class="drawer-panel">
+    <div class="panel-head">
+      <h3>Favoritos</h3>
+      <button class="close-btn" data-close="favDrawer">×</button>
+    </div>
+    <div id="favItems"></div>
+  </aside>
+</div>
   <div class="modal" id="loginModal"><div class="overlay" data-close="loginModal"></div><div class="modal-card"><div class="panel-head"><h3>Painel admin</h3><button class="close-btn" data-close="loginModal">×</button></div><p class="hint">Área restrita. Digite a senha de administrador para continuar.</p><form class="form-grid" id="loginForm"><input class="input" type="email" id="adminEmail" placeholder="E-mail admin" required><input class="input" type="password" id="adminPassword" placeholder="Senha do painel" required><button class="btn" type="submit">Entrar</button></form></div></div>
  <div class="modal" id="couponsModal">
   <div class="modal-card">
@@ -1366,8 +1318,7 @@
     </form>
   </div>
 </div>
-
-<div class="modal" id="manageModal"><div class="overlay" data-close="manageModal"></div><div class="modal-card"><div class="panel-head"><h3>Gerenciar catálogo</h3><button class="close-btn" data-close="manageModal">×</button></div><div id="adminProductList"></div></div></div>
+  <div class="modal" id="manageModal"><div class="overlay" data-close="manageModal"></div><div class="modal-card"><div class="panel-head"><h3>Gerenciar catálogo</h3><button class="close-btn" data-close="manageModal">×</button></div><div id="adminProductList"></div></div></div>
  <div class="modal" id="ordersModal">
   <div class="overlay" data-close="ordersModal"></div>
 
@@ -1417,6 +1368,7 @@
   <div class="modal" id="branchModal"><div class="overlay" data-close="branchModal"></div><div class="modal-card"><div class="panel-head"><h3>Escolha a filial</h3><button class="close-btn" data-close="branchModal">×</button></div><p class="hint">Envie seu pedido para a filial Brasil ou Argentina.</p><div class="form-grid"><button class="btn" id="sendBrasil">Filial Brasil</button><button class="btn btn-outline" id="sendArgentina">Filial Argentina</button></div></div></div>
   <div class="modal" id="detailModal"><div class="overlay" data-close="detailModal"></div><div class="modal-card" id="detailContent"></div></div>
   <div class="toast" id="toast"></div>
+  <div class="toast" class="toast-duplicate-disabled" style="display:none"></div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -1673,7 +1625,7 @@ cartDiscount: qs('#cartDiscount'),
         productForm: qs('#productForm'),
         productModalTitle: qs('#productModalTitle'),
         productSizes: qs('#productSizes'),
-        productColors: qs('#productColors'),
+productColors: qs('#productColors'),
         adminProductList: qs('#adminProductList'),
         sendBrasil: qs('#sendBrasil'),
         sendArgentina: qs('#sendArgentina'),
@@ -1995,39 +1947,6 @@ function renderCategories(){
   });
 
 }
-
-      function parseList(value) {
-        if (!value) return [];
-        if (Array.isArray(value)) return value.map(function(item){ return String(item).trim(); }).filter(Boolean);
-        return String(value).split(',').map(function(item){ return item.trim(); }).filter(Boolean);
-      }
-
-      function parseSizeStock(value) {
-        var map = {};
-        if (!value) return map;
-        String(value).replace(/,/g, ' ').split(/\s+/).forEach(function(part) {
-          if (!part || part.indexOf(':') === -1) return;
-          var pieces = part.split(':');
-          var size = pieces[0].trim().toUpperCase();
-          var qty = Number(pieces.slice(1).join(':').trim());
-          if (size) map[size] = Number.isFinite(qty) ? qty : 0;
-        });
-        return map;
-      }
-
-      function getAvailableStock(product, selectedSize) {
-        var stockMap = parseSizeStock(product.sizeStock);
-        var keys = Object.keys(stockMap);
-        if (selectedSize && keys.length) {
-          var selectedKey = String(selectedSize).trim().toUpperCase();
-          if (stockMap[selectedKey] !== undefined) return Number(stockMap[selectedKey] || 0);
-        }
-        if (keys.length) {
-          return keys.reduce(function(total, key){ return total + Number(stockMap[key] || 0); }, 0);
-        }
-        return Number(product.stock || 0);
-      }
-
       function renderProducts() {
         if (!els.productsGrid) return;
         var list = products.slice();
@@ -2062,13 +1981,17 @@ function renderCategories(){
         var oldPrice = product.oldPrice ? '<span class="old-price">' + money(product.oldPrice) + '</span>' : '';
         var badgeText = product.tag || (product.status && product.status !== 'Normal' ? product.status : '');
         var badge = badgeText ? '<span class="discount">' + safe(badgeText) + '</span>' : '';
-        var stockMap = parseSizeStock(product.sizeStock);
-        var sizesList = parseList(product.sizes);
-        if (!sizesList.length && Object.keys(stockMap).length) sizesList = Object.keys(stockMap);
-        var colorsList = parseList(product.colors);
-        var stockQty = getAvailableStock(product, '');
-        var isOutOfStock = stockQty <= 0;
         var admin = '';
+
+        var sizesList = parseProductList(product.sizes);
+        var stockMap = parseProductSizeStock(product.sizeStock);
+        var hasSizeStock = Object.keys(stockMap).length > 0;
+        if (!sizesList.length && hasSizeStock) sizesList = Object.keys(stockMap);
+
+        var colorsList = parseProductList(product.colors);
+        var totalSizeStock = getTotalSizeStock(stockMap);
+        var stockQty = hasSizeStock ? totalSizeStock : Number(product.stock || 0);
+        var isOutOfStock = stockQty <= 0;
 
         if (isAdmin) {
           admin += '<div class="admin-actions">';
@@ -2082,8 +2005,7 @@ function renderCategories(){
         html += '<div class="product-img">' + badge + '<span class="stock-badge-mobile">Estoque: ' + stockQty + '</span>';
         html += '<button class="heart-btn ' + (isFav ? 'active' : '') + '" data-action="fav" data-id="' + product.id + '">' + (isFav ? '♥' : '♡') + '</button>';
         html += '<img src="' + safe(product.image) + '" alt="' + safe(product.name) + '" loading="lazy" data-action="detail" data-id="' + product.id + '">';
-        html += '</div>';
-        html += '<div class="product-info">';
+        html += '</div><div class="product-info">';
         html += '<h3 data-action="detail" data-id="' + product.id + '">' + safe(product.name) + '</h3>';
         html += '<p class="product-desc">' + safe(product.description) + '</p>';
         html += '<div class="price"><strong>' + money(product.price) + '</strong>' + oldPrice + '</div>';
@@ -2094,7 +2016,7 @@ function renderCategories(){
             var originalSize = String(size).trim();
             var key = originalSize.toUpperCase();
             var qty = stockMap[key];
-            if (Object.keys(stockMap).length && Number(qty || 0) <= 0) return '';
+            if (hasSizeStock && Number(qty || 0) <= 0) return '';
             return '<option value="' + safe(originalSize) + '">' + safe(originalSize) + (qty !== undefined ? ' (' + qty + ')' : '') + '</option>';
           }).join('');
           html += '<select class="input size-select" data-size-select="' + product.id + '"><option value="">Escolha o tamanho</option>' + sizeOptions + '</select>';
@@ -2102,8 +2024,8 @@ function renderCategories(){
 
         if (colorsList.length) {
           var colorOptions = colorsList.map(function(color) {
-            var cleanColor = String(color).trim();
-            return '<option value="' + safe(cleanColor) + '">' + safe(cleanColor) + '</option>';
+            var c = String(color).trim();
+            return '<option value="' + safe(c) + '">' + safe(c) + '</option>';
           }).join('');
           html += '<select class="input color-select" data-color-select="' + product.id + '"><option value="">Escolha a cor</option>' + colorOptions + '</select>';
         }
@@ -2116,6 +2038,40 @@ function renderCategories(){
         }
         html += admin + '</div></article>';
         return html;
+      }
+
+      function parseProductList(value) {
+        if (!value) return [];
+        if (Array.isArray(value)) return value.map(String).map(function(v){ return v.trim(); }).filter(Boolean);
+        return String(value).split(',').map(function(v){ return v.trim(); }).filter(Boolean);
+      }
+
+      function parseProductSizeStock(value) {
+        var map = {};
+        if (!value) return map;
+        String(value).split(/[ ,]+/).forEach(function(part) {
+          if (!part || part.indexOf(':') === -1) return;
+          var pieces = part.split(':');
+          var size = pieces[0].trim().toUpperCase();
+          var qty = Number(pieces.slice(1).join(':').trim());
+          if (size && !Number.isNaN(qty)) map[size] = qty;
+        });
+        return map;
+      }
+
+      function formatProductSizeStock(map) {
+        return Object.keys(map).map(function(size) { return size + ':' + Number(map[size] || 0); }).join(' ');
+      }
+
+      function getTotalSizeStock(map) {
+        return Object.keys(map).reduce(function(total, size) { return total + Number(map[size] || 0); }, 0);
+      }
+
+      function getProductAvailableStock(product, size) {
+        var stockMap = parseProductSizeStock(product && product.sizeStock);
+        if (size && Object.keys(stockMap).length) return Number(stockMap[String(size).trim().toUpperCase()] || 0);
+        if (Object.keys(stockMap).length) return getTotalSizeStock(stockMap);
+        return Number(product && product.stock || 0);
       }
 
       function handleProductAction(event) {
@@ -2147,7 +2103,7 @@ function renderCategories(){
           return;
         }
 
-        var availableStock = getAvailableStock(product, selectedSize);
+        var availableStock = getProductAvailableStock(product, selectedSize);
         if (availableStock <= 0) {
           toast('Produto sem estoque.');
           return;
@@ -2155,8 +2111,8 @@ function renderCategories(){
 
         var item = cart.find(function (cartItem) {
           return cartItem.id === id &&
-            (cartItem.size || '') === selectedSize &&
-            (cartItem.color || '') === selectedColor;
+                 (cartItem.size || '') === selectedSize &&
+                 (cartItem.color || '') === selectedColor;
         });
 
         if (item) {
@@ -2214,16 +2170,18 @@ function renderCategories(){
         if (buyButton) buyButton.addEventListener('click', function () { buyNow(id); });
         if (cartButton) cartButton.addEventListener('click', function () { addToCart(id); closeModal('detailModal'); });
       }
+function cartKey(item) {
+  return [item.id || '', item.size || '', item.color || ''].join('||');
+}
+
 function renderCart() {
   if (!els.cartItems || !els.cartTotal) return;
 
   if (!cart.length) {
     els.cartItems.innerHTML = '<div class="empty">Seu carrinho está vazio.</div>';
-
     if (els.cartSubtotal) els.cartSubtotal.textContent = money(0);
     if (els.cartDiscount) els.cartDiscount.textContent = money(0);
     if (els.cartTotal) els.cartTotal.textContent = money(0);
-
     updateCouponArea(0, 0, null);
     return;
   }
@@ -2231,25 +2189,20 @@ function renderCart() {
   var subtotal = 0;
   var html = '';
 
-  cart.forEach(function (item, cartIndex) {
+  cart.forEach(function (item) {
     var product = findProduct(item.id);
     if (!product) return;
 
     subtotal += product.price * item.qty;
+    var key = safe(cartKey(item));
 
     html += '<div class="cart-item"><img src="' + safe(product.image) + '" alt="' + safe(product.name) + '">';
     html += '<div><h4>' + safe(product.name) + '</h4>';
-
-if (item.size) {
-  html += '<span>Tamanho: ' + safe(item.size) + '</span><br>';
-}
-if (item.color) {
-  html += '<span>Cor: ' + safe(item.color) + '</span><br>';
-}
-
-html += '<span>' + money(product.price) + '</span>';
-    html += '<div class="qty"><button data-cart="minus" data-id="' + item.id + '" data-index="' + cartIndex + '">−</button><strong>' + item.qty + '</strong><button data-cart="plus" data-id="' + item.id + '" data-index="' + cartIndex + '">+</button></div></div>';
-    html += '<button class="close-btn" data-cart="remove" data-id="' + item.id + '" data-index="' + cartIndex + '">×</button></div>';
+    if (item.size) html += '<span>Tamanho: ' + safe(item.size) + '</span><br>';
+    if (item.color) html += '<span>Cor: ' + safe(item.color) + '</span><br>';
+    html += '<span>' + money(product.price) + '</span>';
+    html += '<div class="qty"><button data-cart="minus" data-key="' + key + '">−</button><strong>' + item.qty + '</strong><button data-cart="plus" data-key="' + key + '">+</button></div></div>';
+    html += '<button class="close-btn" data-cart="remove" data-key="' + key + '">×</button></div>';
   });
 
   var coupon = getAppliedCoupon();
@@ -2257,41 +2210,33 @@ html += '<span>' + money(product.price) + '</span>';
   var total = Math.max(0, subtotal - discount);
 
   els.cartItems.innerHTML = html;
-
   if (els.cartSubtotal) els.cartSubtotal.textContent = money(subtotal);
   if (els.cartDiscount) els.cartDiscount.textContent = money(discount);
   if (els.cartTotal) els.cartTotal.textContent = money(total);
-
   updateCouponArea(subtotal, discount, coupon);
 
-  var cartButtons = els.cartItems.querySelectorAll('[data-cart]');
-
-  cartButtons.forEach(function (button) {
+  els.cartItems.querySelectorAll('[data-cart]').forEach(function (button) {
     button.addEventListener('click', handleCartAction);
   });
 }
 
-      function handleCartAction(event) {
+function handleCartAction(event) {
         var action = event.currentTarget.getAttribute('data-cart');
-        var id = event.currentTarget.getAttribute('data-id');
-        var index = Number(event.currentTarget.getAttribute('data-index'));
-        var item = Number.isInteger(index) ? cart[index] : cart.find(function (cartItem) { return cartItem.id === id; });
+        var key = event.currentTarget.getAttribute('data-key');
+        var item = cart.find(function (cartItem) { return cartKey(cartItem) === key; });
         if (!item) return;
 
         if (action === 'plus') {
           var product = findProduct(item.id);
-          var availableStock = product ? getAvailableStock(product, item.size || '') : 0;
+          var availableStock = product ? getProductAvailableStock(product, item.size) : 0;
           if (item.qty >= availableStock) {
             toast('Quantidade máxima em estoque.');
             return;
           }
           item.qty += 1;
         }
-
         if (action === 'minus') item.qty -= 1;
-        if (action === 'remove' || item.qty <= 0) {
-          cart = cart.filter(function (_, cartIndex) { return cartIndex !== index; });
-        }
+        if (action === 'remove' || item.qty <= 0) cart = cart.filter(function (cartItem) { return cartKey(cartItem) !== key; });
         save(CONFIG.keys.cart, cart);
         renderAll();
       }
@@ -2341,44 +2286,25 @@ function checkoutCart() {
   cart.forEach(function (item) {
     var product = findProduct(item.id);
     if (!product) return;
-
     subtotal += product.price * item.qty;
-lines.push(
-  '- ' +
-  product.name +
-  (item.size ? ' | Tam: ' + item.size : '') +
-  (item.color ? ' | Cor: ' + item.color : '') +
-  ' - ' +
-  item.qty +
-  'x - ' +
-  money(product.price * item.qty)
-);
+    lines.push('- ' + product.name +
+      (item.size ? ' | Tam: ' + item.size : '') +
+      (item.color ? ' | Cor: ' + item.color : '') +
+      ' - ' + item.qty + 'x - ' + money(product.price * item.qty));
   });
 
   var coupon = getAppliedCoupon();
   var discount = coupon ? calculateCouponDiscount(subtotal, coupon) : 0;
   var total = Math.max(0, subtotal - discount);
 
-  pendingMessage =
-    'Ola! Quero finalizar meu pedido na Sisters Boutique:\n\n' +
-    lines.join('\n') +
-    '\n\nSubtotal: ' +
-    money(subtotal);
-
-  if (coupon) {
-    pendingMessage +=
-      '\nCupom: ' +
-      coupon.code +
-      '\nDesconto: ' +
-      money(discount);
-  }
-
+  pendingMessage = 'Ola! Quero finalizar meu pedido na Sisters Boutique:\n\n' + lines.join('\n') + '\n\nSubtotal: ' + money(subtotal);
+  if (coupon) pendingMessage += '\nCupom: ' + coupon.code + '\nDesconto: ' + money(discount);
   pendingMessage += '\nTotal: ' + money(total);
 
- openModal('orderModal');
+  openModal('orderModal');
 }
 
-     function saveOrder(event) {
+function saveOrder(event) {
   event.preventDefault();
 
   if (!cart.length) {
@@ -2388,37 +2314,40 @@ lines.push(
 
   var lines = [];
   var items = [];
-  var total = 0;
+  var subtotal = 0;
 
   cart.forEach(function (item) {
     var product = findProduct(item.id);
     if (!product) return;
-
     var itemTotal = product.price * item.qty;
-    total += itemTotal;
-
+    subtotal += itemTotal;
     items.push({
-  productId: product.id,
-  name: product.name,
-  size: item.size || '',
-  color: item.color || '',
-  price: product.price,
-  qty: item.qty,
-  total: itemTotal
-});
-    lines.push(
-  '- ' + product.name +
-  (item.size ? ' | Tam: ' + item.size : '') +
-  (item.color ? ' | Cor: ' + item.color : '') +
-  ' - ' + item.qty + 'x - ' + money(itemTotal)
-);
+      productId: product.id,
+      name: product.name,
+      size: item.size || '',
+      color: item.color || '',
+      price: product.price,
+      qty: item.qty,
+      total: itemTotal
+    });
+    lines.push('- ' + product.name +
+      (item.size ? ' | Tam: ' + item.size : '') +
+      (item.color ? ' | Cor: ' + item.color : '') +
+      ' - ' + item.qty + 'x - ' + money(itemTotal));
   });
+
+  var coupon = getAppliedCoupon();
+  var discount = coupon ? calculateCouponDiscount(subtotal, coupon) : 0;
+  var total = Math.max(0, subtotal - discount);
 
   var order = {
     customerName: els.customerName.value.trim(),
     customerPhone: els.customerPhone.value.trim(),
     customerNote: els.customerNote.value.trim(),
     items: items,
+    subtotal: subtotal,
+    coupon: coupon ? coupon.code : '',
+    discount: discount,
     total: total,
     status: 'Novo',
     createdAt: new Date().toISOString()
@@ -2429,90 +2358,61 @@ lines.push(
     return;
   }
 
-  if (window.firebaseDB && window.firebaseFns) {
-    var db = window.firebaseDB;
-    var f = window.firebaseFns;
-
-    f.addDoc(f.collection(db, 'orders'), order).then(function () {
-   items.forEach(function (item) {
-  var productId = item.productId || item.id;
-
-  var product = products.find(function (p) {
-    return p.id === productId;
-  });
-
-  if (!product) {
-    console.log('Produto não encontrado no estoque:', item);
+  if (!window.firebaseDB || !window.firebaseFns) {
+    toast('Firebase não carregou.');
     return;
   }
 
-var newStock = Math.max(
-  0,
-  Number(product.stock || 0) - Number(item.qty || 0)
-);
+  var db = window.firebaseDB;
+  var f = window.firebaseFns;
 
-product.stock = newStock;
+  f.addDoc(f.collection(db, 'orders'), order).then(function () {
+    items.forEach(function (item) {
+      var productId = item.productId;
+      var product = products.find(function (p) { return p.id === productId; });
+      if (!product) return;
 
-var updateData = {
-  stock: newStock
-};
+      var stockMap = parseProductSizeStock(product.sizeStock);
+      var updateData = {};
 
-if (item.size && product.sizeStock) {
-  var stockMap = {};
+      if (item.size && Object.keys(stockMap).length) {
+        var sizeKey = item.size.trim().toUpperCase();
+        if (stockMap[sizeKey] !== undefined) stockMap[sizeKey] = Math.max(0, Number(stockMap[sizeKey] || 0) - Number(item.qty || 0));
+        product.sizeStock = formatProductSizeStock(stockMap);
+        updateData.sizeStock = product.sizeStock;
+        product.stock = Math.max(0, Number(product.stock || 0) - Number(item.qty || 0));
+        updateData.stock = product.stock;
+      } else {
+        product.stock = Math.max(0, Number(product.stock || 0) - Number(item.qty || 0));
+        updateData.stock = product.stock;
+      }
 
-  product.sizeStock.split(' ').forEach(function(part) {
-    var pieces = part.split(':');
-
-    if (pieces.length === 2) {
-      stockMap[pieces[0].trim().toUpperCase()] = Number(pieces[1]);
-    }
-  });
-
-  var sizeKey = item.size.trim().toUpperCase();
-
-  if (stockMap[sizeKey] !== undefined) {
-    stockMap[sizeKey] = Math.max(0, stockMap[sizeKey] - Number(item.qty || 0));
-
-    product.sizeStock = Object.keys(stockMap).map(function(size) {
-      return size + ':' + stockMap[size];
-    }).join(' ');
-
-    updateData.sizeStock = product.sizeStock;
-  }
-}
-
-f.updateDoc(
-  f.doc(db, 'products', productId),
-  updateData
-).then(function () {
-  console.log('Estoque atualizado:', product.name, updateData);
-}).catch(function (error) {
-  console.log('Erro ao atualizar estoque:', error);
-  toast('Pedido registrado, mas estoque não atualizou.');
-});
-});
-
-save(CONFIG.keys.products, products);
-renderAll();
-      pendingMessage =
-        'Olá! Quero finalizar meu pedido na Sisters Boutique:\n\n' +
-        lines.join('\n') +
-        '\n\nNome: ' + order.customerName +
-        '\nWhatsApp: ' + order.customerPhone +
-        '\nObservação: ' + (order.customerNote || 'Nenhuma') +
-        '\n\nTotal: ' + money(total);
-
-      closeModal('orderModal');
-      openModal('branchModal');
-      toast('Pedido registrado.');
-    }).catch(function () {
-      toast('Erro ao registrar pedido.');
+      f.updateDoc(f.doc(db, 'products', productId), updateData).catch(function () {
+        toast('Pedido registrado, mas estoque não atualizou.');
+      });
     });
- } else {
-  toast('Firebase não carregou.');
-}
 
-};
+    save(CONFIG.keys.products, products);
+    cart = [];
+    removeCoupon();
+    save(CONFIG.keys.cart, cart);
+    renderAll();
+
+    pendingMessage = 'Olá! Quero finalizar meu pedido na Sisters Boutique:\n\n' +
+      lines.join('\n') +
+      '\n\nNome: ' + order.customerName +
+      '\nWhatsApp: ' + order.customerPhone +
+      '\nObservação: ' + (order.customerNote || 'Nenhuma') +
+      (coupon ? '\nCupom: ' + coupon.code + '\nDesconto: ' + money(discount) : '') +
+      '\n\nTotal: ' + money(total);
+
+    closeModal('orderModal');
+    openModal('branchModal');
+    toast('Pedido registrado.');
+  }).catch(function () {
+    toast('Erro ao registrar pedido.');
+  });
+}
 
 window.openOrdersModal = async function () {
 
@@ -2728,7 +2628,10 @@ function sendWhatsapp(number) {
         qs('#productCategory').value = product ? product.category : 'Vestidos';
         qs('#productImage').value = product ? product.image : '';
         qs('#productDescription').value = product ? product.description : '';
-qs('#productSizes').value = product && product.sizes ? product.sizes : '';
+qs('#productSizes').value =
+  product && product.sizes
+    ? product.sizes
+    : '';
 
 qs('#productColors').value =
   product && product.colors
