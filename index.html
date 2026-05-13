@@ -862,6 +862,25 @@
     display: grid !important;
   }
 }
+.stock-badge-mobile {
+  position: absolute !important;
+  left: 12px !important;
+  bottom: 12px !important;
+  z-index: 20 !important;
+  background: #fff !important;
+  color: var(--dark) !important;
+  padding: 6px 10px !important;
+  border-radius: 4px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.product-img {
+  position: relative !important;
+}
  </style>
 </head>
 <body>
@@ -2058,7 +2077,7 @@ function renderCategories(){
 
         var html = '';
         html += '<article class="product-card">';
-        html += '<div class="product-img">' + badge + stockBadge;
+       html += '<div class="product-img">' + badge + '<span class="stock-badge-mobile">Estoque: ' + Number(product.stock || 0) + '</span>';
         html += '<button class="heart-btn ' + (isFav ? 'active' : '') + '" data-action="fav" data-id="' + product.id + '">' + (isFav ? '♥' : '♡') + '</button>';
         html += '<img src="' + safe(product.image) + '" alt="' + safe(product.name) + '" loading="lazy" data-action="detail" data-id="' + product.id + '">';
         html += '</div><div class="product-info">';
