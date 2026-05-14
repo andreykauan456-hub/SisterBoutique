@@ -1104,7 +1104,7 @@
         <div class="footer-col"><h4>Institucional</h4><a href="#sobre">Sobre nós</a><a href="#filiais">Nossas filiais</a><a href="#loja">Catálogo</a><a href="#">Política de privacidade</a></div>
         <div class="footer-col"><h4>Ajuda</h4><a href="#loja">Como comprar</a><a href="#">Formas de pagamento</a><a href="#">Prazos de entrega</a><a href="#contato">Fale conosco</a></div>
         <div class="footer-col"><h4>Contato</h4><p>Brasil: (62) 98474-7298</p><p>Argentina: +54 9 11 4189-5959</p><p>contato@sisters.com.br</p><p>Seg - Sáb: 09h às 18h</p></div>
-        <div class="footer-col"><h4>Formas de pagamento</h4><div class="payment-tags"><span>VISA</span><span>MASTER</span><span>ELO</span><span>PIX</span></div><h4>Segurança</h4><p>🛡️ Site protegido</p></div>
+        <div class="footer-col"><h4>Formas de pagamento</h4><div class="payment-tags"><span>VISA</span><span>MASTER</span><span>ELO</span><span>PIX</span><span>BOLETO</span></div><h4>Segurança</h4><p>🛡️ Site protegido</p></div>
       </div>
     </div>
     <div class="bottom-bar"><div class="bottom-inner"><p>© <span id="year"></span> Sister's Boutique. Todos os direitos reservados.</p><span>Sister's Boutique • Moda feminina premium</span></div></div>
@@ -1140,6 +1140,7 @@
   <button class="btn btn-small btn-danger" id="logoutAdminBtn">
     Sair
   </button>
+
 </div>
 
   <div class="drawer" id="cartDrawer"><div class="overlay" data-close="cartDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Carrinho</h3><button class="close-btn" data-close="cartDrawer">×</button></div><div id="cartItems"></div>
@@ -1210,41 +1211,27 @@
 
     <h2>Gerenciar cupons</h2>
 
-  <form class="form-grid" id="couponForm">
-  <input type="hidden" id="couponId">
+    <div class="form-grid">
+      <input id="couponCodeInput" class="input" placeholder="Código do cupom">
 
-  <label class="field">
-    Código do cupom
-    <input id="couponCode" class="input" placeholder="Ex: PRIMEIRA5" required>
-  </label>
+      <select id="couponTypeInput" class="input">
+        <option value="percent">Porcentagem (%)</option>
+        <option value="fixed">Valor fixo (R$)</option>
+      </select>
 
-  <label class="field">
-    Tipo de desconto
-    <select id="couponType" class="input">
-      <option value="percent">Porcentagem (%)</option>
-      <option value="fixed">Valor fixo (R$)</option>
-    </select>
-  </label>
+      <input id="couponValueInput" class="input" type="number" placeholder="Valor">
 
-  <label class="field">
-    Valor
-    <input id="couponValue" class="input" type="number" placeholder="Ex: 10" required>
-  </label>
+      <label class="check-row">
+        <input id="couponActiveInput" type="checkbox" checked>
+        Cupom ativo
+      </label>
 
-  <label class="field">
-    Status
-    <select id="couponActive" class="input">
-      <option value="yes">Ativo</option>
-      <option value="no">Desativado</option>
-    </select>
-  </label>
+      <button class="btn" id="saveCouponBtn" type="button">
+        Salvar cupom
+      </button>
+    </div>
 
-  <button class="btn" type="submit">
-    Salvar cupom
-  </button>
-</form>
-
-<div id="adminCouponList" style="margin-top:15px;"></div>
+    <div id="adminCouponsList" style="margin-top:15px;"></div>
   </div>
 </div>
   <div class="modal" id="productModal"><div class="overlay" data-close="productModal"></div><div class="modal-card"><div class="panel-head"><h3 id="productModalTitle">Produto</h3><button class="close-btn" data-close="productModal">×</button></div><form class="form-grid" id="productForm">
