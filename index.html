@@ -2257,7 +2257,16 @@ html += `
         if (!product) return;
         var sizeSelect = document.querySelector('[data-size-select="' + id + '"]');
 
-
+if (sizeSelect && !sizeSelect.value) {
+  if (colorSelect && !colorSelect.value) {
+  alert('Escolha uma cor antes de comprar.');
+  colorSelect.focus();
+  return;
+}
+  alert('Escolha um tamanho antes de comprar.');
+  sizeSelect.focus();
+  return;
+}
 
 
 var sizeSelect = document.querySelector('[data-size-select="' + id + '"]');
