@@ -2275,9 +2275,6 @@ var selectedSize = sizeSelect ? sizeSelect.value : '';
 var colorSelects = document.querySelectorAll('[data-color-select="' + id + '"]');
 var colorSelect = colorSelects.length ? colorSelects[colorSelects.length - 1] : null;
 var selectedColor = colorSelect ? colorSelect.value : '';
-console.log('SELECTS DE COR:', colorSelects);
-console.log('SELECT DE COR USADO:', colorSelect);
-console.log('COR ESCOLHIDA:', selectedColor);
 
 if (product.sizes && !selectedSize) {
   toast('Escolha um tamanho.');
