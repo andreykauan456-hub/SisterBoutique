@@ -1129,18 +1129,15 @@
     Restaurar catálogo
   </button>
 
-  <button
-  class="btn btn-small"
-  id="manageCouponsBtn"
-  type="button"
->
-  Gerenciar cupons
-</button>
-
   <button class="btn btn-small btn-danger" id="logoutAdminBtn">
     Sair
   </button>
-
+  <button
+class="btn btn-small btn-outline"
+id="manageCouponsBtn"
+>
+Gerenciar cupons
+</button>
 </div>
 
   <div class="drawer" id="cartDrawer"><div class="overlay" data-close="cartDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Carrinho</h3><button class="close-btn" data-close="cartDrawer">×</button></div><div id="cartItems"></div>
@@ -1202,38 +1199,8 @@
 >
   FINALIZAR PELO WHATSAPP
 <button
-
   <div class="drawer" id="favDrawer"><div class="overlay" data-close="favDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Favoritos</h3><button class="close-btn" data-close="favDrawer">×</button></div><div id="favItems"></div></aside></div>
   <div class="modal" id="loginModal"><div class="overlay" data-close="loginModal"></div><div class="modal-card"><div class="panel-head"><h3>Painel admin</h3><button class="close-btn" data-close="loginModal">×</button></div><p class="hint">Área restrita. Digite a senha de administrador para continuar.</p><form class="form-grid" id="loginForm"><input class="input" type="email" id="adminEmail" placeholder="E-mail admin" required><input class="input" type="password" id="adminPassword" placeholder="Senha do painel" required><button class="btn" type="submit">Entrar</button></form></div></div>
- <div class="modal" id="couponsModal">
-  <div class="modal-card">
-    <button class="modal-close" data-close="couponsModal">×</button>
-
-    <h2>Gerenciar cupons</h2>
-
-    <div class="form-grid">
-      <input id="couponCodeInput" class="input" placeholder="Código do cupom">
-
-      <select id="couponTypeInput" class="input">
-        <option value="percent">Porcentagem (%)</option>
-        <option value="fixed">Valor fixo (R$)</option>
-      </select>
-
-      <input id="couponValueInput" class="input" type="number" placeholder="Valor">
-
-      <label class="check-row">
-        <input id="couponActiveInput" type="checkbox" checked>
-        Cupom ativo
-      </label>
-
-      <button class="btn" id="saveCouponBtn" type="button">
-        Salvar cupom
-      </button>
-    </div>
-
-    <div id="adminCouponsList" style="margin-top:15px;"></div>
-  </div>
-</div>
   <div class="modal" id="productModal"><div class="overlay" data-close="productModal"></div><div class="modal-card"><div class="panel-head"><h3 id="productModalTitle">Produto</h3><button class="close-btn" data-close="productModal">×</button></div><form class="form-grid" id="productForm">
 
   <input type="hidden" id="productId">
