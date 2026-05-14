@@ -2221,7 +2221,7 @@ if (product.colors) {
 }).join('');
 
 html += `
-  <select class="input color-select" data-color-old=="${product.id}">
+  <select class="input color-select" data-color-select="${product.id}">
     <option value="">Escolha a cor</option>
     ${colorOptions}
   </select>
