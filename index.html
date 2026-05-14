@@ -33,6 +33,18 @@
     button { cursor: pointer; }
     img { max-width: 100%; display: block; }
 
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .top-strip { background: var(--brown); color: #fff; font-size: 12px; font-weight: 600; }
     .top-strip-inner { max-width: 1220px; margin: auto; padding: 9px 18px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center; }
 
@@ -510,7 +522,7 @@
 
     justify-content:center !important;
 
-    gap:45x !important;
+    gap:45px !important;
 
     width:100% !important;
 
@@ -966,6 +978,7 @@
     </section>
 
     <section class="benefits">
+      <h2 class="sr-only">Benefícios da loja</h2>
       <div class="benefits-inner">
         <div class="benefit"><div class="benefit-icon">🚚</div><div><strong>Frete</strong><span>Para todo o Brasil</span></div></div>
         <div class="benefit"><div class="benefit-icon">💳</div><div><strong>Parcele em até 6x</strong><span>Sem juros no cartão</span></div></div>
@@ -1088,6 +1101,7 @@
     </section>
 
     <section class="values">
+      <h2 class="sr-only">Valores da Sister's Boutique</h2>
       <div class="values-inner">
         <div class="value-item"><div class="value-icon">♡</div><div><strong>Estilo que encanta</strong><span>Peças selecionadas com amor</span></div></div>
         <div class="value-item"><div class="value-icon">⚙</div><div><strong>Qualidade premium</strong><span>Tecidos impecáveis</span></div></div>
@@ -1101,12 +1115,11 @@
     <div class="footer-main">
       <div class="footer-inner">
         <div class="footer-logo"><div class="logo-area"><div class="logo-mark">SB</div><div class="logo-name"><strong>Sister's</strong><span>Boutique</span></div></div><p>Elegância que te acompanha em todos os momentos.</p><div class="socials"><a href="https://www.instagram.com/sistersboutiquear/" target="_blank" rel="noopener">◎</a><button data-branch="br">☏</button><button data-branch="ar">✉</button></div></div>
-        <div class="footer-col"><h4>Institucional</h4><a href="#sobre">Sobre nós</a><a href="#filiais">Nossas filiais</a><a href="#loja">Catálogo</a><a href="#">Política de privacidade</a></div>
-        <div class="footer-col"><h4>Ajuda</h4><a href="#loja">Como comprar</a><a href="#">Formas de pagamento</a><a href="#">Prazos de entrega</a><a href="#contato">Fale conosco</a></div>
-        <div class="footer-col"><h4>Contato</h4><p>Brasil: (62) 98474-7298</p><p>Argentina: +54 9 11 4189-5959</p><p>contato@sisters.com.br</p><p>Seg - Sáb: 09h às 18h</p></div>
-        <div class="footer-col"><h4>Formas de pagamento</h4><div class="payment-tags"><span>VISA</span><span>MASTER</span><span>ELO</span><span>PIX</span><span>BOLETO</span></div><h4>Segurança</h4><p>🛡️ Site protegido</p></div>
+        <div class="footer-col"></div><h3>Institucional</h3><a href="#sobre">Sobre nós</a><a href="#filiais">Nossas filiais</a><a href="#loja">Catálogo</a><a href="#">Política de privacidade</a></div>
+        <div class="footer-col"><h3>Ajuda</h3><a href="#loja">Como comprar</a><a href="#">Formas de pagamento</a><a href="#">Prazos de entrega</a><a href="#contato">Fale conosco</a></div>
+        <div class="footer-col"><h3>Contato</h3><p>Brasil: (62) 98474-7298</p><p>Argentina: +54 9 11 4189-5959</p><p>contato@sisters.com.br</p><p>Seg - Sáb: 09h às 18h</p></div>
+        <div class="footer-col"><h3>Formas de pagamento</h3><div class="payment-tags"><span>VISA</span><span>MASTER</span><span>ELO</span><span>PIX</span><span>BOLETO</span></div><h3>Segurança</h3><p>🛡️ Site protegido</p></div>
       </div>
-    </div>
     <div class="bottom-bar"><div class="bottom-inner"><p>© <span id="year"></span> Sister's Boutique. Todos os direitos reservados.</p><span>Sister's Boutique • Moda feminina premium</span></div></div>
   </footer>
 
@@ -1132,12 +1145,6 @@
   <button class="btn btn-small btn-danger" id="logoutAdminBtn">
     Sair
   </button>
-  <button
-class="btn btn-small btn-outline"
-id="manageCouponsBtn"
->
-Gerenciar cupons
-</button>
 </div>
 
   <div class="drawer" id="cartDrawer"><div class="overlay" data-close="cartDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Carrinho</h3><button class="close-btn" data-close="cartDrawer">×</button></div><div id="cartItems"></div>
@@ -1198,7 +1205,10 @@ Gerenciar cupons
   style="width:100%;"
 >
   FINALIZAR PELO WHATSAPP
-<button
+</button>
+
+</aside>
+</div>
   <div class="drawer" id="favDrawer"><div class="overlay" data-close="favDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Favoritos</h3><button class="close-btn" data-close="favDrawer">×</button></div><div id="favItems"></div></aside></div>
   <div class="modal" id="loginModal"><div class="overlay" data-close="loginModal"></div><div class="modal-card"><div class="panel-head"><h3>Painel admin</h3><button class="close-btn" data-close="loginModal">×</button></div><p class="hint">Área restrita. Digite a senha de administrador para continuar.</p><form class="form-grid" id="loginForm"><input class="input" type="email" id="adminEmail" placeholder="E-mail admin" required><input class="input" type="password" id="adminPassword" placeholder="Senha do painel" required><button class="btn" type="submit">Entrar</button></form></div></div>
   <div class="modal" id="productModal"><div class="overlay" data-close="productModal"></div><div class="modal-card"><div class="panel-head"><h3 id="productModalTitle">Produto</h3><button class="close-btn" data-close="productModal">×</button></div><form class="form-grid" id="productForm">
@@ -1238,6 +1248,7 @@ Gerenciar cupons
     
 
     <select class="input" id="productCategory" required>
+      <option value="" disabled selected>Selecione uma categoria</option>
       <option>Vestidos</option>
       <option>Conjuntos</option>
       <option>Blusas</option>
@@ -1248,63 +1259,9 @@ Gerenciar cupons
 
   </label>
 
-  <label class="field">
-    Tamanhos disponíveis
+ 
 
- <select
-  class="input"
-  id="productSizes"
-  multiple
-  style="height:120px"
->
 
-  <option>PP</option>
-  <option>P</option>
-  <option>M</option>
-  <option>G</option>
-  <option>GG</option>
-  <option>XG</option>
-
-  <option>Baby Look P</option>
-  <option>Baby Look M</option>
-  <option>Baby Look G</option>
-  <option>ÚNICO</option>
-
-</select>
-  </label>
-
-  <label class="field">
-    Cores disponíveis
-
-    <select
-  class="input"
-  id="productColors"
-  multiple
-  style="height:170px"
->
-
-  <option>Preto</option>
-  <option>Branco</option>
-  <option>Bege</option>
-  <option>Marrom</option>
-  <option>Rosa</option>
-  <option>Pink</option>
-  <option>Vermelho</option>
-  <option>Verde</option>
-  <option>Azul</option>
-  <option>Azul Claro</option>
-  <option>Azul Marinho</option>
-  <option>Lilás</option>
-  <option>Roxo</option>
-  <option>Amarelo</option>
-  <option>Laranja</option>
-  <option>Cinza</option>
-  <option>Nude</option>
-  <option>Off White</option>
-
-</select>
-    >
-  </label>
 
   <label class="field">
     Imagem
@@ -1374,7 +1331,9 @@ Gerenciar cupons
     id="productColors"
     placeholder="Ex: Rosa, Branco, Preto, Verde"
   >
-  <label class="field">
+</label>
+
+<label class="field">
   Estoque disponível
   <input
     class="input"
@@ -1383,14 +1342,15 @@ Gerenciar cupons
     min="0"
     placeholder="Ex: 10"
   >
-  <label class="field">
+</label>
+
+<label class="field">
   Estoque por tamanho
   <input
     class="input"
     id="productSizeStock"
     placeholder="Ex: PP:2, P:4, M:0, G:3, GG:1"
   >
-</label>
 </label>
   
   <button class="btn" type="submit">
@@ -1447,7 +1407,6 @@ Gerenciar cupons
 </div>
   <div class="modal" id="branchModal"><div class="overlay" data-close="branchModal"></div><div class="modal-card"><div class="panel-head"><h3>Escolha a filial</h3><button class="close-btn" data-close="branchModal">×</button></div><p class="hint">Envie seu pedido para a filial Brasil ou Argentina.</p><div class="form-grid"><button class="btn" id="sendBrasil">Filial Brasil</button><button class="btn btn-outline" id="sendArgentina">Filial Argentina</button></div></div></div>
   <div class="modal" id="detailModal"><div class="overlay" data-close="detailModal"></div><div class="modal-card" id="detailContent"></div></div>
-  <div class="toast" id="toast"></div>
   <div class="toast" id="toast"></div>
 
 <script type="module">
