@@ -2221,7 +2221,7 @@ if (product.colors) {
 }).join('');
 
 html += `
-  <select class="input color-select" data-color-old="${product.id}">
+  <select class="input color-select" data-color-old=="${product.id}">
     <option value="">Escolha a cor</option>
     ${colorOptions}
   </select>
@@ -2271,8 +2271,7 @@ if (sizeSelect && !sizeSelect.value) {
 
         var sizeSelect = document.querySelector('[data-size-select="' + id + '"]');
 var selectedSize = sizeSelect ? sizeSelect.value : '';
-var colorSelects = document.querySelectorAll('[data-color-select="' + id + '"]');
-var colorSelect = colorSelects.length ? colorSelects[colorSelects.length - 1] : null;
+var colorSelect = document.querySelector('[data-color-select="' + id + '"]');
 var selectedColor = colorSelect ? colorSelect.value : '';
 
 if (product.sizes && !selectedSize) {
