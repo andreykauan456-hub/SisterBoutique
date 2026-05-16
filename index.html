@@ -899,6 +899,27 @@
     line-height: 1.1 !important;
   }
 }
+.country-switch {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.country-switch button {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--brown);
+  border-radius: 20px;
+  padding: 7px 12px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.country-switch button.active {
+  background: var(--brown);
+  color: #fff;
+}
  </style>
 </head>
 <body>
@@ -916,13 +937,17 @@
         <div class="logo-mark">SB</div>
         <div class="logo-name"><strong>Sister's</strong><span>Boutique</span></div>
       </a>
+      <div class="country-switch">
+        <button type="button" data-country="BR">🇧🇷 Brasil</button>
+        <button type="button" data-country="AR">🇦🇷 Argentina</button>
+      </div>
       <div class="nav-menu">
-        <a href="#inicio">Início</a>
-        <a href="#loja">Loja</a>
-        <a href="#categorias">Categorias</a>
-        <a href="#sobre">Sobre nós</a>
-        <a href="#filiais">Filiais</a>
-        <a href="#contato">Contato</a>
+        <a href="#inicio" data-translate="home">Início</a>
+        <a href="#loja" data-translate="shop">Loja</a>
+        <a href="#categorias" data-translate="categories">Categorias</a>
+        <a href="#sobre" data-translate="about">Sobre nós</a>
+        <a href="#filiais" data-translate="branches">Filiais</a>
+        <a href="#contato" data-translate="contact">Contato</a>
       </div>
       <div class="nav-icons">
         <button class="icon-btn" id="searchFocusBtn" title="Buscar">
@@ -1025,7 +1050,12 @@
           <div class="center-line"></div>
         </div>
         <div class="shop-tools">
-          <input class="search-box" id="searchInput" placeholder="Buscar produto...">
+         <input
+  class="search-box"
+  id="searchInput"
+  placeholder="Buscar produto..."
+  data-translate-placeholder="search"
+>
           <select class="select-box" id="sortSelect">
             <option value="default">Ordenar</option>
             <option value="low">Menor preço</option>
@@ -1121,11 +1151,12 @@
     <div class="footer-main">
       <div class="footer-inner">
         <div class="footer-logo"><div class="logo-area"><div class="logo-mark">SB</div><div class="logo-name"><strong>Sister's</strong><span>Boutique</span></div></div><p>Elegância que te acompanha em todos os momentos.</p><div class="socials"><a href="https://www.instagram.com/sistersboutiquear/" target="_blank" rel="noopener">◎</a><button data-branch="br">☏</button><button data-branch="ar">✉</button></div></div>
-        <div class="footer-col"></div><h3>Institucional</h3><a href="#sobre">Sobre nós</a><a href="#filiais">Nossas filiais</a><a href="#loja">Catálogo</a><a href="#">Política de privacidade</a></div>
+        <div class="footer-col"><h3>Institucional</h3><a href="#sobre">Sobre nós</a><a href="#filiais">Nossas filiais</a><a href="#loja">Catálogo</a><a href="#">Política de privacidade</a></div>
         <div class="footer-col"><h3>Ajuda</h3><a href="#loja">Como comprar</a><a href="#">Formas de pagamento</a><a href="#">Prazos de entrega</a><a href="#contato">Fale conosco</a></div>
         <div class="footer-col"><h3>Contato</h3><p>Brasil: (62) 98474-7298</p><p>Argentina: +54 9 11 4189-5959</p><p>contato@sisters.com.br</p><p>Seg - Sáb: 09h às 18h</p></div>
-        <div class="footer-col"><h3>Formas de pagamento</h3><div class="payment-tags"><span>VISA</span><span>MASTER</span><span>ELO</span><span>PIX</span><span>BOLETO</span></div><h3>Segurança</h3><p>🛡️ Site protegido</p></div>
+        <div class="footer-col"><h3>Formas de pagamento</h3><div class="payment-tags"><span>VISA</span><span>MASTER</span><span>ELO</span><span>PIX</span></div><h3>Segurança</h3><p>🛡️ Site protegido</p></div>
       </div>
+    </div>
     <div class="bottom-bar"><div class="bottom-inner"><p>© <span id="year"></span> Sister's Boutique. Todos os direitos reservados.</p><span>Sister's Boutique • Moda feminina premium</span></div></div>
   </footer>
 
@@ -1155,7 +1186,7 @@
   </button>
 </div>
 
-  <div class="drawer" id="cartDrawer"><div class="overlay" data-close="cartDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3>Carrinho</h3><button class="close-btn" data-close="cartDrawer">×</button></div><div id="cartItems"></div>
+  <div class="drawer" id="cartDrawer"><div class="overlay" data-close="cartDrawer"></div><aside class="drawer-panel"><div class="panel-head"><h3 data-translate="cart">Carrinho</h3><button class="close-btn" data-close="cartDrawer">×</button></div><div id="cartItems"></div>
 
 <div style="margin:8px 0;">
 
@@ -1220,7 +1251,7 @@
   id="checkoutBtn"
   style="width:100%;"
 >
-  FINALIZAR PELO WHATSAPP
+  <span data-translate="checkout">FINALIZAR PELO WHATSAPP</span>
 </button>
 
 </aside>
@@ -1274,6 +1305,15 @@
     </select>
 
   </label>
+  <label class="field">
+  País do produto
+
+  <select class="input" id="productCountry" required>
+    <option value="" disabled selected>Selecione o país</option>
+    <option value="BR">Brasil</option>
+    <option value="AR">Argentina</option>
+  </select>
+</label>
 
  
 
@@ -1542,7 +1582,39 @@ window.firebaseAuthFns = {
   <script>
     (function () {
       'use strict';
+var translations = {
+  BR: {
+    addToCart: 'Adicionar ao carrinho',
+    buyNow: 'Comprar agora',
+    cart: 'Carrinho',
+    checkout: 'FINALIZAR PELO WHATSAPP',
+    emptyCart: 'Seu carrinho está vazio',
+    search: 'Buscar produto...',
+    categories: 'Categorias',
+    shop: 'Loja',
+    home: 'Início',
+    contact: 'Contato',
+    about: 'Sobre nós',
+    favorites: 'Favoritos',
+    branches: 'Filiais'
+  },
 
+  AR: {
+    addToCart: 'Agregar al carrito',
+    buyNow: 'Comprar ahora',
+    cart: 'Carrito',
+    checkout: 'FINALIZAR POR WHATSAPP',
+    emptyCart: 'Tu carrito está vacío',
+    search: 'Buscar producto...',
+    categories: 'Categorías',
+    shop: 'Tienda',
+    home: 'Inicio',
+    contact: 'Contacto',
+    about: 'Sobre nosotros',
+    favorites: 'Favoritos',
+    branches: 'Sucursales'
+  }
+};
       var CONFIG = {
         adminPassword: 'Yeshua@2026',
         adminRoute: '#YeshuaFamiliaCostaSB',
@@ -1624,6 +1696,7 @@ appliedCoupon: 'sb_applied_coupon_final_v1'
 
    var products = [];
       var cart = load(CONFIG.keys.cart, []);
+      var currentCountry = localStorage.getItem('sb_country') || 'BR';
       var favorites = load(CONFIG.keys.favorites, []);
       var coupons = load(CONFIG.keys.coupons, defaultCoupons);
 var appliedCouponCode = load(CONFIG.keys.appliedCoupon, '');
@@ -1793,7 +1866,21 @@ function hideDashboard() {
         if (els.orderForm) {
   els.orderForm.addEventListener('submit', saveOrder);
 }
+document.querySelectorAll('[data-country]').forEach(function (btn) {
+  btn.addEventListener('click', function () {
 
+    currentCountry = btn.getAttribute('data-country');
+
+    localStorage.setItem('sb_country', currentCountry);
+
+    cart = [];
+
+    save(CONFIG.keys.cart, cart);
+
+    renderAll();
+
+  });
+});
       
         if (els.cartBtn) els.cartBtn.addEventListener('click', function () { openModal('cartDrawer'); });
         if (els.favoritesBtn) els.favoritesBtn.addEventListener('click', function () { openModal('favDrawer'); });
@@ -1986,10 +2073,166 @@ function setAdminUI() {
     els.adminDashboard.style.display = isAdmin ? 'block' : 'none';
   }
 }
+function setText(selector, value) {
+  var el = document.querySelector(selector);
+  if (el) el.textContent = value;
+}
+
+function setHTML(selector, value) {
+  var el = document.querySelector(selector);
+  if (el) el.innerHTML = value;
+}
+
+function applyTranslations() {
+  var t = translations[currentCountry] || translations.BR;
+
+  document.documentElement.lang = currentCountry === 'AR' ? 'es-AR' : 'pt-BR';
+
+  document.querySelectorAll('[data-translate]').forEach(function(el) {
+    var key = el.getAttribute('data-translate');
+    if (t[key]) el.textContent = t[key];
+  });
+
+  document.querySelectorAll('[data-translate-placeholder]').forEach(function(el) {
+    var key = el.getAttribute('data-translate-placeholder');
+    if (t[key]) el.setAttribute('placeholder', t[key]);
+  });
+
+  if (currentCountry === 'AR') {
+    setText('.top-strip-inner span:nth-child(1)', '🚚 ENVÍOS A TODA ARGENTINA');
+    setText('.top-strip-inner span:nth-child(2)', '💳 HASTA 6 CUOTAS SIN INTERÉS');
+    setText('.top-strip-inner span:nth-child(3)', '🏷️ 5% OFF POR TRANSFERENCIA');
+
+    setText('.hero h1', 'Elegancia que te acompaña en todos los momentos.');
+    setText('.hero-sub', 'Comodidad • Elegancia • Exclusividad');
+    setText('.hero .btn', 'Comprar ahora');
+
+    setText('.benefit:nth-child(1) strong', 'Envío');
+    setText('.benefit:nth-child(1) span', 'A toda Argentina');
+    setText('.benefit:nth-child(2) strong', 'Hasta 6 cuotas');
+    setText('.benefit:nth-child(2) span', 'Sin interés con tarjeta');
+    setText('.benefit:nth-child(3) strong', 'Compra segura');
+    setText('.benefit:nth-child(3) span', 'Tus datos protegidos');
+    setText('.benefit:nth-child(4) strong', 'Atención VIP');
+    setText('.benefit:nth-child(4) span', 'Soporte personalizado');
+
+    setText('#sobre .eyebrow', 'Sobre nosotros');
+    setHTML('#sobre .section-title', 'Más que una tienda,<br>un propósito.');
+    var aboutPs = document.querySelectorAll('#sobre .about-text p');
+    if (aboutPs[0]) aboutPs[0].textContent = "Sister's Boutique nació del sueño de dos hermanas apasionadas por la moda y por transformar autoestima en confianza.";
+    if (aboutPs[1]) aboutPs[1].textContent = 'Creemos que cada mujer es única y merece sentirse increíble todos los días.';
+    setText('#sobre .btn', 'Conocé nuestras sucursales');
+
+    setText('#categorias .eyebrow', 'Categorías');
+    setText('#categorias .section-title', 'Encontrá lo que estás buscando');
+    setText('#loja .eyebrow', 'Destacados');
+    setText('#loja .section-title', 'Los más amados de la semana');
+
+    var sort = document.querySelector('#sortSelect');
+    if (sort) {
+      sort.options[0].textContent = 'Ordenar';
+      sort.options[1].textContent = 'Menor precio';
+      sort.options[2].textContent = 'Mayor precio';
+      sort.options[3].textContent = 'Nombre A-Z';
+    }
+
+    setText('.coupon strong', '5% OFF en la primera compra');
+    setText('.coupon span', 'Registrate y recibí tu cupón.');
+    var newsletter = document.querySelector('#newsletterEmail');
+    if (newsletter) newsletter.placeholder = 'Tu mejor e-mail';
+    setText('#newsletterForm .btn', 'Ganar 5% OFF');
+    setText('.instagram-box strong', 'Seguinos en Instagram');
+
+    setText('#filiais .eyebrow', 'Nuestras sucursales');
+    setText('#filiais .section-title', 'Atención en Brasil y Argentina');
+
+    var branchCards = document.querySelectorAll('#filiais .product-card');
+    if (branchCards[0]) {
+      branchCards[0].querySelector('h3').textContent = 'Sucursal Brasil';
+      branchCards[0].querySelector('.product-desc').textContent = 'Atención para todo Brasil con envío nacional.';
+      branchCards[0].querySelector('.installment').textContent = '📍 Brasil • Lunes a sábado • 08:30 a 19:30';
+      branchCards[0].querySelector('.btn').textContent = 'Contactar Brasil';
+    }
+    if (branchCards[1]) {
+      branchCards[1].querySelector('h3').textContent = 'Sucursal Argentina';
+      branchCards[1].querySelector('.product-desc').textContent = 'Atención especial para clientes de Argentina.';
+      branchCards[1].querySelector('.installment').textContent = '📍 Argentina • Lunes a sábado • 08:30 a 19:30';
+      branchCards[1].querySelector('.btn').textContent = 'Contactar Argentina';
+    }
+    if (branchCards[2]) {
+      branchCards[2].querySelector('h3').textContent = 'Atención online';
+      branchCards[2].querySelector('.product-desc').textContent = 'Elegí tus productos y enviá el pedido por WhatsApp.';
+      branchCards[2].querySelector('.installment').textContent = '💬 Respuesta rápida';
+      branchCards[2].querySelector('.btn').textContent = 'Ver carrito';
+    }
+    if (branchCards[3]) {
+      branchCards[3].querySelector('h3').textContent = 'Instagram oficial';
+      branchCards[3].querySelector('.product-desc').textContent = 'Seguí novedades y promociones exclusivas.';
+      branchCards[3].querySelector('.btn').textContent = 'Abrir Instagram';
+    }
+
+    setText('#avaliacoes .eyebrow', 'Reseñas');
+    setText('#avaliacoes .section-title', 'Lo que dicen nuestras clientas');
+    var reviews = document.querySelectorAll('.review-card');
+    if (reviews[0]) reviews[0].querySelector('p').textContent = 'Compré un vestido y quedé enamorada. La atención fue rápida, la prenda llegó bien embalada y la tela es maravillosa.';
+    if (reviews[1]) reviews[1].querySelector('p').textContent = 'La tienda es muy elegante y fácil para comprar. Me gustó mucho el soporte por WhatsApp y las opciones de looks.';
+    if (reviews[2]) reviews[2].querySelector('p').textContent = 'Las prendas son lindas, delicadas y combinan con varias ocasiones. Recomiendo comprar con seguridad.';
+
+    setText('#porque-escolher .eyebrow', 'Por qué elegirnos');
+    setText('#porque-escolher .section-title', "Motivos para comprar en Sister's Boutique");
+    var choose = document.querySelectorAll('.choose-card');
+    if (choose[0]) { choose[0].querySelector('h3').textContent = 'Prendas seleccionadas'; choose[0].querySelector('p').textContent = 'Elegimos cada producto con cuidado para entregar belleza, comodidad y elegancia.'; }
+    if (choose[1]) { choose[1].querySelector('h3').textContent = 'Envío facilitado'; choose[1].querySelector('p').textContent = 'Atención para Brasil y Argentina, con soporte para finalizar tu pedido.'; }
+    if (choose[2]) { choose[2].querySelector('h3').textContent = 'Atención humana'; choose[2].querySelector('p').textContent = 'Hablás directo por WhatsApp y recibís ayuda para elegir el mejor look.'; }
+    if (choose[3]) { choose[3].querySelector('h3').textContent = 'Estilo exclusivo'; choose[3].querySelector('p').textContent = 'Looks delicados, modernos y sofisticados para diferentes momentos de tu día.'; }
+
+    var values = document.querySelectorAll('.value-item');
+    if (values[0]) { values[0].querySelector('strong').textContent = 'Estilo que encanta'; values[0].querySelector('span').textContent = 'Prendas seleccionadas con amor'; }
+    if (values[1]) { values[1].querySelector('strong').textContent = 'Calidad premium'; values[1].querySelector('span').textContent = 'Telas impecables'; }
+    if (values[2]) { values[2].querySelector('strong').textContent = 'Exclusividad'; values[2].querySelector('span').textContent = 'Colecciones únicas para vos'; }
+    if (values[3]) { values[3].querySelector('strong').textContent = 'Confianza'; values[3].querySelector('span').textContent = 'Clientas satisfechas'; }
+
+    setText('.footer-logo p', 'Elegancia que te acompaña en todos los momentos.');
+    var footerCols = document.querySelectorAll('.footer-col');
+    if (footerCols[0]) { footerCols[0].querySelector('h3').textContent = 'Institucional'; footerCols[0].querySelectorAll('a')[0].textContent = 'Sobre nosotros'; footerCols[0].querySelectorAll('a')[1].textContent = 'Nuestras sucursales'; footerCols[0].querySelectorAll('a')[2].textContent = 'Catálogo'; footerCols[0].querySelectorAll('a')[3].textContent = 'Política de privacidad'; }
+    if (footerCols[1]) { footerCols[1].querySelector('h3').textContent = 'Ayuda'; footerCols[1].querySelectorAll('a')[0].textContent = 'Cómo comprar'; footerCols[1].querySelectorAll('a')[1].textContent = 'Formas de pago'; footerCols[1].querySelectorAll('a')[2].textContent = 'Plazos de entrega'; footerCols[1].querySelectorAll('a')[3].textContent = 'Contactanos'; }
+    if (footerCols[2]) { footerCols[2].querySelector('h3').textContent = 'Contacto'; footerCols[2].querySelectorAll('p')[3].textContent = 'Lun - Sáb: 09h a 18h'; }
+    if (footerCols[3]) { footerCols[3].querySelector('h3').textContent = 'Formas de pago'; footerCols[3].querySelectorAll('h3')[1].textContent = 'Seguridad'; footerCols[3].querySelector('p').textContent = '🛡️ Sitio protegido'; }
+    setText('.bottom-inner p', '© ' + new Date().getFullYear() + " Sister's Boutique. Todos los derechos reservados.");
+    setText('.bottom-inner span', "Sister's Boutique • Moda femenina premium");
+
+    setText('#applyCouponBtn', 'Aplicar');
+    setText('#removeCouponBtn', 'Quitar cupón');
+    setText('.total-row:nth-of-type(1) span:first-child', 'Subtotal');
+    setText('.total-row:nth-of-type(2) span:first-child', 'Descuento');
+    setText('.total-row:nth-of-type(3) span:first-child', 'Total');
+    setText('#branchModal h3', 'Elegí la sucursal');
+    setText('#branchModal .hint', 'Enviá tu pedido a la sucursal de Brasil o Argentina.');
+    setText('#sendBrasil', 'Sucursal Brasil');
+    setText('#sendArgentina', 'Sucursal Argentina');
+    setText('#orderModal h3', 'Finalizar pedido');
+    setText('#orderModal .hint', 'Completá tus datos para registrar el pedido.');
+    setText('#orderForm button', 'Enviar pedido');
+  }
+}
       function renderAll() {
+        function updateCountryButtons() {
+
+  document.querySelectorAll('[data-country]').forEach(function (btn) {
+
+    btn.classList.toggle(
+      'active',
+      btn.getAttribute('data-country') === currentCountry
+    );
+
+  });
+
+}
+        updateCountryButtons();
         renderCategories();
         renderProducts();
         renderCart();
+        applyTranslations();
         renderFavorites();
         updateCounts();
       }
@@ -2062,6 +2305,9 @@ function renderCategories(){
       function renderProducts() {
         if (!els.productsGrid) return;
         var list = products.slice();
+        list = list.filter(function (product) {
+  return (product.country || 'BR') === currentCountry;
+});
 
         if (activeCategory !== 'Todos') {
           list = list.filter(function (product) { return product.category === activeCategory; });
@@ -2076,7 +2322,7 @@ function renderCategories(){
         if (sortMode === 'name') list.sort(function (a, b) { return a.name.localeCompare(b.name); });
 
         if (!list.length) {
-          els.productsGrid.innerHTML = '<div class="empty" style="grid-column:1/-1">Nenhum produto encontrado.</div>';
+          els.productsGrid.innerHTML = '<div class="empty" style="grid-column:1/-1">' + (currentCountry === 'AR' ? 'No se encontraron productos.' : 'Nenhum produto encontrado.') + '</div>';
           return;
         }
 
@@ -2102,7 +2348,7 @@ function renderCategories(){
           admin += '<button class="btn btn-small btn-outline" data-action="edit" data-id="' + product.id + '">Editar</button>';
           admin += '<button class="btn btn-small btn-danger" data-action="delete" data-id="' + product.id + '">Excluir</button>';
           admin += '</div>';
-        }
+        } 
 
         var html = '';
         html += '<article class="product-card">';
@@ -2221,7 +2467,7 @@ html += `
        if (isOutOfStock) {
   html += '<div class="product-actions"><button class="btn btn-danger" disabled>Esgotado</button><button class="btn btn-outline" disabled>☏</button></div>';
 } else {
-  html += '<div class="product-actions"><button class="btn" data-action="cart" data-id="' + product.id + '">Comprar</button><button class="btn btn-outline" data-action="buy" data-id="' + product.id + '">☏</button></div>';
+  html += '<div class="product-actions"><button class="btn" data-action="cart" data-id="' + product.id + '">' + translations[currentCountry].addToCart + '</button><button class="btn btn-outline" data-action="buy" data-id="' + product.id + '">☏</button></div>';
 }
         html += admin + '</div></article>';
         return html;
@@ -2241,62 +2487,53 @@ html += `
       function addToCart(id) {
         var product = findProduct(id);
         if (!product) return;
-        var sizeSelect = document.querySelector('[data-size-select="' + id + '"]');
-
-if (sizeSelect && !sizeSelect.value) {
-  if (colorSelect && !colorSelect.value) {
-  alert('Escolha uma cor antes de comprar.');
-  colorSelect.focus();
-  return;
-}
-  alert('Escolha um tamanho antes de comprar.');
-  sizeSelect.focus();
-  return;
-}
-
 
         var sizeSelect = document.querySelector('[data-size-select="' + id + '"]');
-var selectedSize = sizeSelect ? sizeSelect.value : '';
-var colorSelect = document.querySelector('[data-color-select="' + id + '"]');
-var selectedColor = colorSelect ? colorSelect.value : '';
+        var colorSelect = document.querySelector('[data-color-select="' + id + '"]');
+        var selectedSize = sizeSelect ? sizeSelect.value : '';
+        var selectedColor = colorSelect ? colorSelect.value : '';
 
-if (product.sizes && !selectedSize) {
-  toast('Escolha um tamanho.');
-  return;
-}
-if (colorSelect && !colorSelect.value) {
-  toast('Escolha uma cor.');
-  return;
-}
+        if (product.sizes && !selectedSize) {
+          toast(currentCountry === 'AR' ? 'Elegí un talle.' : 'Escolha um tamanho.');
+          if (sizeSelect) sizeSelect.focus();
+          return;
+        }
 
-if (Number(product.stock || 0) <= 0) {
-  toast('Produto sem estoque.');
-  return;
-}
-        if (!product) return;
+        if (colorSelect && !selectedColor) {
+          toast(currentCountry === 'AR' ? 'Elegí un color.' : 'Escolha uma cor.');
+          colorSelect.focus();
+          return;
+        }
+
+        if (Number(product.stock || 0) <= 0) {
+          toast(currentCountry === 'AR' ? 'Producto sin stock.' : 'Produto sem estoque.');
+          return;
+        }
+
         var item = cart.find(function (cartItem) {
-  return cartItem.id === id &&
-       cartItem.size === selectedSize &&
-       cartItem.color === selectedColor;
-});
-   if (item) {
-  if (item.qty >= Number(product.stock || 0)) {
-    toast('Quantidade máxima em estoque.');
-    return;
-  }
+          return cartItem.id === id &&
+            cartItem.size === selectedSize &&
+            cartItem.color === selectedColor;
+        });
 
-  item.qty += 1;
-} else {
-  cart.push({
-  id: id,
-  qty: 1,
-  size: selectedSize,
-  color: selectedColor
-});
-}
+        if (item) {
+          if (item.qty >= Number(product.stock || 0)) {
+            toast(currentCountry === 'AR' ? 'Cantidad máxima en stock.' : 'Quantidade máxima em estoque.');
+            return;
+          }
+          item.qty += 1;
+        } else {
+          cart.push({
+            id: id,
+            qty: 1,
+            size: selectedSize,
+            color: selectedColor
+          });
+        }
+
         save(CONFIG.keys.cart, cart);
         renderAll();
-        toast('Produto adicionado.');
+        toast(currentCountry === 'AR' ? 'Producto agregado.' : 'Produto adicionado.');
       }
 
       function toggleFavorite(id) {
@@ -2429,7 +2666,7 @@ html += '<span>' + money(product.price) + '</span>';
         list.forEach(function (product) {
           html += '<div class="cart-item"><img src="' + safe(product.image) + '" alt="' + safe(product.name) + '">';
           html += '<div><h4>' + safe(product.name) + '</h4><span>' + money(product.price) + '</span>';
-          html += '<div class="admin-actions"><button class="btn btn-small" data-fav="cart" data-id="' + product.id + '">Carrinho</button><button class="btn btn-small btn-outline" data-fav="remove" data-id="' + product.id + '">Remover</button></div></div></div>';
+          html += '<div class="admin-actions"><button class="btn btn-small" data-fav="cart" data-id="' + product.id + '">' + translations[currentCountry].addToCart + '</button><button class="btn btn-small btn-outline" data-fav="remove" data-id="' + product.id + '">Remover</button></div></div></div>';
         });
         els.favItems.innerHTML = html;
 
@@ -2777,10 +3014,14 @@ html += `
     return;
   }
 
-  var message =
-    'Olá, ' + (name || 'cliente') +
-    '! Seu pedido na Sisters Boutique está com status: ' +
-    status + '.';
+ var message =
+currentCountry === 'AR'
+? 'Hola, ' + (name || 'cliente') +
+  '! Tu pedido en Sisters Boutique está con estado: ' +
+  status + '.'
+: 'Olá, ' + (name || 'cliente') +
+  '! Seu pedido na Sisters Boutique está com status: ' +
+  status + '.';
 
   window.open(
     'https://wa.me/55' + number +
@@ -2829,12 +3070,25 @@ html += `
   }
 
 }
+function sendWhatsapp() {
+  var phone =
+    currentCountry === 'AR'
+      ? CONFIG.whatsappArgentina
+      : CONFIG.whatsappBrasil;
 
-function sendWhatsapp(number) {
-        var msg = pendingMessage || 'Ola! Vim pelo site da Sisters Boutique e quero atendimento.';
-        window.open('https://wa.me/' + number + '?text=' + encodeURIComponent(msg), '_blank');
-        closeModal('branchModal');
-      }
+  var msg = pendingMessage || 'Olá! Vim pelo site da Sisters Boutique e quero atendimento.';
+
+  if (currentCountry === 'AR') {
+    msg = pendingMessage || '¡Hola! Vengo del sitio de Sisters Boutique y quiero atención.';
+  }
+
+  window.open(
+    'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg),
+    '_blank'
+  );
+
+  closeModal('branchModal');
+}
 
       function openProductForm(id) {
         if (!requireAdmin()) return;
@@ -2845,6 +3099,7 @@ function sendWhatsapp(number) {
         qs('#productPrice').value = product ? product.price : '';
         qs('#productOldPrice').value = product && product.oldPrice ? product.oldPrice : '';
         qs('#productCategory').value = product ? product.category : 'Vestidos';
+        qs('#productCountry').value = product ? (product.country || 'BR') : 'BR';
         qs('#productImage').value = product ? product.image : '';
         qs('#productDescription').value = product ? product.description : '';
 qs('#productSizesNew').value =
@@ -2886,6 +3141,7 @@ qs('#productTag').value =
     price: Number(qs('#productPrice').value),
     oldPrice: Number(qs('#productOldPrice').value) || 0,
     category: qs('#productCategory').value,
+    country: qs('#productCountry').value,
     image: qs('#productImage').value.trim(),
     stock: Number(qs('#productStock').value) || 0,
     sizeStock: qs('#productSizeStock').value.trim(),
@@ -3459,9 +3715,22 @@ function renderAdminCoupons() {
         return products.find(function (product) { return product.id === id; });
       }
 
-      function money(value) {
-        return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      }
+function money(value) {
+
+  value = Number(value || 0);
+
+  if (currentCountry === 'AR') {
+    return '$ ' + value.toLocaleString('es-AR', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    });
+  }
+
+  return 'R$ ' + value.toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+}
 
       function load(key, fallback) {
         try {
