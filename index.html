@@ -1272,9 +1272,9 @@
     <input
       class="input"
       id="productPrice"
-      type="text"
-      inputmode="decimal"
-      placeholder="Ex: 69.900"
+      type="number"
+      step="0.01"
+      min="0"
       required
     >
   </label>
@@ -1284,9 +1284,9 @@
     <input
       class="input"
       id="productOldPrice"
-      type="text"
-      inputmode="decimal"
-      placeholder="Ex: 89.900"
+      type="number"
+      step="0.01"
+      min="0"
     >
   </label>
 
@@ -3141,8 +3141,8 @@ qs('#productTag').value =
   var data = {
     id: id || uid(),
     name: qs('#productName').value.trim(),
-    price: parseFloat(qs('#productPrice').value.replace(/\./g, '').replace(',', '.')),
-    oldPrice: parseFloat(qs('#productOldPrice').value.replace(/\./g, '').replace(',', '.')) || 0,
+    price: Number(qs('#productPrice').value),
+    oldPrice: Number(qs('#productOldPrice').value) || 0,
     category: qs('#productCategory').value,
     country: qs('#productCountry').value,
     image: qs('#productImage').value.trim(),
@@ -3827,4 +3827,3 @@ uploadInput?.addEventListener('change', async function () {
   </script>
 </body>
 </html>
-
