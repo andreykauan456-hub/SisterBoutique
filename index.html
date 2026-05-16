@@ -1154,7 +1154,7 @@
         <div class="footer-col"><h3>Institucional</h3><a href="#sobre">Sobre nós</a><a href="#filiais">Nossas filiais</a><a href="#loja">Catálogo</a><a href="#">Política de privacidade</a></div>
         <div class="footer-col"><h3>Ajuda</h3><a href="#loja">Como comprar</a><a href="#">Formas de pagamento</a><a href="#">Prazos de entrega</a><a href="#contato">Fale conosco</a></div>
         <div class="footer-col"><h3>Contato</h3><p>Brasil: (62) 98474-7298</p><p>Argentina: +54 9 11 4189-5959</p><p>contato@sisters.com.br</p><p>Seg - Sáb: 09h às 18h</p></div>
-        <div class="footer-col"><h3>Formas de pagamento</h3><div class="payment-tags"><span>VISA</span><span>MASTER</span><span>ELO</span><span>PIX</span></div><h3>Segurança</h3><p>🛡️ Site protegido</p></div>
+        <div class="footer-col"><h3>Formas de pagamento</h3><div class="payment-tags"><span>VISA</span><span>MASTER</span><span>ELO</span><span>PIX</span><span>BOLETO</span></div><h3>Segurança</h3><p>🛡️ Site protegido</p></div>
       </div>
     </div>
     <div class="bottom-bar"><div class="bottom-inner"><p>© <span id="year"></span> Sister's Boutique. Todos os direitos reservados.</p><span>Sister's Boutique • Moda feminina premium</span></div></div>
@@ -1272,9 +1272,9 @@
     <input
       class="input"
       id="productPrice"
-      type="number"
-      step="0.01"
-      min="0"
+      type="text"
+      inputmode="decimal"
+      placeholder="Ex: 69.900"
       required
     >
   </label>
@@ -1284,9 +1284,9 @@
     <input
       class="input"
       id="productOldPrice"
-      type="number"
-      step="0.01"
-      min="0"
+      type="text"
+      inputmode="decimal"
+      placeholder="Ex: 89.900"
     >
   </label>
 
@@ -1496,7 +1496,7 @@
        <select class="input" id="couponType" required>
   <option value="" disabled selected>Selecione o tipo</option>
   <option value="percent">Porcentagem (%)</option>
-  <option value="fixed">Valor fixo (R$)</option>
+  <option value="fixed">Valor fixo (moeda do país)</option>
 </select>
       </label>
 
@@ -1649,13 +1649,14 @@ appliedCoupon: 'sb_applied_coupon_final_v1'
         return 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2);
       }
 
-      function makeProduct(name, price, oldPrice, category, image, description, tag, status) {
+      function makeProduct(name, price, oldPrice, category, image, description, tag, status, country) {
         return {
           id: uid(),
           name: name,
           price: price,
           oldPrice: oldPrice || 0,
           category: category,
+          country: country || 'BR',
           image: image,
           description: description,
           tag: tag || '',
@@ -1724,6 +1725,7 @@ var appliedCouponCode = load(CONFIG.keys.appliedCoupon, '');
         price: Number(data.price || 0),
         oldPrice: Number(data.oldPrice || 0),
         category: data.category || 'Vestidos',
+        country: data.country || 'BR',
         image: data.image || '',
         description: data.description || '',
         tag: data.tag || '',
@@ -1751,6 +1753,7 @@ sizeStock: data.sizeStock || ''
         price: p.price,
         oldPrice: p.oldPrice || 0,
         category: p.category,
+        country: p.country || 'BR',
         image: p.image,
         description: p.description,
         tag: p.tag || '',
@@ -3138,8 +3141,8 @@ qs('#productTag').value =
   var data = {
     id: id || uid(),
     name: qs('#productName').value.trim(),
-    price: Number(qs('#productPrice').value),
-    oldPrice: Number(qs('#productOldPrice').value) || 0,
+    price: parseFloat(qs('#productPrice').value.replace(/\./g, '').replace(',', '.')),
+    oldPrice: parseFloat(qs('#productOldPrice').value.replace(/\./g, '').replace(',', '.')) || 0,
     category: qs('#productCategory').value,
     country: qs('#productCountry').value,
     image: qs('#productImage').value.trim(),
@@ -3172,6 +3175,7 @@ colors: qs('#productColors').value.trim(),
         price: data.price,
         oldPrice: data.oldPrice,
         category: data.category,
+        country: data.country,
         image: data.image,
         description: data.description,
         tag: data.tag,
@@ -3197,6 +3201,7 @@ sizeStock: data.sizeStock
         price: data.price,
         oldPrice: data.oldPrice,
         category: data.category,
+        country: data.country,
         image: data.image,
         description: data.description,
         tag: data.tag,
@@ -3716,11 +3721,10 @@ function renderAdminCoupons() {
       }
 
 function money(value) {
-
   value = Number(value || 0);
 
   if (currentCountry === 'AR') {
-    return '$ ' + value.toLocaleString('es-AR', {
+    return 'ARS ' + value.toLocaleString('es-AR', {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     });
@@ -3823,3 +3827,4 @@ uploadInput?.addEventListener('change', async function () {
   </script>
 </body>
 </html>
+
